@@ -73,19 +73,19 @@ async function run(options: { schema: string }) {
   });
 
   // the real work is done here
-  // const result = await codegenRunner.compileAll();
+  const result = await codegenRunner.compileAll();
 
-  // const queryCacheOutputFile = `${srcDir}/queryCache.json`;
-  // try {
-  //   await writeFileAsync(queryCacheOutputFile, JSON.stringify(queryCache));
-  //   console.log(`Query cache written to: ${queryCacheOutputFile}`);
-  // } catch (err) {
-  //   if (err) {
-  //     return console.log(err);
-  //   }
-  // }
+  const queryCacheOutputFile = `${srcDir}/queryCache.json`;
+  try {
+    await writeFileAsync(queryCacheOutputFile, JSON.stringify(queryCache));
+    console.log(`Query cache written to: ${queryCacheOutputFile}`);
+  } catch (err) {
+    if (err) {
+      return console.log(err);
+    }
+  }
 
-  // console.log(`Done! ${result}`);
+  console.log(`Done! ${result}`);
 }
 
 // Collect args

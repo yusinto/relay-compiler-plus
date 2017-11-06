@@ -1,0 +1,60 @@
+{
+  "name": "create-relay-modern-app",
+  "version": "1.0.0",
+  "description": "A starter kit to quickly create a relay modern app",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run relay-compiler-plus && node src/server",
+    "build-schema": "node ./build/graphql/webpack && node ./build/graphql/buildSchema.js.transpiled",
+    "rcp": "node ../dist/bin/relay-compiler-plus --schema src/server/schema.graphql"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yusinto/create-relay-modern-app.git"
+  },
+  "keywords": [
+    "create",
+    "relay",
+    "modern",
+    "app",
+    "graphql",
+    "react",
+    "starter",
+    "kit"
+  ],
+  "author": "Yus Ng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yusinto/create-relay-modern-app/issues"
+  },
+  "homepage": "https://github.com/yusinto/create-relay-modern-app#readme",
+  "dependencies": {
+    "babel-plugin-array-includes": "^2.0.3",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "express": "^4.16.2",
+    "express-graphql": "^0.6.11",
+    "graphql": "^0.11.7",
+    "isomorphic-fetch": "^2.2.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-relay": "^1.4.1",
+    "relay-runtime": "^1.4.1"
+  },
+  "devDependencies": {
+    "babel-loader": "^7.1.2",
+    "babel-plugin-relay": "^1.4.1",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react-hmre": "^1.1.1",
+    "webpack": "^3.8.1",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.20.0",
+    "webpack-node-externals": "^1.6.0"
+  }
+}

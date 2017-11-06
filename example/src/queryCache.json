@@ -1,0 +1,1 @@
+[{"id":"6082095e8a45f64d38924775d047cf8c","text":"query client_index_Query {\n  root {\n    animal\n    ...app_root\n  }\n}\n\nfragment app_root on Root {\n  animal\n  human\n}\n"}]

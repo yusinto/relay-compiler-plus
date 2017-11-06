@@ -1,0 +1,47 @@
+{
+  "name": "relay-compiler-plus",
+  "version": "1.0.0",
+  "description": "A custom relay modern compiler that supports persisted queries",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node build",
+    "dev": "node dist/bin/relay-compiler-plus"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yusinto/relay-compiler-plus.git"
+  },
+  "keywords": [
+    "relay",
+    "compiler",
+    "persisted",
+    "queries",
+    "query",
+    "custom",
+    "modern"
+  ],
+  "author": "Yusinto Ngadiman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yusinto/relay-compiler-plus/issues"
+  },
+  "homepage": "https://github.com/yusinto/relay-compiler-plus#readme",
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "graphql": "^0.11.7",
+    "relay-compiler": "^1.4.1",
+    "yargs": "^10.0.3"
+  },
+  "devDependencies": {
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "webpack": "^3.8.1",
+    "webpack-node-externals": "^1.6.0"
+  }
+}

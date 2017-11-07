@@ -135,7 +135,7 @@ module.exports = __webpack_require__(/*! ./src/main.js */5);
 
 var run = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(options) {
-    var srcDir, schemaPath, reporter, parserConfigs, writerConfigs, codegenRunner;
+    var srcDir, schemaPath, reporter, parserConfigs, writerConfigs, codegenRunner, result, queryCacheOutputFile;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -178,26 +178,43 @@ var run = function () {
             });
 
             // the real work is done here
-            // const result = await codegenRunner.compileAll();
 
-            // const queryCacheOutputFile = `${srcDir}/queryCache.json`;
-            // try {
-            //   await writeFileAsync(queryCacheOutputFile, JSON.stringify(queryCache));
-            //   console.log(`Query cache written to: ${queryCacheOutputFile}`);
-            // } catch (err) {
-            //   if (err) {
-            //     return console.log(err);
-            //   }
-            // }
+            _context.next = 9;
+            return codegenRunner.compileAll();
 
-            // console.log(`Done! ${result}`);
+          case 9:
+            result = _context.sent;
+            queryCacheOutputFile = srcDir + '/queryCache.json';
+            _context.prev = 11;
+            _context.next = 14;
+            return writeFileAsync(queryCacheOutputFile, JSON.stringify(queryCache));
 
-          case 7:
+          case 14:
+            console.log('Query cache written to: ' + queryCacheOutputFile);
+            _context.next = 21;
+            break;
+
+          case 17:
+            _context.prev = 17;
+            _context.t0 = _context['catch'](11);
+
+            if (!_context.t0) {
+              _context.next = 21;
+              break;
+            }
+
+            return _context.abrupt('return', console.log(_context.t0));
+
+          case 21:
+
+            console.log('Done! ' + result);
+
+          case 22:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, this);
+    }, _callee, this, [[11, 17]]);
   }));
 
   return function run(_x) {

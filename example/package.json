@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npm run relay-compiler-plus && node src/server",
     "build-schema": "node ./build/graphql/webpack && node ./build/graphql/buildSchema.js.transpiled",
-    "rcp": "node ../dist/bin/relay-compiler-plus --schema src/server/schema.graphql"
+    "rcp": "node ../bin/relay-compiler-plus --schema src/server/schema.graphql"
   },
   "repository": {
     "type": "git",

@@ -2,11 +2,12 @@
   "name": "relay-compiler-plus",
   "version": "1.0.0",
   "description": "A custom relay modern compiler that supports persisted queries",
-  "main": "index.js",
+  "preferGlobal": true,
+  "bin": {
+    "relay-compiler-plus": "bin/relay-compiler-plus"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node build",
-    "dev": "node dist/bin/relay-compiler-plus"
+    "build": "node build"
   },
   "repository": {
     "type": "git",

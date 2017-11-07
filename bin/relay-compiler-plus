@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 module.exports =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -61,11 +62,24 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/*!******************************************!*\
+  !*** multi babel-polyfill ./src/main.js ***!
+  \******************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! babel-polyfill */1);
+module.exports = __webpack_require__(/*! ./src/main.js */2);
+
+
+/***/ }),
+/* 1 */
 /*!*********************************!*\
   !*** external "babel-polyfill" ***!
   \*********************************/
@@ -76,401 +90,15 @@ module.exports =
 module.exports = require("babel-polyfill");
 
 /***/ }),
-/* 1 */
-/*!***********************!*\
-  !*** external "path" ***!
-  \***********************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports) {
-
-module.exports = require("path");
-
-/***/ }),
 /* 2 */
-/*!*********************!*\
-  !*** external "fs" ***!
-  \*********************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports) {
-
-module.exports = require("fs");
-
-/***/ }),
-/* 3 */
-/*!*********************************!*\
-  !*** external "relay-compiler" ***!
-  \*********************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports) {
-
-module.exports = require("relay-compiler");
-
-/***/ }),
-/* 4 */
-/*!******************************************!*\
-  !*** multi babel-polyfill ./src/main.js ***!
-  \******************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(/*! babel-polyfill */0);
-module.exports = __webpack_require__(/*! ./src/main.js */5);
-
-
-/***/ }),
-/* 5 */
 /*!*********************!*\
   !*** ./src/main.js ***!
   \*********************/
 /*! dynamic exports provided */
 /*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var run = function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(options) {
-    var srcDir, schemaPath, reporter, parserConfigs, writerConfigs, codegenRunner, result, queryCacheOutputFile;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            srcDir = _path2.default.resolve(process.cwd(), '.');
-            schemaPath = _path2.default.resolve(process.cwd(), options.schema);
-
-            console.log('srcDir: ' + srcDir + ', schemaPath: ' + schemaPath);
-
-            reporter = new ConsoleReporter({ verbose: true });
-            parserConfigs = {
-              default: {
-                baseDir: srcDir,
-                getFileFilter: RelayJSModuleParser.getFileFilter,
-                getParser: RelayJSModuleParser.getParser,
-                getSchema: function getSchema() {
-                  return (0, _ripped.getSchema)(schemaPath);
-                },
-                filepaths: (0, _ripped.getFilepathsFromGlob)(srcDir, {
-                  extensions: ['js'],
-                  include: ['**'],
-                  exclude: ['**/node_modules/**', '**/__mocks__/**', '**/__tests__/**', '**/__generated__/**']
-                })
-              }
-            };
-            writerConfigs = {
-              default: {
-                getWriter: (0, _ripped.getRelayFileWriter)(srcDir, persistQuery),
-                isGeneratedFile: function isGeneratedFile(filePath) {
-                  return filePath.endsWith('.js') && filePath.includes('__generated__');
-                },
-                parser: 'default'
-              }
-            };
-            codegenRunner = new CodegenRunner({
-              reporter: reporter,
-              parserConfigs: parserConfigs,
-              writerConfigs: writerConfigs,
-              onlyValidate: false
-            });
-
-            // the real work is done here
-
-            _context.next = 9;
-            return codegenRunner.compileAll();
-
-          case 9:
-            result = _context.sent;
-            queryCacheOutputFile = srcDir + '/queryCache.json';
-            _context.prev = 11;
-            _context.next = 14;
-            return writeFileAsync(queryCacheOutputFile, JSON.stringify(queryCache));
-
-          case 14:
-            console.log('Query cache written to: ' + queryCacheOutputFile);
-            _context.next = 21;
-            break;
-
-          case 17:
-            _context.prev = 17;
-            _context.t0 = _context['catch'](11);
-
-            if (!_context.t0) {
-              _context.next = 21;
-              break;
-            }
-
-            return _context.abrupt('return', console.log(_context.t0));
-
-          case 21:
-
-            console.log('Done! ' + result);
-
-          case 22:
-          case 'end':
-            return _context.stop();
-        }
-      }
-    }, _callee, this, [[11, 17]]);
-  }));
-
-  return function run(_x) {
-    return _ref.apply(this, arguments);
-  };
-}();
-
-// Collect args
-
-
-var _yargs = __webpack_require__(/*! yargs */ 6);
-
-var _yargs2 = _interopRequireDefault(_yargs);
-
-__webpack_require__(/*! babel-polyfill */ 0);
-
-var _util = __webpack_require__(/*! util */ 7);
-
-var _path = __webpack_require__(/*! path */ 1);
-
-var _path2 = _interopRequireDefault(_path);
-
-var _fs = __webpack_require__(/*! fs */ 2);
-
-var _fs2 = _interopRequireDefault(_fs);
-
-var _crypto = __webpack_require__(/*! crypto */ 8);
-
-var _crypto2 = _interopRequireDefault(_crypto);
-
-var _relayCompiler = __webpack_require__(/*! relay-compiler */ 3);
-
-var _relayCompiler2 = _interopRequireDefault(_relayCompiler);
-
-var _ripped = __webpack_require__(/*! ./ripped */ 9);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-var ConsoleReporter = _relayCompiler2.default.ConsoleReporter,
-    CodegenRunner = _relayCompiler2.default.Runner,
-    RelayJSModuleParser = _relayCompiler2.default.FileIRParser;
-
-var queryCache = [];
-var writeFileAsync = (0, _util.promisify)(_fs2.default.writeFile);
-
-function md5(x) {
-  return _crypto2.default.createHash('md5').update(x, 'utf8').digest('hex');
-}
-
-function persistQuery(operationText) {
-  return new Promise(function (resolve) {
-    var queryId = md5(operationText);
-    queryCache.push({ id: queryId, text: operationText });
-    console.log('mapped ' + operationText + ' to ' + queryId);
-    resolve(queryId);
-  });
-}
-
-var argv = _yargs2.default.usage('Usage: $0 --schema <path-to-schema>').options({
-  schema: {
-    describe: 'Path to schema.graphql or schema.json',
-    demandOption: true,
-    type: 'string'
-  }
-}).help().argv;
-
-_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-  return regeneratorRuntime.wrap(function _callee2$(_context2) {
-    while (1) {
-      switch (_context2.prev = _context2.next) {
-        case 0:
-          console.log('Starting relay compilation');
-          _context2.prev = 1;
-          _context2.next = 4;
-          return run(argv);
-
-        case 4:
-          _context2.next = 10;
-          break;
-
-        case 6:
-          _context2.prev = 6;
-          _context2.t0 = _context2['catch'](1);
-
-          console.log('error: ' + _context2.t0);
-          process.exit(1);
-
-        case 10:
-        case 'end':
-          return _context2.stop();
-      }
-    }
-  }, _callee2, this, [[1, 6]]);
-}))();
-
-/***/ }),
-/* 6 */
-/*!************************!*\
-  !*** external "yargs" ***!
-  \************************/
-/*! dynamic exports provided */
-/*! all exports used */
 /***/ (function(module, exports) {
 
-module.exports = require("yargs");
-
-/***/ }),
-/* 7 */
-/*!***********************!*\
-  !*** external "util" ***!
-  \***********************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports) {
-
-module.exports = require("util");
-
-/***/ }),
-/* 8 */
-/*!*************************!*\
-  !*** external "crypto" ***!
-  \*************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports) {
-
-module.exports = require("crypto");
-
-/***/ }),
-/* 9 */
-/*!***********************!*\
-  !*** ./src/ripped.js ***!
-  \***********************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.getFilepathsFromGlob = getFilepathsFromGlob;
-exports.getRelayFileWriter = getRelayFileWriter;
-exports.getSchema = getSchema;
-
-var _fs = __webpack_require__(/*! fs */ 2);
-
-var _fs2 = _interopRequireDefault(_fs);
-
-var _path = __webpack_require__(/*! path */ 1);
-
-var _path2 = _interopRequireDefault(_path);
-
-var _graphql = __webpack_require__(/*! graphql */ 10);
-
-var _relayCompiler = __webpack_require__(/*! relay-compiler */ 3);
-
-var _relayCompiler2 = _interopRequireDefault(_relayCompiler);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * The code in this file are ripped from:
- * relay-compiler/bin/RelayCompilerBin.js
- */
-var RelayFileWriter = _relayCompiler2.default.FileWriter,
-    RelayIRTransforms = _relayCompiler2.default.IRTransforms,
-    formatGeneratedModule = _relayCompiler2.default.formatGeneratedModule;
-var codegenTransforms = RelayIRTransforms.codegenTransforms,
-    fragmentTransforms = RelayIRTransforms.fragmentTransforms,
-    printTransforms = RelayIRTransforms.printTransforms,
-    queryTransforms = RelayIRTransforms.queryTransforms,
-    schemaExtensions = RelayIRTransforms.schemaExtensions;
-function getFilepathsFromGlob(baseDir, options) {
-  var extensions = options.extensions,
-      include = options.include,
-      exclude = options.exclude;
-
-  var patterns = include.map(function (inc) {
-    return inc + '/*.+(' + extensions.join('|') + ')';
-  });
-
-  var glob = __webpack_require__(/*! fast-glob */ 11);
-  return glob.sync(patterns, {
-    cwd: baseDir,
-    bashNative: [],
-    onlyFiles: true,
-    ignore: exclude
-  });
-}
-
-// Note: persistQuery param added
-function getRelayFileWriter(baseDir, persistQuery) {
-  return function (onlyValidate, schema, documents, baseDocuments) {
-    return new RelayFileWriter({
-      config: {
-        baseDir: baseDir,
-        compilerTransforms: {
-          codegenTransforms: codegenTransforms,
-          fragmentTransforms: fragmentTransforms,
-          printTransforms: printTransforms,
-          queryTransforms: queryTransforms
-        },
-        customScalars: {},
-        formatModule: formatGeneratedModule,
-        inputFieldWhiteListForFlow: [],
-        schemaExtensions: schemaExtensions,
-        useHaste: false,
-        persistQuery: persistQuery
-      },
-      onlyValidate: onlyValidate,
-      schema: schema,
-      baseDocuments: baseDocuments,
-      documents: documents
-    });
-  };
-}
-
-function getSchema(schemaPath) {
-  try {
-    var source = _fs2.default.readFileSync(schemaPath, 'utf8');
-    if (_path2.default.extname(schemaPath) === '.json') {
-      source = (0, _graphql.printSchema)((0, _graphql.buildClientSchema)(JSON.parse(source).data));
-    }
-    source = '\n  directive @include(if: Boolean) on FRAGMENT | FIELD\n  directive @skip(if: Boolean) on FRAGMENT | FIELD\n\n  ' + source + '\n  ';
-    return (0, _graphql.buildASTSchema)((0, _graphql.parse)(source));
-  } catch (error) {
-    throw new Error(('\nError loading schema. Expected the schema to be a .graphql or a .json\nfile, describing your GraphQL server\'s API. Error detail:\n\n' + error.stack + '\n    ').trim());
-  }
-}
-
-/***/ }),
-/* 10 */
-/*!**************************!*\
-  !*** external "graphql" ***!
-  \**************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports) {
-
-module.exports = require("graphql");
-
-/***/ }),
-/* 11 */
-/*!****************************!*\
-  !*** external "fast-glob" ***!
-  \****************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports) {
-
-module.exports = require("fast-glob");
+throw new Error("Module parse failed: Unexpected character '#' (1:0)\nYou may need an appropriate loader to handle this file type.\n| #! /usr/bin/env node\n| 'use strict';\n| ");
 
 /***/ })
 /******/ ]);

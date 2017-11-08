@@ -40,8 +40,5 @@ module.exports = {
   // Enables hot module replacement in webpack
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.DefinePlugin({
-      __DEV__: true,
-    }),
   ]
 };

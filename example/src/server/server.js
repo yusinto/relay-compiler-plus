@@ -6,6 +6,7 @@ import WebpackDevMiddleware from 'webpack-dev-middleware';
 import WebPackHotMiddleware from 'webpack-hot-middleware';
 import expressGraphl from 'express-graphql';
 import graphqlSchema from './schema';
+import queryMap from '../queryMap.json';
 
 const PORT = 3000;
 const app = Express();
@@ -28,22 +29,16 @@ app.use(WebPackHotMiddleware(webpackCompiler));
 // graphql
 app.use('/graphql', jsonParser,
   (req, res, next) => {
-    if (req.body.queryId) {
-      console.log(`Mapping queryId: ${req.body.queryId}`);
-      // TODO: lookup queryId and insert it into the post body for expressGraphql to process
-      req.body.query = `
-      query client_index_Query {
-        root {
-            animal
-            ...app_root
-          }
-        }
-        
-        fragment app_root on Root {
-          animal
-          human
-        }
-      `
+    const queryId = req.body.queryId;
+    if (queryId) {
+      console.log(`Mapping queryId: ${queryId}`);
+      const query = queryMap.find(q => q.id === queryId);
+      if(query) {
+        console.log(`Yayy! Found persisted query ${queryId}`);
+        req.body.query = query.text;
+      } else {
+        console.error(`Relay persisted query error: Can't find queryId: ${queryId}`);
+      }
     }
 
     next();

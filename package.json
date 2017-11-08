@@ -7,7 +7,7 @@
     "relay-compiler-plus": "bin/relay-compiler-plus"
   },
   "scripts": {
-    "build": "node build && exec 3<> bin/relay-compiler-plus && awk -v TEXT='#!/usr/bin/env node' 'BEGIN {print TEXT}{print}' bin/relay-compiler-plus >&3"
+    "build": "NODE_ENV=production node build && exec 3<> bin/relay-compiler-plus && awk -v TEXT='#!/usr/bin/env node' 'BEGIN {print TEXT}{print}' bin/relay-compiler-plus >&3"
   },
   "repository": {
     "type": "git",

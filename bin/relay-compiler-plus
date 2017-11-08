@@ -185,7 +185,7 @@ var run = function () {
 
           case 9:
             result = _context.sent;
-            queryCacheOutputFile = srcDir + '/queryCache.json';
+            queryCacheOutputFile = srcDir + '/queryMap.json';
             _context.prev = 11;
             _context.next = 14;
             return writeFileAsync(queryCacheOutputFile, JSON.stringify(queryCache));

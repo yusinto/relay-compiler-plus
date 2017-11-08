@@ -27,12 +27,21 @@ module.exports = {
           presets: 'react-hmre',
           cacheDirectory: true,
         },
+      },
+      {
+        test: /\.json$/,
+        include: sourceFolder,
+        exclude: /node_modules/,
+        loader: 'json-loader',
       }
     ]
   },
 
   // Enables hot module replacement in webpack
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      __DEV__: true,
+    }),
   ]
 };

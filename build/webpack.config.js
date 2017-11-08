@@ -1,4 +1,5 @@
 import path from 'path';
+import webpack from 'webpack';
 import nodeExternals from 'webpack-node-externals';
 
 const compiler = 'main.js';
@@ -31,4 +32,25 @@ export default {
       },
     ],
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+        screw_ie8: true,
+        conditionals: true,
+        unused: true,
+        comparisons: true,
+        sequences: true,
+        dead_code: true,
+        evaluate: true,
+        join_vars: true,
+        if_return: true,
+      },
+    }),
+  ],
 };

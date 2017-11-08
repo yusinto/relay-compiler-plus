@@ -75,7 +75,7 @@ async function run(options: { schema: string, src: string}) {
   // the real work is done here
   const result = await codegenRunner.compileAll();
 
-  const queryCacheOutputFile = `${srcDir}/queryCache.json`;
+  const queryCacheOutputFile = `${srcDir}/queryMap.json`;
   try {
     await writeFileAsync(queryCacheOutputFile, JSON.stringify(queryCache));
     console.log(`Query cache written to: ${queryCacheOutputFile}`);

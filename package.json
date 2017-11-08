@@ -1,6 +1,6 @@
 {
   "name": "relay-compiler-plus",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A custom relay modern compiler that supports persisted queries",
   "preferGlobal": true,
   "bin": {

@@ -17,6 +17,7 @@ const {
 const queryCache = [];
 const writeFileAsync = promisify(fs.writeFile);
 
+// Ripped from relay-compiler/RelayFileWriter.js
 function md5(x: string): string {
   return crypto
     .createHash('md5')
@@ -33,6 +34,10 @@ function persistQuery(operationText: string): Promise<string> {
   });
 }
 
+/*
+* Most of the code in this run method are ripped from:
+* relay-compiler/bin/RelayCompilerBin.js
+*/
 async function run(options: { schema: string, src: string}) {
   const srcDir = path.resolve(process.cwd(), options.src);
   const schemaPath = path.resolve(process.cwd(), options.schema);

@@ -384,15 +384,29 @@ var _relayCompiler = __webpack_require__(/*! relay-compiler */ 3);
 
 var _relayCompiler2 = _interopRequireDefault(_relayCompiler);
 
+var _formatGeneratedModule = __webpack_require__(/*! ./formatGeneratedModule */ 11);
+
+var _formatGeneratedModule2 = _interopRequireDefault(_formatGeneratedModule);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * The code in this file are ripped from:
- * relay-compiler/bin/RelayCompilerBin.js
- */
 var RelayFileWriter = _relayCompiler2.default.FileWriter,
-    RelayIRTransforms = _relayCompiler2.default.IRTransforms,
-    formatGeneratedModule = _relayCompiler2.default.formatGeneratedModule;
+    RelayIRTransforms = _relayCompiler2.default.IRTransforms; /**
+                                                               * The code in this file are ripped from:
+                                                               * relay-compiler/bin/RelayCompilerBin.js
+                                                               *
+                                                               * Copyright (c) 2013-present, Facebook, Inc.
+                                                               * All rights reserved.
+                                                               *
+                                                               * This source code is licensed under the BSD-style license found in the
+                                                               * LICENSE file in the root directory of this source tree. An additional grant
+                                                               * of patent rights can be found in the PATENTS file in the same directory.
+                                                               *
+                                                               * 
+                                                               * @providesModule RelayCompilerBin
+                                                               * @format
+                                                               */
+
 var codegenTransforms = RelayIRTransforms.codegenTransforms,
     fragmentTransforms = RelayIRTransforms.fragmentTransforms,
     printTransforms = RelayIRTransforms.printTransforms,
@@ -407,7 +421,7 @@ function getFilepathsFromGlob(baseDir, options) {
     return inc + '/*.+(' + extensions.join('|') + ')';
   });
 
-  var glob = __webpack_require__(/*! fast-glob */ 11);
+  var glob = __webpack_require__(/*! fast-glob */ 12);
   return glob.sync(patterns, {
     cwd: baseDir,
     bashNative: [],
@@ -416,7 +430,8 @@ function getFilepathsFromGlob(baseDir, options) {
   });
 }
 
-// Note: persistQuery param added
+// Note: this function has been modified from its original form.
+// persistQuery param is added
 function getRelayFileWriter(baseDir, persistQuery) {
   return function (onlyValidate, schema, documents, baseDocuments) {
     return new RelayFileWriter({
@@ -429,7 +444,7 @@ function getRelayFileWriter(baseDir, persistQuery) {
           queryTransforms: queryTransforms
         },
         customScalars: {},
-        formatModule: formatGeneratedModule,
+        formatModule: _formatGeneratedModule2.default,
         inputFieldWhiteListForFlow: [],
         schemaExtensions: schemaExtensions,
         useHaste: false,
@@ -469,6 +484,50 @@ module.exports = require("graphql");
 
 /***/ }),
 /* 11 */
+/*!**************************************!*\
+  !*** ./src/formatGeneratedModule.js ***!
+  \**************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule formatGeneratedModule
+ * 
+ * @format
+ */
+
+
+
+var formatGeneratedModule = function formatGeneratedModule(_ref) {
+  var moduleName = _ref.moduleName,
+      documentType = _ref.documentType,
+      docText = _ref.docText,
+      concreteText = _ref.concreteText,
+      flowText = _ref.flowText,
+      hash = _ref.hash,
+      devTextGenerator = _ref.devTextGenerator,
+      relayRuntimeModule = _ref.relayRuntimeModule;
+
+  var objectName = documentType === 'ConcreteBatch' ? 'batch' : 'fragment';
+  var docTextComment = docText ? '\n/*\n' + docText.trim() + '\n*/\n' : '';
+  var hashText = hash ? '\n * ' + hash : '';
+  // const devOnlyText = devTextGenerator ? devTextGenerator(objectName) : '';
+  return '/**\n * ' + '@' + 'flow' + hashText + '\n */\n\n/* eslint-disable */\n\n\'use strict\';\n\n/*::\nimport type {' + documentType + '} from \'' + relayRuntimeModule + '\';\n' + (flowText || '') + '\n*/\n\n' + docTextComment + '\nconst ' + objectName + ' /*: ' + documentType + '*/ = ' + concreteText + ';\n\nmodule.exports = ' + objectName + ';\n';
+};
+
+module.exports = formatGeneratedModule;
+
+/***/ }),
+/* 12 */
 /*!****************************!*\
   !*** external "fast-glob" ***!
   \****************************/

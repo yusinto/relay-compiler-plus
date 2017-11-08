@@ -493,6 +493,11 @@ module.exports = require("graphql");
 
 "use strict";
 /**
+ * Changes have been made to this file.
+ *
+ * devOnlyText have been removed because the variable __DEV__ is not guaranteed
+ * to be available on the consumer end.
+ *
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
  *

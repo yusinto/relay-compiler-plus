@@ -134,6 +134,10 @@ module.exports = __webpack_require__(/*! ./src/main.js */5);
 "use strict";
 
 
+/*
+* Most of the code in this run method are ripped from:
+* relay-compiler/bin/RelayCompilerBin.js
+*/
 var run = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(options) {
     var srcDir, schemaPath, reporter, parserConfigs, writerConfigs, codegenRunner, result, queryCacheOutputFile;
@@ -263,6 +267,7 @@ var ConsoleReporter = _relayCompiler2.default.ConsoleReporter,
 var queryCache = [];
 var writeFileAsync = (0, _util.promisify)(_fs2.default.writeFile);
 
+// Ripped from relay-compiler/RelayFileWriter.js
 function md5(x) {
   return _crypto2.default.createHash('md5').update(x, 'utf8').digest('hex');
 }
@@ -274,9 +279,7 @@ function persistQuery(operationText) {
     console.log('mapped ' + operationText + ' to ' + queryId);
     resolve(queryId);
   });
-}
-
-var argv = _yargs2.default.usage('Usage: $0 --schema <path-to-schema> --src <path-to-src-dir>').options({
+}var argv = _yargs2.default.usage('Usage: $0 --schema <path-to-schema> --src <path-to-src-dir>').options({
   schema: {
     describe: 'Path to schema.graphql or schema.json',
     demandOption: true,

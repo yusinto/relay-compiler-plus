@@ -3,11 +3,13 @@ Example project using relay-compiler-plus to generate relay persisted queries.
 
 ## Quickstart
 
+```
 yarn
 
 npm run dev
+```
 
-Browse to localhost:3000, under dev tools network tab you should be able
+Browse to http://localhost:3000, under dev tools network tab you should be able
 to see graphql requests sent has a queryId and variables object and nothing
 else.
 

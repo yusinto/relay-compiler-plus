@@ -33,8 +33,8 @@ function persistQuery(operationText: string): Promise<string> {
   });
 }
 
-async function run(options: { schema: string }) {
-  const srcDir = path.resolve(process.cwd(), '.');
+async function run(options: { schema: string, src: string}) {
+  const srcDir = path.resolve(process.cwd(), options.src);
   const schemaPath = path.resolve(process.cwd(), options.schema);
   console.log(`srcDir: ${srcDir}, schemaPath: ${schemaPath}`);
 
@@ -90,10 +90,15 @@ async function run(options: { schema: string }) {
 
 // Collect args
 const argv = yargs
-  .usage(`Usage: $0 --schema <path-to-schema>`)
+  .usage(`Usage: $0 --schema <path-to-schema> --src <path-to-src-dir>`)
   .options({
     schema: {
       describe: 'Path to schema.graphql or schema.json',
+      demandOption: true,
+      type: 'string',
+    },
+    src: {
+      describe: 'Root directory of application code',
       demandOption: true,
       type: 'string',
     },

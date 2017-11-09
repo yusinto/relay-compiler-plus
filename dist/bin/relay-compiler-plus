@@ -111,22 +111,22 @@ module.exports = require("relay-compiler");
 
 /***/ }),
 /* 4 */
-/*!******************************************!*\
-  !*** multi babel-polyfill ./src/main.js ***!
-  \******************************************/
+/*!***************************************************!*\
+  !*** multi babel-polyfill ./src/compiler/main.js ***!
+  \***************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! babel-polyfill */0);
-module.exports = __webpack_require__(/*! ./src/main.js */5);
+module.exports = __webpack_require__(/*! ./src/compiler/main.js */5);
 
 
 /***/ }),
 /* 5 */
-/*!*********************!*\
-  !*** ./src/main.js ***!
-  \*********************/
+/*!******************************!*\
+  !*** ./src/compiler/main.js ***!
+  \******************************/
 /*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -356,9 +356,9 @@ module.exports = require("crypto");
 
 /***/ }),
 /* 9 */
-/*!***********************!*\
-  !*** ./src/ripped.js ***!
-  \***********************/
+/*!********************************!*\
+  !*** ./src/compiler/ripped.js ***!
+  \********************************/
 /*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -487,9 +487,9 @@ module.exports = require("graphql");
 
 /***/ }),
 /* 11 */
-/*!**************************************!*\
-  !*** ./src/formatGeneratedModule.js ***!
-  \**************************************/
+/*!***********************************************!*\
+  !*** ./src/compiler/formatGeneratedModule.js ***!
+  \***********************************************/
 /*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {

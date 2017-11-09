@@ -3,11 +3,14 @@
   "version": "1.1.2",
   "description": "A custom relay modern compiler that supports persisted queries",
   "preferGlobal": true,
+  "main": "dist/lib/index.js",
   "bin": {
-    "relay-compiler-plus": "bin/relay-compiler-plus"
+    "relay-compiler-plus": "dist/bin/relay-compiler-plus"
   },
   "scripts": {
-    "build": "NODE_ENV=production node build && exec 3<> bin/relay-compiler-plus && awk -v TEXT='#!/usr/bin/env node' 'BEGIN {print TEXT}{print}' bin/relay-compiler-plus >&3"
+    "build1": "NODE_ENV=production node build && exec 3<> dist/bin/relay-compiler-plus && awk -v TEXT='#!/usr/bin/env node' 'BEGIN {print TEXT}{print}' dist/bin/relay-compiler-plus >&3",
+    "build2": "babel src/exports -d dist/lib",
+    "build": "rimraf dist/* && npm run build1 && npm run build2"
   },
   "repository": {
     "type": "git",
@@ -30,11 +33,13 @@
   "homepage": "https://github.com/yusinto/relay-compiler-plus#readme",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "body-parser": "^1.18.2",
     "graphql": "^0.11.7",
     "relay-compiler": "^1.4.1",
     "yargs": "^10.0.3"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
@@ -42,6 +47,7 @@
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
+    "rimraf": "^2.6.2",
     "webpack": "^3.8.1",
     "webpack-node-externals": "^1.6.0"
   }

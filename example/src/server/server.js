@@ -1,16 +1,15 @@
 import Express from 'express';
 import Webpack from 'webpack';
-import bodyParser from 'body-parser';
 import WebpackConfig from '../../webpack.config.dev';
 import WebpackDevMiddleware from 'webpack-dev-middleware';
 import WebPackHotMiddleware from 'webpack-hot-middleware';
 import expressGraphl from 'express-graphql';
 import graphqlSchema from './schema';
-import queryMap from '../queryMap.json';
+import queryMapJson from '../queryMap.json';
+import matchQueryMiddleware from '../../../src/exports/matchQueryMiddleware';
 
 const PORT = 3000;
 const app = Express();
-const jsonParser = bodyParser.json();
 
 // create a webpack instance from our dev config
 const webpackCompiler = Webpack(WebpackConfig);
@@ -27,22 +26,8 @@ app.use(WebpackDevMiddleware(webpackCompiler, {
 app.use(WebPackHotMiddleware(webpackCompiler));
 
 // graphql
-app.use('/graphql', jsonParser,
-  (req, res, next) => {
-    const queryId = req.body.queryId;
-    if (queryId) {
-      console.log(`Mapping queryId: ${queryId}`);
-      const query = queryMap.find(q => q.id === queryId);
-      if(query) {
-        console.log(`Yayy! Found persisted query ${queryId}`);
-        req.body.query = query.text;
-      } else {
-        console.error(`Relay persisted query error: Can't find queryId: ${queryId}`);
-      }
-    }
-
-    next();
-  },
+app.use('/graphql',
+  matchQueryMiddleware(queryMapJson),
   expressGraphl({
     schema: graphqlSchema,
     graphiql: true,

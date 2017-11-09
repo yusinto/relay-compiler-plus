@@ -13,7 +13,7 @@ export default function matchQueryMiddleware(queryMapJson) {
           console.log(`Yayy! Found persisted query ${queryId}`);
           req.body.query = query.text;
         } else {
-          console.error(`ERROR matching queryId: ${queryId}`);
+          console.error(`ERROR: can't find queryId: ${queryId}`);
         }
       }
       next();

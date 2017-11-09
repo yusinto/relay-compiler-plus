@@ -13,7 +13,7 @@
     "build-exports": "babel src/exports -d lib",
     "build-flow": "flow-copy-source -v src lib",
     "clean": "rimraf bin && rimraf lib",
-    "build": "npm run clean && npm run build-compiler && npm run build-exports && npm run build-flow"
+    "build": "npm run clean && npm run build-compiler && npm run build-exports"
   },
   "repository": {
     "type": "git",

@@ -1,4 +1,3 @@
-// @flow
 import yargs from 'yargs';
 
 import 'babel-polyfill';

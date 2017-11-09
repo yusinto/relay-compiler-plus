@@ -12,7 +12,7 @@
     "build-compiler": "NODE_ENV=production node build && exec 3<> bin/relay-compiler-plus && awk -v TEXT='#!/usr/bin/env node' 'BEGIN {print TEXT}{print}' bin/relay-compiler-plus >&3",
     "build-exports": "babel src/exports -d lib",
     "build-flow": "flow-copy-source -v src lib",
-    "clean": "rimraf bin && rimraf lib",
+    "clean": "rimraf bin/* && rimraf lib/*",
     "build": "npm run clean && npm run build-compiler && npm run build-exports"
   },
   "repository": {

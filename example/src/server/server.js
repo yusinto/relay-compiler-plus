@@ -6,7 +6,7 @@ import WebPackHotMiddleware from 'webpack-hot-middleware';
 import expressGraphl from 'express-graphql';
 import graphqlSchema from './schema';
 import queryMapJson from '../queryMap.json';
-import matchQueryMiddleware from '../../../src/exports/matchQueryMiddleware';
+import {matchQueryMiddleware} from 'relay-compiler-plus';
 
 const PORT = 3000;
 const app = Express();

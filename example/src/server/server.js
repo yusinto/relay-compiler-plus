@@ -31,8 +31,7 @@ app.use('/graphql',
   expressGraphl({
     schema: graphqlSchema,
     graphiql: true,
-  }))
-;
+  }));
 
 app.use((req, res) => {
   const html = `<!DOCTYPE html>

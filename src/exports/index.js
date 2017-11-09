@@ -1,5 +1,5 @@
 import matchQueryMiddleware from './matchQueryMiddleware';
 
-export default {
+module.exports = {
   matchQueryMiddleware,
-}
+};

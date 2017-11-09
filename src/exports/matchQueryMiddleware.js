@@ -2,7 +2,7 @@ import bodyParser from 'body-parser';
 
 const jsonParser = bodyParser.json();
 
-export default function matchQuery(queryMapJson) {
+export default function matchQueryMiddleware(queryMapJson) {
   return (req, res, next) => {
     return jsonParser(req, res, () => {
       const queryId = req.body.queryId;

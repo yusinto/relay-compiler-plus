@@ -1,7 +1,8 @@
-const bodyParser = require('body-parser');
+import bodyParser from 'body-parser';
+
 const jsonParser = bodyParser.json();
 
-export default function matchRelayQuery(queryMapJson) {
+export default function matchQuery(queryMapJson) {
   return (req, res, next) => {
     return jsonParser(req, res, () => {
       const queryId = req.body.queryId;
@@ -12,7 +13,7 @@ export default function matchRelayQuery(queryMapJson) {
           console.log(`Yayy! Found persisted query ${queryId}`);
           req.body.query = query.text;
         } else {
-          console.error(`Relay persisted query error: Can't find queryId: ${queryId}`);
+          console.error(`ERROR matching queryId: ${queryId}`);
         }
       }
       next();

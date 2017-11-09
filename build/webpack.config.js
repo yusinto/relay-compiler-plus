@@ -5,14 +5,14 @@ import nodeExternals from 'webpack-node-externals';
 const compiler = 'main.js';
 
 export default {
-  entry: ['babel-polyfill', `./src/${compiler}`],
+  entry: ['babel-polyfill', `./src/compiler/${compiler}`],
   target: 'node',
   node: {
     __dirname: false,
   },
   externals: [nodeExternals()], // ignore all modules in node_modules folder
   output: {
-    path: path.resolve('./bin'),
+    path: path.resolve('./dist/bin'),
     filename: 'relay-compiler-plus',
     pathinfo: true,
     library: 'RelayCompilerPlus',

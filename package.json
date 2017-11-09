@@ -8,9 +8,12 @@
     "relay-compiler-plus": "bin/relay-compiler-plus"
   },
   "scripts": {
+    "flow": "flow",
     "build-compiler": "NODE_ENV=production node build && exec 3<> bin/relay-compiler-plus && awk -v TEXT='#!/usr/bin/env node' 'BEGIN {print TEXT}{print}' bin/relay-compiler-plus >&3",
     "build-exports": "babel src/exports -d lib",
-    "build": "rimraf bin/* && rimraf lib/* && npm run build-compiler && npm run build-exports"
+    "build-flow": "flow-copy-source -v src lib",
+    "clean": "rimraf bin && rimraf lib",
+    "build": "npm run clean && npm run build-compiler && npm run build-exports && npm run build-flow"
   },
   "repository": {
     "type": "git",
@@ -47,6 +50,8 @@
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
+    "flow-bin": "^0.59.0",
+    "flow-copy-source": "^1.2.1",
     "rimraf": "^2.6.2",
     "webpack": "^3.8.1",
     "webpack-node-externals": "^1.6.0"

@@ -1,0 +1,12 @@
+[ignore]
+<PROJECT_ROOT>/bin/.*
+<PROJECT_ROOT>/build/.*
+<PROJECT_ROOT>/example/.*
+<PROJECT_ROOT>/lib/.*
+
+[include]
+./src/.*
+
+[libs]
+
+[options]

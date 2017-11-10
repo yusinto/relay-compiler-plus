@@ -140,8 +140,7 @@ module.exports = __webpack_require__(/*! ./src/compiler/main.js */5);
 */
 var run = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(options) {
-    var srcDir, schemaPath, reporter, parserConfigs, writerConfigs, codegenRunner, _result, queryCacheOutputFile;
-
+    var srcDir, schemaPath, reporter, parserConfigs, writerConfigs, codegenRunner, result, queryCacheOutputFile;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -182,59 +181,60 @@ var run = function () {
               writerConfigs: writerConfigs,
               onlyValidate: false
             });
-            _context.prev = 7;
+            result = '';
+            _context.prev = 8;
 
             // the real work is done here
             console.log('start compileAll');
-            _context.next = 11;
+            _context.next = 12;
             return codegenRunner.compileAll();
 
-          case 11:
-            _result = _context.sent;
+          case 12:
+            result = _context.sent;
 
             console.log('end compileAll');
-            _context.next = 19;
+            _context.next = 20;
             break;
 
-          case 15:
-            _context.prev = 15;
-            _context.t0 = _context['catch'](7);
+          case 16:
+            _context.prev = 16;
+            _context.t0 = _context['catch'](8);
 
             console.log('Error codegenRunner.compileAll(): ' + _context.t0);
             throw _context.t0;
 
-          case 19:
+          case 20:
             queryCacheOutputFile = srcDir + '/queryMap.json';
-            _context.prev = 20;
-            _context.next = 23;
+            _context.prev = 21;
+            _context.next = 24;
             return writeFileAsync(queryCacheOutputFile, JSON.stringify(queryCache));
 
-          case 23:
+          case 24:
             console.log('Query cache written to: ' + queryCacheOutputFile);
-            _context.next = 30;
+            _context.next = 31;
             break;
 
-          case 26:
-            _context.prev = 26;
-            _context.t1 = _context['catch'](20);
+          case 27:
+            _context.prev = 27;
+            _context.t1 = _context['catch'](21);
 
             if (!_context.t1) {
-              _context.next = 30;
+              _context.next = 31;
               break;
             }
 
             return _context.abrupt('return', console.log(_context.t1));
 
-          case 30:
+          case 31:
 
             console.log('Done! ' + result);
 
-          case 31:
+          case 32:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, this, [[7, 15], [20, 26]]);
+    }, _callee, this, [[8, 16], [21, 27]]);
   }));
 
   return function run(_x) {
@@ -477,12 +477,17 @@ function getRelayFileWriter(baseDir, persistQuery) {
 
 function getSchema(schemaPath) {
   try {
+    console.log('reading schema from: ' + schemaPath);
     var source = _fs2.default.readFileSync(schemaPath, 'utf8');
     if (_path2.default.extname(schemaPath) === '.json') {
       source = (0, _graphql.printSchema)((0, _graphql.buildClientSchema)(JSON.parse(source).data));
+    } else {
+      console.log('detected .graphql file');
     }
     source = '\n  directive @include(if: Boolean) on FRAGMENT | FIELD\n  directive @skip(if: Boolean) on FRAGMENT | FIELD\n\n  ' + source + '\n  ';
-    return (0, _graphql.buildASTSchema)((0, _graphql.parse)(source));
+    var output = (0, _graphql.buildASTSchema)((0, _graphql.parse)(source));
+    console.log('successfully built schema: ' + output);
+    return output;
   } catch (error) {
     throw new Error(('\nError loading schema. Expected the schema to be a .graphql or a .json\nfile, describing your GraphQL server\'s API. Error detail:\n\n' + error.stack + '\n    ').trim());
   }

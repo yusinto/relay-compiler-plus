@@ -76,10 +76,11 @@ async function run(options: { schema: string, src: string}) {
     onlyValidate: false,
   });
 
+  let result = '';
   try {
     // the real work is done here
     console.log(`start compileAll`)
-    const result = await codegenRunner.compileAll();
+    result = await codegenRunner.compileAll();
     console.log(`end compileAll`);
   } catch(err) {
     console.log(`Error codegenRunner.compileAll(): ${err}`);

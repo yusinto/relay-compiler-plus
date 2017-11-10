@@ -12,7 +12,8 @@
     "build-exports": "babel src/exports -d lib",
     "build-flow": "flow-copy-source -v src lib",
     "clean": "rimraf bin/* && rimraf lib/*",
-    "build": "npm run clean && npm run build-compiler && npm run build-exports"
+    "build": "npm run clean && npm run build-compiler && npm run build-exports",
+    "prep-publish": "npm version patch -m 'Upgrade to %s' && npm publish && git push"
   },
   "repository": {
     "type": "git",
@@ -38,7 +39,20 @@
     "body-parser": "^1.18.2",
     "graphql": "^0.11.7",
     "relay-compiler": "^1.4.1",
-    "yargs": "^10.0.3"
+    "babel-generator": "^6.26.0",
+    "babel-preset-fbjs": "^2.1.4",
+    "babel-runtime": "^6.23.0",
+    "babel-traverse": "^6.26.0",
+    "babel-types": "^6.24.1",
+    "babylon": "^6.18.0",
+    "chalk": "^1.1.1",
+    "fast-glob": "^1.0.1",
+    "fb-watchman": "^2.0.0",
+    "fbjs": "^0.8.14",
+    "immutable": "~3.7.6",
+    "relay-runtime": "1.4.1",
+    "signedsource": "^1.0.0",
+    "yargs": "^9.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

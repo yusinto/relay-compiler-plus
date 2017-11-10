@@ -76,8 +76,15 @@ async function run(options: { schema: string, src: string}) {
     onlyValidate: false,
   });
 
-  // the real work is done here
-  const result = await codegenRunner.compileAll();
+  try {
+    // the real work is done here
+    console.log(`start compileAll`)
+    const result = await codegenRunner.compileAll();
+    console.log(`end compileAll`);
+  } catch(err) {
+    console.log(`Error codegenRunner.compileAll(): ${err}`);
+    throw err;
+  }
 
   const queryCacheOutputFile = `${srcDir}/queryMap.json`;
   try {

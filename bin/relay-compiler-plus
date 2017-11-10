@@ -140,7 +140,8 @@ module.exports = __webpack_require__(/*! ./src/compiler/main.js */5);
 */
 var run = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(options) {
-    var srcDir, schemaPath, reporter, parserConfigs, writerConfigs, codegenRunner, result, queryCacheOutputFile;
+    var srcDir, schemaPath, reporter, parserConfigs, writerConfigs, codegenRunner, _result, queryCacheOutputFile;
+
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -181,45 +182,59 @@ var run = function () {
               writerConfigs: writerConfigs,
               onlyValidate: false
             });
+            _context.prev = 7;
 
             // the real work is done here
-
-            _context.next = 9;
+            console.log('start compileAll');
+            _context.next = 11;
             return codegenRunner.compileAll();
 
-          case 9:
-            result = _context.sent;
-            queryCacheOutputFile = srcDir + '/queryMap.json';
-            _context.prev = 11;
-            _context.next = 14;
-            return writeFileAsync(queryCacheOutputFile, JSON.stringify(queryCache));
+          case 11:
+            _result = _context.sent;
 
-          case 14:
-            console.log('Query cache written to: ' + queryCacheOutputFile);
-            _context.next = 21;
+            console.log('end compileAll');
+            _context.next = 19;
             break;
 
-          case 17:
-            _context.prev = 17;
-            _context.t0 = _context['catch'](11);
+          case 15:
+            _context.prev = 15;
+            _context.t0 = _context['catch'](7);
 
-            if (!_context.t0) {
-              _context.next = 21;
+            console.log('Error codegenRunner.compileAll(): ' + _context.t0);
+            throw _context.t0;
+
+          case 19:
+            queryCacheOutputFile = srcDir + '/queryMap.json';
+            _context.prev = 20;
+            _context.next = 23;
+            return writeFileAsync(queryCacheOutputFile, JSON.stringify(queryCache));
+
+          case 23:
+            console.log('Query cache written to: ' + queryCacheOutputFile);
+            _context.next = 30;
+            break;
+
+          case 26:
+            _context.prev = 26;
+            _context.t1 = _context['catch'](20);
+
+            if (!_context.t1) {
+              _context.next = 30;
               break;
             }
 
-            return _context.abrupt('return', console.log(_context.t0));
+            return _context.abrupt('return', console.log(_context.t1));
 
-          case 21:
+          case 30:
 
             console.log('Done! ' + result);
 
-          case 22:
+          case 31:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, this, [[11, 17]]);
+    }, _callee, this, [[7, 15], [20, 26]]);
   }));
 
   return function run(_x) {

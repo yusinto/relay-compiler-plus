@@ -1,6 +1,6 @@
 {
   "name": "relay-compiler-plus",
-  "version": "1.2.10",
+  "version": "1.2.11",
   "description": "A custom relay modern compiler that supports persisted queries",
   "main": "lib/index.js",
   "bin": {

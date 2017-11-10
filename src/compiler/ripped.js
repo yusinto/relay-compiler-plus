@@ -99,7 +99,7 @@ export function getSchema(schemaPath: string): GraphQLSchema {
   ${source}
   `;
     const output = buildASTSchema(parse(source));
-    console.log(`successfully built schema: ${output}`);
+    console.log(`successfully built schema: ${JSON.stringify(output)}`);
     return output;
   } catch (error) {
     throw new Error(

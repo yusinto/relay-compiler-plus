@@ -486,7 +486,7 @@ function getSchema(schemaPath) {
     }
     source = '\n  directive @include(if: Boolean) on FRAGMENT | FIELD\n  directive @skip(if: Boolean) on FRAGMENT | FIELD\n\n  ' + source + '\n  ';
     var output = (0, _graphql.buildASTSchema)((0, _graphql.parse)(source));
-    console.log('successfully built schema: ' + output);
+    console.log('successfully built schema: ' + JSON.stringify(output));
     return output;
   } catch (error) {
     throw new Error(('\nError loading schema. Expected the schema to be a .graphql or a .json\nfile, describing your GraphQL server\'s API. Error detail:\n\n' + error.stack + '\n    ').trim());

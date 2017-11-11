@@ -7,14 +7,19 @@
 #### Note: This is still unstable! A stable release is coming soon.
 
 ## Installation
-
+```bash
 yarn add relay-compiler-plus
+```
+
+Make sure you have the latest version of [graphql-js](https://github.com/graphql/graphql-js):
+```bash
+yarn upgrade graphql --latest  
+```
 
 ## Usage
-
 1. Add this npm command to your package.json:
 
-    ```sh
+    ```json
     "scripts": {
         "relay-compiler-plus": "relay-compiler-plus --schema <SCHEMA_FILE_PATH> --src <SRC_DIR_PATH> -f",
     },

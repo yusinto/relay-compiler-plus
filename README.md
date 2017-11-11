@@ -14,7 +14,7 @@ yarn add relay-compiler-plus
 
 1. Add this npm command to your package.json.
 
-    ```
+    ```sh
     "scripts": {
         "relay-compiler-plus": "relay-compiler-plus --schema <SCHEMA_FILE_PATH> --src <SRC_DIR_PATH>",
     },

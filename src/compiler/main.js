@@ -4,9 +4,9 @@ import 'babel-polyfill';
 import {promisify} from 'util';
 import path from 'path';
 import fs from 'fs';
-import crypto from 'crypto';
 import RelayCompiler from 'relay-compiler';
 import {getFilepathsFromGlob, getRelayFileWriter, getSchema} from './ripped';
+import {md5, clean} from "./utils";
 
 const {
   ConsoleReporter,
@@ -16,19 +16,10 @@ const {
 const queryCache = [];
 const writeFileAsync = promisify(fs.writeFile);
 
-// Ripped from relay-compiler/RelayFileWriter.js
-function md5(x: string): string {
-  return crypto
-    .createHash('md5')
-    .update(x, 'utf8')
-    .digest('hex');
-}
-
 function persistQuery(operationText: string): Promise<string> {
   return new Promise((resolve) => {
     const queryId = md5(operationText);
     queryCache.push({id: queryId, text: operationText});
-    // console.log(`mapped ${operationText} to ${queryId}`);
     resolve(queryId);
   });
 }
@@ -40,7 +31,16 @@ function persistQuery(operationText: string): Promise<string> {
 async function run(options: { schema: string, src: string}) {
   const srcDir = path.resolve(process.cwd(), options.src);
   const schemaPath = path.resolve(process.cwd(), options.schema);
-  console.log(`srcDir: ${srcDir}, schemaPath: ${schemaPath}`);
+  const force = options.force;
+  console.log(`schema: ${schemaPath}`);
+  console.log(`src: ${srcDir}`);
+  console.log(`force: ${force}`);
+
+  if (force) {
+    clean(srcDir);
+  } else {
+    console.log('Not cleaning.');
+  }
 
   const reporter = new ConsoleReporter({verbose: true});
   const parserConfigs = {
@@ -79,9 +79,7 @@ async function run(options: { schema: string, src: string}) {
   let result = '';
   try {
     // the real work is done here
-    // console.log(`start compileAll`)
     result = await codegenRunner.compileAll();
-    // console.log(`end compileAll`);
   } catch(err) {
     console.log(`Error codegenRunner.compileAll(): ${err}`);
     throw err;
@@ -102,7 +100,7 @@ async function run(options: { schema: string, src: string}) {
 
 // Collect args
 const argv = yargs
-  .usage(`Usage: $0 --schema <path-to-schema> --src <path-to-src-dir>`)
+  .usage(`Usage: $0 --schema <schemaPath> --src <srcDir> -f`)
   .options({
     schema: {
       describe: 'Path to schema.graphql or schema.json',
@@ -114,11 +112,17 @@ const argv = yargs
       demandOption: true,
       type: 'string',
     },
+    force: {
+      describe: 'Recursively delete all *.graphql.js files in src folder before compilation',
+      demandOption: false,
+      type: 'boolean'
+    }
   })
+  .alias('f', 'force')
   .help().argv;
 
 (async function () {
-  console.log(`Starting relay compilation`);
+  console.log(`Welcome to relay-compiler-plus. Compiling now with these parameters:`);
   try {
     await run(argv);
   } catch (err) {

@@ -85,12 +85,9 @@ export function getRelayFileWriter(baseDir: string, persistQuery: (operationText
 
 export function getSchema(schemaPath: string): GraphQLSchema {
   try {
-    // console.log(`reading schema from: ${schemaPath}`);
     let source = fs.readFileSync(schemaPath, 'utf8');
     if (path.extname(schemaPath) === '.json') {
       source = printSchema(buildClientSchema(JSON.parse(source).data));
-    } else {
-      // console.log(`detected .graphql file`);
     }
     source = `
   directive @include(if: Boolean) on FRAGMENT | FIELD
@@ -99,7 +96,6 @@ export function getSchema(schemaPath: string): GraphQLSchema {
   ${source}
   `;
     const output = buildASTSchema(parse(source));
-    // console.log(`successfully built schema: ${JSON.stringify(output)}`);
     return output;
   } catch (error) {
     throw new Error(

@@ -1,2 +1,9 @@
-example
+.idea
 build
+example
+src
+.babelrc
+.flowconfig
+.gitignore
+.npmignore
+yarn.lock

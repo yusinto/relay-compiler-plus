@@ -16,6 +16,4 @@ else.
 On the server, you should be able to see console output of the server
 mapping the queryId to the actual queries.
 
-Will update with more details later.
-
 Have fun!

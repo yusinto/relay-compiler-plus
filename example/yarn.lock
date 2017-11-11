@@ -3256,9 +3256,9 @@ regjsparser@^0.1.4:
   dependencies:
     jsesc "~0.5.0"
 
-relay-compiler-plus@^1.2.4:
-  version "1.2.10"
-  resolved "https://registry.yarnpkg.com/relay-compiler-plus/-/relay-compiler-plus-1.2.10.tgz#6b68e23a499a9d56cdec673d449bfae57f710d44"
+relay-compiler-plus@^1.2.20:
+  version "1.2.20"
+  resolved "https://registry.yarnpkg.com/relay-compiler-plus/-/relay-compiler-plus-1.2.20.tgz#d9e39dc9a44ca4c2353e9bcc34f86b4b3c9ab742"
   dependencies:
     babel-polyfill "^6.26.0"
     body-parser "^1.18.2"

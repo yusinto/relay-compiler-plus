@@ -12,18 +12,21 @@ yarn add relay-compiler-plus
 
 ## Usage
 
-1. Add this npm command to your package.json.
+1. Add this npm command to your package.json:
 
     ```sh
     "scripts": {
-        "relay-compiler-plus": "relay-compiler-plus --schema <SCHEMA_FILE_PATH> --src <SRC_DIR_PATH>",
+        "relay-compiler-plus": "relay-compiler-plus --schema <SCHEMA_FILE_PATH> --src <SRC_DIR_PATH> -f",
     },
     ```
 
-    where `<SCHEMA_FILE_PATH>` is the path to your schema.graphql or schema.json file.
+    where 
+    * `<SCHEMA_FILE_PATH>` is the path to your schema.graphql or schema.json file.
+    * `<SRC_DIR_PATH>` is the path to your src directory
+    * `-f` will delete all `__generated__/*.graphql.js` files under `SRC_DIR_PATH`
 
-    This should generate:
-    * root query files (*.graphql.js) containing query ids and null query text.
+    Running this should generate:
+    * query files (*.graphql.js) containing query ids and null query text.
     * A `queryMap.json` file under `<SRC_DIR_PATH>/queryMap.json`.
     This file can be consumed by the server to map the query ids to actual queries.
 

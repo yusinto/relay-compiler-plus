@@ -183,58 +183,53 @@ var run = function () {
             });
             result = '';
             _context.prev = 8;
-
-            // the real work is done here
-            console.log('start compileAll');
-            _context.next = 12;
+            _context.next = 11;
             return codegenRunner.compileAll();
 
-          case 12:
+          case 11:
             result = _context.sent;
-
-            console.log('end compileAll');
-            _context.next = 20;
+            _context.next = 18;
             break;
 
-          case 16:
-            _context.prev = 16;
+          case 14:
+            _context.prev = 14;
             _context.t0 = _context['catch'](8);
 
             console.log('Error codegenRunner.compileAll(): ' + _context.t0);
             throw _context.t0;
 
-          case 20:
+          case 18:
             queryCacheOutputFile = srcDir + '/queryMap.json';
-            _context.prev = 21;
-            _context.next = 24;
+            _context.prev = 19;
+            _context.next = 22;
             return writeFileAsync(queryCacheOutputFile, JSON.stringify(queryCache));
 
-          case 24:
+          case 22:
             console.log('Query cache written to: ' + queryCacheOutputFile);
-            _context.next = 31;
+            _context.next = 29;
             break;
 
-          case 27:
-            _context.prev = 27;
-            _context.t1 = _context['catch'](21);
+          case 25:
+            _context.prev = 25;
+            _context.t1 = _context['catch'](19);
 
             if (!_context.t1) {
-              _context.next = 31;
+              _context.next = 29;
               break;
             }
 
             return _context.abrupt('return', console.log(_context.t1));
 
-          case 31:
+          case 29:
 
             console.log('Done! ' + result);
 
-          case 32:
+          case 30:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, this, [[8, 16], [21, 27]]);
+    }, _callee, this, [[8, 14], [19, 25]]);
   }));
 
   return function run(_x) {
@@ -291,7 +286,7 @@ function persistQuery(operationText) {
   return new Promise(function (resolve) {
     var queryId = md5(operationText);
     queryCache.push({ id: queryId, text: operationText });
-    console.log('mapped ' + operationText + ' to ' + queryId);
+    // console.log(`mapped ${operationText} to ${queryId}`);
     resolve(queryId);
   });
 }var argv = _yargs2.default.usage('Usage: $0 --schema <path-to-schema> --src <path-to-src-dir>').options({
@@ -477,16 +472,16 @@ function getRelayFileWriter(baseDir, persistQuery) {
 
 function getSchema(schemaPath) {
   try {
-    console.log('reading schema from: ' + schemaPath);
+    // console.log(`reading schema from: ${schemaPath}`);
     var source = _fs2.default.readFileSync(schemaPath, 'utf8');
     if (_path2.default.extname(schemaPath) === '.json') {
       source = (0, _graphql.printSchema)((0, _graphql.buildClientSchema)(JSON.parse(source).data));
     } else {
-      console.log('detected .graphql file');
+      // console.log(`detected .graphql file`);
     }
     source = '\n  directive @include(if: Boolean) on FRAGMENT | FIELD\n  directive @skip(if: Boolean) on FRAGMENT | FIELD\n\n  ' + source + '\n  ';
     var output = (0, _graphql.buildASTSchema)((0, _graphql.parse)(source));
-    console.log('successfully built schema: ' + JSON.stringify(output));
+    // console.log(`successfully built schema: ${JSON.stringify(output)}`);
     return output;
   } catch (error) {
     throw new Error(('\nError loading schema. Expected the schema to be a .graphql or a .json\nfile, describing your GraphQL server\'s API. Error detail:\n\n' + error.stack + '\n    ').trim());

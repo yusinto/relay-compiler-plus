@@ -28,7 +28,7 @@ function persistQuery(operationText: string): Promise<string> {
   return new Promise((resolve) => {
     const queryId = md5(operationText);
     queryCache.push({id: queryId, text: operationText});
-    console.log(`mapped ${operationText} to ${queryId}`);
+    // console.log(`mapped ${operationText} to ${queryId}`);
     resolve(queryId);
   });
 }
@@ -79,9 +79,9 @@ async function run(options: { schema: string, src: string}) {
   let result = '';
   try {
     // the real work is done here
-    console.log(`start compileAll`)
+    // console.log(`start compileAll`)
     result = await codegenRunner.compileAll();
-    console.log(`end compileAll`);
+    // console.log(`end compileAll`);
   } catch(err) {
     console.log(`Error codegenRunner.compileAll(): ${err}`);
     throw err;

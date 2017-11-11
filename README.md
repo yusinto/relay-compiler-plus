@@ -4,7 +4,8 @@
 
 > **Custom relay compiler which supports persisted queries** :bowtie:
 
-#### Note: This is still unstable! A stable release is coming soon.
+Relay modern is awesome. However it's missing a few things, one of which is persisted queries. This package
+is a custom relay compiler which supports persisted queries.
 
 ## Installation
 ```bash

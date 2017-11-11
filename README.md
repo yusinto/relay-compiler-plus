@@ -30,7 +30,11 @@ yarn upgrade graphql --latest
     * `<SRC_DIR_PATH>` is the path to your src directory
     * `-f` will delete all `__generated__/*.graphql.js` files under `SRC_DIR_PATH`
 
-    Running this should generate:
+    then:
+    ```
+    npm run rcp
+    ``` 
+     this should generate:
     * query files (*.graphql.js) containing query ids and null query text.
     * A `queryMap.json` file under `<SRC_DIR_PATH>/queryMap.json`.
     This file can be consumed by the server to map the query ids to actual queries.

@@ -7,7 +7,7 @@ import fs from 'fs';
 import RelayCompiler from 'relay-compiler';
 import {getFilepathsFromGlob, getRelayFileWriter, getSchema} from './ripped';
 import {md5, clean} from './utils';
-import compileSchema from './compileSchema';
+import compileSchema from '../../compileGraphqlJS/compileSchema';
 
 const {
   ConsoleReporter,
@@ -38,9 +38,9 @@ async function run(options: { schema: string, src: string }) {
   console.log(`force: ${force}`);
 
   if (path.extname(schemaPath) === '.js') {
-    // fs.writeFileSync(`${srcDir}/schema.graphql`, printSchema(require(schemaPath)));
-    console.log(`generating schema.graphql from schema.js`);
-    compileSchema(schemaPath, srcDir);
+    compileSchema(schemaPath);
+    //TODO: once compiled, set schemaPath to the newly generate schema.graphql file
+    // schemaPath = <path_to_schema.graphql>;
   }
 
   if (force) {

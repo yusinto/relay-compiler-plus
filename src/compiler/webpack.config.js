@@ -11,7 +11,7 @@ export default {
   externals: [nodeExternals()], // ignore all modules in node_modules folder
   output: {
     path: path.resolve('./'),
-    filename: 'updateSchemaCompiled.js',
+    filename: 'compiled.js',
     libraryTarget: 'commonjs2',
   },
   module: {

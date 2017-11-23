@@ -217,7 +217,7 @@ var run = function () {
           case 9:
             schemaPath = _context.sent;
 
-            console.log('schemaPath is ' + schemaPath);
+            console.log('schemaPath: ' + schemaPath);
 
           case 11:
 
@@ -630,4 +630,4 @@ module.exports = require("crypto");
 module.exports = require("relay-compiler-plus");
 
 /***/ })
-/******/ ]);
+/******/ ]);**

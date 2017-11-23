@@ -30,11 +30,13 @@ export default async (schemaPath, srcDir) => {
     return printErrors('Failed to compile.', stats.errors);
   }
 
-  const transpiled = path.resolve(webpack.output.path, webpack.output.filename);
+  const transpiled = path.resolve(webpackConfig.output.path, webpackConfig.output.filename);
   const schema = require(transpiled).default;
   const outputDest = path.resolve(srcDir, './schema.graphql');
+
   fs.writeFileSync(outputDest, printSchema(schema));
   fs.unlinkSync(transpiled);
+
   console.log('Successfully compiled graphql-js.');
   return outputDest;
 };

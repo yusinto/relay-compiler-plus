@@ -35,25 +35,25 @@
   },
   "homepage": "https://github.com/yusinto/relay-compiler-plus#readme",
   "dependencies": {
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-stage-0": "^6.24.1",
     "body-parser": "^1.18.2",
     "graphql": "^0.11.7",
     "relay-compiler": "^1.4.1",
+    "webpack": "^3.8.1",
+    "webpack-node-externals": "^1.6.0",
     "yargs": "^10.0.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
-    "babel-plugin-transform-flow-strip-types": "^6.22.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-flow": "^6.23.0",
-    "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
     "flow-bin": "^0.59.0",
     "flow-copy-source": "^1.2.1",
-    "rimraf": "^2.6.2",
-    "webpack": "^3.8.1",
-    "webpack-node-externals": "^1.6.0"
+    "rimraf": "^2.6.2"
   }
 }

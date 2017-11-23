@@ -164,6 +164,12 @@ var run = function () {
             console.log('src: ' + srcDir);
             console.log('force: ' + force);
 
+            if (_path2.default.extname(schemaPath) === '.js') {
+              compileGraphqlJS(schemaPath);
+              //TODO: once compiled, set schemaPath to the newly generate schema.graphql file
+              // schemaPath = <path_to_schema.graphql>;
+            }
+
             if (force) {
               (0, _utils.clean)(srcDir);
             } else {
@@ -202,54 +208,54 @@ var run = function () {
               onlyValidate: false
             });
             result = '';
-            _context.prev = 12;
-            _context.next = 15;
+            _context.prev = 13;
+            _context.next = 16;
             return codegenRunner.compileAll();
 
-          case 15:
+          case 16:
             result = _context.sent;
-            _context.next = 22;
+            _context.next = 23;
             break;
 
-          case 18:
-            _context.prev = 18;
-            _context.t0 = _context['catch'](12);
+          case 19:
+            _context.prev = 19;
+            _context.t0 = _context['catch'](13);
 
             console.log('Error codegenRunner.compileAll(): ' + _context.t0);
             throw _context.t0;
 
-          case 22:
+          case 23:
             queryCacheOutputFile = srcDir + '/queryMap.json';
-            _context.prev = 23;
-            _context.next = 26;
+            _context.prev = 24;
+            _context.next = 27;
             return writeFileAsync(queryCacheOutputFile, JSON.stringify(queryCache));
 
-          case 26:
+          case 27:
             console.log('Query cache written to: ' + queryCacheOutputFile);
-            _context.next = 33;
+            _context.next = 34;
             break;
 
-          case 29:
-            _context.prev = 29;
-            _context.t1 = _context['catch'](23);
+          case 30:
+            _context.prev = 30;
+            _context.t1 = _context['catch'](24);
 
             if (!_context.t1) {
-              _context.next = 33;
+              _context.next = 34;
               break;
             }
 
             return _context.abrupt('return', console.log(_context.t1));
 
-          case 33:
+          case 34:
 
             console.log('Done! ' + result);
 
-          case 34:
+          case 35:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, this, [[12, 18], [23, 29]]);
+    }, _callee, this, [[13, 19], [24, 30]]);
   }));
 
   return function run(_x) {
@@ -283,6 +289,8 @@ var _relayCompiler2 = _interopRequireDefault(_relayCompiler);
 var _ripped = __webpack_require__(/*! ./ripped */ 9);
 
 var _utils = __webpack_require__(/*! ./utils */ 12);
+
+var _relayCompilerPlus = __webpack_require__(/*! relay-compiler-plus */ 14);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -616,6 +624,17 @@ var clean = exports.clean = function clean(src) {
 /***/ (function(module, exports) {
 
 module.exports = require("crypto");
+
+/***/ }),
+/* 14 */
+/*!**************************************!*\
+  !*** external "relay-compiler-plus" ***!
+  \**************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports) {
+
+module.exports = require("relay-compiler-plus");
 
 /***/ })
 /******/ ]);

@@ -1,6 +1,5 @@
 const nodeExternals = require('webpack-node-externals');
 const path = require('path');
-const webpack = require('webpack');
 
 module.exports = {
   entry: [],
@@ -10,7 +9,7 @@ module.exports = {
   },
   externals: [nodeExternals()], // ignore all modules in node_modules folder
   output: {
-    path: path.resolve('./compileGraphqlJS'),
+    path: path.resolve('.'),
     filename: 'compiled.js',
     pathinfo: true,
     libraryTarget: 'commonjs2',

@@ -18,17 +18,17 @@ export default async (schemaPath) => {
   console.log('Transpiling graphql-js with webpack');
 
   webpackConfig.entry.push(schemaPath);
-  const {err, rawStats} = await webpackAsync([webpackConfig]);
-
-  const stats = rawStats.toJson();
-
-  if (err) {
-    return printErrors('Failed to compile.', [err]);
-  }
-
-  if (stats.errors.length) {
-    return printErrors('Failed to compile.', stats.errors);
-  }
+  const webpackResult = await webpackAsync([webpackConfig]);
+  console.log(`webpack result: ${JSON.stringify(webpackResult)}`);
+  // const stats = rawStats.toJson();
+  //
+  // if (err) {
+  //   return printErrors('Failed to compile.', [err]);
+  // }
+  //
+  // if (stats.errors.length) {
+  //   return printErrors('Failed to compile.', stats.errors);
+  // }
 
   const transpiled = path.resolve(process.cwd(), './compiled.js');
   console.log(`Compiling schema.graphql from ${transpiled}`);

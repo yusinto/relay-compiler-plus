@@ -19,7 +19,7 @@ export default async (schemaPath) => {
 
   webpackConfig.entry.push(schemaPath);
   const webpackResult = await webpackAsync([webpackConfig]);
-  console.log(`webpack result: ${JSON.stringify(webpackResult)}`);
+  // console.log(`webpack result: ${webpackResult.err}`);
   // const stats = rawStats.toJson();
   //
   // if (err) {

@@ -1,12 +1,11 @@
 import yargs from 'yargs';
-
 import 'babel-polyfill';
-import {promisify} from 'util';
 import path from 'path';
 import fs from 'fs';
 import RelayCompiler from 'relay-compiler';
 import {getFilepathsFromGlob, getRelayFileWriter, getSchema} from './ripped';
-import {md5, clean} from "./utils";
+import {md5, clean} from './utils';
+import {graphqlJSCompiler} from 'relay-compiler-plus';
 
 const {
   ConsoleReporter,
@@ -14,7 +13,6 @@ const {
   FileIRParser: RelayJSModuleParser,
 } = RelayCompiler;
 const queryCache = [];
-const writeFileAsync = promisify(fs.writeFile);
 
 function persistQuery(operationText: string): Promise<string> {
   return new Promise((resolve) => {
@@ -28,13 +26,18 @@ function persistQuery(operationText: string): Promise<string> {
 * Most of the code in this run method are ripped from:
 * relay-compiler/bin/RelayCompilerBin.js
 */
-async function run(options: { schema: string, src: string}) {
+const run = async (options: { schema: string, src: string }) => {
   const srcDir = path.resolve(process.cwd(), options.src);
-  const schemaPath = path.resolve(process.cwd(), options.schema);
+  let schemaPath = path.resolve(process.cwd(), options.schema);
   const force = options.force;
   console.log(`schema: ${schemaPath}`);
   console.log(`src: ${srcDir}`);
   console.log(`force: ${force}`);
+
+  if (path.extname(schemaPath) === '.js') {
+    schemaPath = await graphqlJSCompiler(schemaPath, srcDir);
+    console.log(`schemaPath is ${schemaPath}`);
+  }
 
   if (force) {
     clean(srcDir);
@@ -80,14 +83,14 @@ async function run(options: { schema: string, src: string}) {
   try {
     // the real work is done here
     result = await codegenRunner.compileAll();
-  } catch(err) {
+  } catch (err) {
     console.log(`Error codegenRunner.compileAll(): ${err}`);
     throw err;
   }
 
   const queryCacheOutputFile = `${srcDir}/queryMap.json`;
   try {
-    await writeFileAsync(queryCacheOutputFile, JSON.stringify(queryCache));
+    fs.writeFileSync(queryCacheOutputFile, JSON.stringify(queryCache));
     console.log(`Query cache written to: ${queryCacheOutputFile}`);
   } catch (err) {
     if (err) {
@@ -96,7 +99,7 @@ async function run(options: { schema: string, src: string}) {
   }
 
   console.log(`Done! ${result}`);
-}
+};
 
 // Collect args
 const argv = yargs
@@ -121,7 +124,7 @@ const argv = yargs
   .alias('f', 'force')
   .help().argv;
 
-(async function () {
+(async () => {
   console.log(`Welcome to relay-compiler-plus. Compiling now with these parameters:`);
   try {
     await run(argv);

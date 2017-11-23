@@ -4,7 +4,7 @@
   "description": "A starter kit to quickly create a relay modern app",
   "main": "index.js",
   "scripts": {
-    "rcp": "relay-compiler-plus --schema src/server/schema.graphql --src src -f",
+    "rcp": "relay-compiler-plus --schema src/server/schema.js --src src -f",
     "dev": "npm run rcp && node src/server"
   },
   "repository": {
@@ -43,7 +43,7 @@
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-relay": "^1.4.1",
-    "relay-compiler-plus": "^1.2.20",
+    "relay-compiler-plus": "git://github.com/yusinto/relay-compiler-plus.git#feature/graphql-js-compilation",
     "relay-runtime": "^1.4.1"
   },
   "devDependencies": {

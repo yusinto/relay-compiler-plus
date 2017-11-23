@@ -1,6 +1,6 @@
 // Create the client and server production builds
 import webpack from 'webpack';
-import webpackConfigSchema from './webpack.config';
+import webpackConfig from './webpack.config';
 
 const printErrors = (summary, errors) => {
   console.log(summary);
@@ -25,4 +25,4 @@ const getWebpackError = (err, rawStats) => {
 
 console.log('Building custom relay compiler...');
 
-webpack([webpackConfigSchema], getWebpackError);
+webpack([webpackConfig], getWebpackError);

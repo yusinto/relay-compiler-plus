@@ -145,6 +145,48 @@ module.exports = __webpack_require__(/*! ./src/compiler/main.js */6);
 "use strict";
 
 
+var _yargs = __webpack_require__(/*! yargs */ 7);
+
+var _yargs2 = _interopRequireDefault(_yargs);
+
+__webpack_require__(/*! babel-polyfill */ 2);
+
+var _path = __webpack_require__(/*! path */ 0);
+
+var _path2 = _interopRequireDefault(_path);
+
+var _fs = __webpack_require__(/*! fs */ 1);
+
+var _fs2 = _interopRequireDefault(_fs);
+
+var _relayCompiler = __webpack_require__(/*! relay-compiler */ 3);
+
+var _relayCompiler2 = _interopRequireDefault(_relayCompiler);
+
+var _ripped = __webpack_require__(/*! ./ripped */ 8);
+
+var _utils = __webpack_require__(/*! ./utils */ 11);
+
+var _relayCompilerPlus = __webpack_require__(/*! relay-compiler-plus */ 13);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+var ConsoleReporter = _relayCompiler2.default.ConsoleReporter,
+    CodegenRunner = _relayCompiler2.default.Runner,
+    RelayJSModuleParser = _relayCompiler2.default.FileIRParser;
+
+var queryCache = [];
+
+function persistQuery(operationText) {
+  return new Promise(function (resolve) {
+    var queryId = (0, _utils.md5)(operationText);
+    queryCache.push({ id: queryId, text: operationText });
+    resolve(queryId);
+  });
+}
+
 /*
 * Most of the code in this run method are ripped from:
 * relay-compiler/bin/RelayCompilerBin.js
@@ -163,6 +205,21 @@ var run = function () {
             console.log('schema: ' + schemaPath);
             console.log('src: ' + srcDir);
             console.log('force: ' + force);
+
+            if (!(_path2.default.extname(schemaPath) === '.js')) {
+              _context.next = 11;
+              break;
+            }
+
+            _context.next = 9;
+            return (0, _relayCompilerPlus.graphqlJSCompiler)(schemaPath, srcDir);
+
+          case 9:
+            schemaPath = _context.sent;
+
+            console.log('schemaPath is ' + schemaPath);
+
+          case 11:
 
             if (force) {
               (0, _utils.clean)(srcDir);
@@ -202,54 +259,52 @@ var run = function () {
               onlyValidate: false
             });
             result = '';
-            _context.prev = 12;
-            _context.next = 15;
+            _context.prev = 17;
+            _context.next = 20;
             return codegenRunner.compileAll();
 
-          case 15:
+          case 20:
             result = _context.sent;
-            _context.next = 22;
+            _context.next = 27;
             break;
 
-          case 18:
-            _context.prev = 18;
-            _context.t0 = _context['catch'](12);
+          case 23:
+            _context.prev = 23;
+            _context.t0 = _context['catch'](17);
 
             console.log('Error codegenRunner.compileAll(): ' + _context.t0);
             throw _context.t0;
 
-          case 22:
+          case 27:
             queryCacheOutputFile = srcDir + '/queryMap.json';
-            _context.prev = 23;
-            _context.next = 26;
-            return writeFileAsync(queryCacheOutputFile, JSON.stringify(queryCache));
+            _context.prev = 28;
 
-          case 26:
+            _fs2.default.writeFileSync(queryCacheOutputFile, JSON.stringify(queryCache));
             console.log('Query cache written to: ' + queryCacheOutputFile);
-            _context.next = 33;
+            _context.next = 37;
             break;
 
-          case 29:
-            _context.prev = 29;
-            _context.t1 = _context['catch'](23);
+          case 33:
+            _context.prev = 33;
+            _context.t1 = _context['catch'](28);
 
             if (!_context.t1) {
-              _context.next = 33;
+              _context.next = 37;
               break;
             }
 
             return _context.abrupt('return', console.log(_context.t1));
 
-          case 33:
+          case 37:
 
             console.log('Done! ' + result);
 
-          case 34:
+          case 38:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, this, [[12, 18], [23, 29]]);
+    }, _callee, undefined, [[17, 23], [28, 33]]);
   }));
 
   return function run(_x) {
@@ -258,50 +313,7 @@ var run = function () {
 }();
 
 // Collect args
-
-
-var _yargs = __webpack_require__(/*! yargs */ 7);
-
-var _yargs2 = _interopRequireDefault(_yargs);
-
-__webpack_require__(/*! babel-polyfill */ 2);
-
-var _util = __webpack_require__(/*! util */ 8);
-
-var _path = __webpack_require__(/*! path */ 0);
-
-var _path2 = _interopRequireDefault(_path);
-
-var _fs = __webpack_require__(/*! fs */ 1);
-
-var _fs2 = _interopRequireDefault(_fs);
-
-var _relayCompiler = __webpack_require__(/*! relay-compiler */ 3);
-
-var _relayCompiler2 = _interopRequireDefault(_relayCompiler);
-
-var _ripped = __webpack_require__(/*! ./ripped */ 9);
-
-var _utils = __webpack_require__(/*! ./utils */ 12);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-var ConsoleReporter = _relayCompiler2.default.ConsoleReporter,
-    CodegenRunner = _relayCompiler2.default.Runner,
-    RelayJSModuleParser = _relayCompiler2.default.FileIRParser;
-
-var queryCache = [];
-var writeFileAsync = (0, _util.promisify)(_fs2.default.writeFile);
-
-function persistQuery(operationText) {
-  return new Promise(function (resolve) {
-    var queryId = (0, _utils.md5)(operationText);
-    queryCache.push({ id: queryId, text: operationText });
-    resolve(queryId);
-  });
-}var argv = _yargs2.default.usage('Usage: $0 --schema <schemaPath> --src <srcDir> -f').options({
+var argv = _yargs2.default.usage('Usage: $0 --schema <schemaPath> --src <srcDir> -f').options({
   schema: {
     describe: 'Path to schema.graphql or schema.json',
     demandOption: true,
@@ -345,7 +357,7 @@ _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
           return _context2.stop();
       }
     }
-  }, _callee2, this, [[1, 6]]);
+  }, _callee2, undefined, [[1, 6]]);
 }))();
 
 /***/ }),
@@ -361,17 +373,6 @@ module.exports = require("yargs");
 
 /***/ }),
 /* 8 */
-/*!***********************!*\
-  !*** external "util" ***!
-  \***********************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports) {
-
-module.exports = require("util");
-
-/***/ }),
-/* 9 */
 /*!********************************!*\
   !*** ./src/compiler/ripped.js ***!
   \********************************/
@@ -397,13 +398,13 @@ var _path = __webpack_require__(/*! path */ 0);
 
 var _path2 = _interopRequireDefault(_path);
 
-var _graphql = __webpack_require__(/*! graphql */ 10);
+var _graphql = __webpack_require__(/*! graphql */ 9);
 
 var _relayCompiler = __webpack_require__(/*! relay-compiler */ 3);
 
 var _relayCompiler2 = _interopRequireDefault(_relayCompiler);
 
-var _formatGeneratedModule = __webpack_require__(/*! ./formatGeneratedModule */ 11);
+var _formatGeneratedModule = __webpack_require__(/*! ./formatGeneratedModule */ 10);
 
 var _formatGeneratedModule2 = _interopRequireDefault(_formatGeneratedModule);
 
@@ -491,7 +492,7 @@ function getSchema(schemaPath) {
 }
 
 /***/ }),
-/* 10 */
+/* 9 */
 /*!**************************!*\
   !*** external "graphql" ***!
   \**************************/
@@ -502,7 +503,7 @@ function getSchema(schemaPath) {
 module.exports = require("graphql");
 
 /***/ }),
-/* 11 */
+/* 10 */
 /*!***********************************************!*\
   !*** ./src/compiler/formatGeneratedModule.js ***!
   \***********************************************/
@@ -550,7 +551,7 @@ var formatGeneratedModule = function formatGeneratedModule(_ref) {
 module.exports = formatGeneratedModule;
 
 /***/ }),
-/* 12 */
+/* 11 */
 /*!*******************************!*\
   !*** ./src/compiler/utils.js ***!
   \*******************************/
@@ -566,7 +567,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.clean = exports.md5 = undefined;
 
-var _crypto = __webpack_require__(/*! crypto */ 13);
+var _crypto = __webpack_require__(/*! crypto */ 12);
 
 var _crypto2 = _interopRequireDefault(_crypto);
 
@@ -607,7 +608,7 @@ var clean = exports.clean = function clean(src) {
 };
 
 /***/ }),
-/* 13 */
+/* 12 */
 /*!*************************!*\
   !*** external "crypto" ***!
   \*************************/
@@ -616,6 +617,17 @@ var clean = exports.clean = function clean(src) {
 /***/ (function(module, exports) {
 
 module.exports = require("crypto");
+
+/***/ }),
+/* 13 */
+/*!**************************************!*\
+  !*** external "relay-compiler-plus" ***!
+  \**************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports) {
+
+module.exports = require("relay-compiler-plus");
 
 /***/ })
 /******/ ]);

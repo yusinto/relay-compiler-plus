@@ -36,7 +36,7 @@ const run = async (options: { schema: string, src: string }) => {
 
   if (path.extname(schemaPath) === '.js') {
     schemaPath = await graphqlJSCompiler(schemaPath, srcDir);
-    console.log(`schemaPath is ${schemaPath}`);
+    console.log(`schemaPath: ${schemaPath}`);
   }
 
   if (force) {

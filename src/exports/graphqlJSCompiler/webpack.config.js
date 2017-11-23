@@ -10,7 +10,7 @@ module.exports = {
   externals: [nodeExternals()], // ignore all modules in node_modules folder
   output: {
     path: path.resolve('.'),
-    filename: 'compiled.js',
+    filename: 'graphql-js-transpiled.js',
     pathinfo: true,
     libraryTarget: 'commonjs2',
   },

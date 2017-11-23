@@ -14,36 +14,27 @@ const printErrors = (summary, errors) => {
   });
 };
 
-export default async (schemaPath) => {
-  console.log('Transpiling graphql-js with webpack');
-
+export default async (schemaPath, srcDir) => {
+  console.log('transpiling graphql-js with webpack');
   webpackConfig.entry.push(schemaPath);
-  const webpackResult = await webpackAsync([webpackConfig]);
-  // console.log(`webpack result: ${webpackResult.err}`);
-  // const stats = rawStats.toJson();
-  //
-  // if (err) {
-  //   return printErrors('Failed to compile.', [err]);
-  // }
-  //
-  // if (stats.errors.length) {
-  //   return printErrors('Failed to compile.', stats.errors);
-  // }
 
-  const transpiled = path.resolve(process.cwd(), './compiled.js');
-  console.log(`Compiling schema.graphql from ${transpiled}`);
+  let rawStats;
+  try {
+    rawStats = await webpackAsync([webpackConfig]);
+  } catch (err) {
+    return printErrors('Failed to compile.', [err]);
+  }
 
+  const stats = rawStats.toJson();
+  if (stats.errors.length) {
+    return printErrors('Failed to compile.', stats.errors);
+  }
+
+  const transpiled = path.resolve(webpack.output.path, webpack.output.filename);
   const schema = require(transpiled).default;
-  console.log(`schema looks like:${JSON.stringify(schema)}`);
-
-  const outputDest = path.resolve(process.cwd(), './schema.graphql');
-  console.log(`writing to ${outputDest}`);
-
+  const outputDest = path.resolve(srcDir, './schema.graphql');
   fs.writeFileSync(outputDest, printSchema(schema));
-  console.log('Cleaning up');
-
   fs.unlinkSync(transpiled);
   console.log('Successfully compiled graphql-js.');
-
   return outputDest;
 };

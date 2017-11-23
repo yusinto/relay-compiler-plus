@@ -3270,7 +3270,7 @@ regjsparser@^0.1.4:
 
 "relay-compiler-plus@git://github.com/yusinto/relay-compiler-plus.git#feature/graphql-js-compilation":
   version "1.3.1"
-  resolved "git://github.com/yusinto/relay-compiler-plus.git#11d36aaacf613350389d6feaaecb213dd0ca5667"
+  resolved "git://github.com/yusinto/relay-compiler-plus.git#a97497b30acfa42b7c8aa450e48770a4b2d4d4ba"
   dependencies:
     babel-polyfill "^6.26.0"
     body-parser "^1.18.2"

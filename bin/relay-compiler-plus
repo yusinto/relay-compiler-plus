@@ -212,7 +212,7 @@ var run = function () {
             }
 
             _context.next = 9;
-            return (0, _relayCompilerPlus.graphqlJSCompiler)(schemaPath);
+            return (0, _relayCompilerPlus.graphqlJSCompiler)(schemaPath, srcDir);
 
           case 9:
             schemaPath = _context.sent;

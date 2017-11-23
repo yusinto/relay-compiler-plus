@@ -1,7 +1,7 @@
 import {promisify} from 'util';
 import fs from 'fs';
 import path from 'path';
-import graphqlUtils from 'graphql/utilities';
+import {printSchema} from 'graphql/utilities';
 import webpack from 'webpack';
 import webpackConfig from './webpack.config';
 
@@ -32,13 +32,16 @@ export default async (schemaPath) => {
 
   const transpiled = path.resolve(process.cwd(), './compiled.js');
   console.log(`Compiling schema.graphql from ${transpiled}`);
+
   const schema = require(transpiled).default;
   console.log(`schema looks like:${JSON.stringify(schema)}`);
+
   const outputDest = path.resolve(process.cwd(), './schema.graphql');
   console.log(`writing to ${outputDest}`);
 
-  fs.writeFileSync(outputDest, graphqlUtils.printSchema(schema));
+  fs.writeFileSync(outputDest, printSchema(schema));
   console.log('Cleaning up');
+
   fs.unlinkSync(transpiled);
   console.log('Successfully compiled graphql-js.');
 

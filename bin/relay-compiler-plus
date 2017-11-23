@@ -165,7 +165,7 @@ var run = function () {
             console.log('force: ' + force);
 
             if (_path2.default.extname(schemaPath) === '.js') {
-              compileGraphqlJS(schemaPath);
+              (0, _relayCompilerPlus.graphqlJSCompiler)(schemaPath);
               //TODO: once compiled, set schemaPath to the newly generate schema.graphql file
               // schemaPath = <path_to_schema.graphql>;
             }

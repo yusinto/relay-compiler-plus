@@ -38,7 +38,7 @@ async function run(options: { schema: string, src: string }) {
   console.log(`force: ${force}`);
 
   if (path.extname(schemaPath) === '.js') {
-    compileGraphqlJS(schemaPath);
+    graphqlJSCompiler(schemaPath);
     //TODO: once compiled, set schemaPath to the newly generate schema.graphql file
     // schemaPath = <path_to_schema.graphql>;
   }

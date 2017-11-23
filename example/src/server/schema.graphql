@@ -1,8 +1,0 @@
-type Query {
-  root: Root
-}
-
-type Root {
-  animal: String
-  human: String
-}

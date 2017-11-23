@@ -43,7 +43,7 @@
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-relay": "^1.4.1",
-    "relay-compiler-plus": "^1.2.20",
+    "relay-compiler-plus": "^1.4.0",
     "relay-runtime": "^1.4.1"
   },
   "devDependencies": {

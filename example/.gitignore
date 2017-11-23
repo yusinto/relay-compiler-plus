@@ -61,3 +61,4 @@ FindGraphQLTags-*
 **/__generated__/*.graphql.js
 
 **/queryMap.json
+**/schema.graphql

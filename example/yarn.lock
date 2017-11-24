@@ -3268,9 +3268,9 @@ regjsparser@^0.1.4:
   dependencies:
     jsesc "~0.5.0"
 
-relay-compiler-plus@^1.2.20:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/relay-compiler-plus/-/relay-compiler-plus-1.4.0.tgz#52004275ad3f981b4f77c2246d87f96d57a313c2"
+relay-compiler-plus@^1.4.0:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/relay-compiler-plus/-/relay-compiler-plus-1.4.3.tgz#538aa3a298ee9a228bc386b2d2eb56f47ce2807e"
   dependencies:
     babel-loader "^7.1.2"
     babel-plugin-transform-async-to-generator "^6.24.1"

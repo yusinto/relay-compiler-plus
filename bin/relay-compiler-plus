@@ -193,44 +193,33 @@ function persistQuery(operationText) {
 */
 var run = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(options) {
-    var srcDir, schemaPath, force, customWebpackConfig, reporter, parserConfigs, writerConfigs, codegenRunner, result, queryCacheOutputFile;
+    var srcDir, schemaPath, reporter, parserConfigs, writerConfigs, codegenRunner, result, queryCacheOutputFile;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             srcDir = _path2.default.resolve(process.cwd(), options.src);
             schemaPath = _path2.default.resolve(process.cwd(), options.schema);
-            force = options.force;
 
             console.log('schema: ' + schemaPath);
             console.log('src: ' + srcDir);
-            console.log('force: ' + force);
 
             if (!(_path2.default.extname(schemaPath) === '.js')) {
-              _context.next = 13;
+              _context.next = 9;
               break;
             }
 
-            customWebpackConfig = void 0;
+            _context.next = 7;
+            return (0, _relayCompilerPlus.graphqlJSCompiler)(schemaPath, srcDir);
 
-            if (options.wc) {
-              customWebpackConfig = _path2.default.resolve(process.cwd(), options.wc);
-            }
-            _context.next = 11;
-            return (0, _relayCompilerPlus.graphqlJSCompiler)(schemaPath, srcDir, customWebpackConfig);
-
-          case 11:
+          case 7:
             schemaPath = _context.sent;
 
-            console.log('schemaPath: ' + schemaPath + ', customWebpackConfig: ' + customWebpackConfig);
+            console.log('schemaPath: ' + schemaPath + ', srcDir: ' + srcDir);
 
-          case 13:
+          case 9:
 
-            if (force) {
-              (0, _utils.clean)(srcDir);
-            } else {
-              console.log('Not cleaning.');
-            }
+            (0, _utils.clean)(srcDir);
 
             reporter = new ConsoleReporter({ verbose: true });
             parserConfigs = {
@@ -264,52 +253,52 @@ var run = function () {
               onlyValidate: false
             });
             result = '';
-            _context.prev = 19;
-            _context.next = 22;
+            _context.prev = 15;
+            _context.next = 18;
             return codegenRunner.compileAll();
 
-          case 22:
+          case 18:
             result = _context.sent;
-            _context.next = 29;
+            _context.next = 25;
             break;
 
-          case 25:
-            _context.prev = 25;
-            _context.t0 = _context['catch'](19);
+          case 21:
+            _context.prev = 21;
+            _context.t0 = _context['catch'](15);
 
             console.log('Error codegenRunner.compileAll(): ' + _context.t0);
             throw _context.t0;
 
-          case 29:
+          case 25:
             queryCacheOutputFile = srcDir + '/queryMap.json';
-            _context.prev = 30;
+            _context.prev = 26;
 
             _fs2.default.writeFileSync(queryCacheOutputFile, JSON.stringify(queryCache));
             console.log('Query cache written to: ' + queryCacheOutputFile);
-            _context.next = 39;
+            _context.next = 35;
             break;
 
-          case 35:
-            _context.prev = 35;
-            _context.t1 = _context['catch'](30);
+          case 31:
+            _context.prev = 31;
+            _context.t1 = _context['catch'](26);
 
             if (!_context.t1) {
-              _context.next = 39;
+              _context.next = 35;
               break;
             }
 
             return _context.abrupt('return', console.log(_context.t1));
 
-          case 39:
+          case 35:
 
             console.log('Done! ' + result);
 
-          case 40:
+          case 36:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, undefined, [[19, 25], [30, 35]]);
+    }, _callee, undefined, [[15, 21], [26, 31]]);
   }));
 
   return function run(_x) {
@@ -318,9 +307,9 @@ var run = function () {
 }();
 
 // Collect args
-var argv = _yargs2.default.usage('Usage: $0 --schema <schemaPath> --src <srcDir> -f').options({
+var argv = _yargs2.default.usage('Usage: $0 --schema <schemaPath> --src <srcDir>').options({
   schema: {
-    describe: 'Path to schema.graphql or schema.json',
+    describe: 'Path to schema.graphql or schema.json. Alternatively, you can also specify the path to \n      webpack.config.js for your graphql-js file to compile directly from graphql-jq.',
     demandOption: true,
     type: 'string'
   },
@@ -328,18 +317,8 @@ var argv = _yargs2.default.usage('Usage: $0 --schema <schemaPath> --src <srcDir>
     describe: 'Root directory of application code',
     demandOption: true,
     type: 'string'
-  },
-  wc: {
-    describe: 'Custom webpack config if schema is graphql-js',
-    demandOption: false,
-    type: 'string'
-  },
-  force: {
-    describe: 'Recursively delete all *.graphql.js files in src folder before compilation',
-    demandOption: false,
-    type: 'boolean'
   }
-}).alias('f', 'force').help().argv;
+}).help().argv;
 
 _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
   return regeneratorRuntime.wrap(function _callee2$(_context2) {

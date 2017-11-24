@@ -26,28 +26,18 @@ function persistQuery(operationText: string): Promise<string> {
 * Most of the code in this run method are ripped from:
 * relay-compiler/bin/RelayCompilerBin.js
 */
-const run = async (options: { schema: string, src: string, wc: string }) => {
+const run = async (options: { schema: string, src: string }) => {
   const srcDir = path.resolve(process.cwd(), options.src);
   let schemaPath = path.resolve(process.cwd(), options.schema);
-  const force = options.force;
   console.log(`schema: ${schemaPath}`);
   console.log(`src: ${srcDir}`);
-  console.log(`force: ${force}`);
 
   if (path.extname(schemaPath) === '.js') {
-    let customWebpackConfig;
-    if(options.wc) {
-      customWebpackConfig = path.resolve(process.cwd(), options.wc);
-    }
-    schemaPath = await graphqlJSCompiler(schemaPath, srcDir, customWebpackConfig);
-    console.log(`schemaPath: ${schemaPath}, customWebpackConfig: ${customWebpackConfig}`);
+    schemaPath = await graphqlJSCompiler(schemaPath, srcDir);
+    console.log(`schemaPath: ${schemaPath}, srcDir: ${srcDir}`);
   }
 
-  if (force) {
-    clean(srcDir);
-  } else {
-    console.log('Not cleaning.');
-  }
+  clean(srcDir);
 
   const reporter = new ConsoleReporter({verbose: true});
   const parserConfigs = {
@@ -107,10 +97,11 @@ const run = async (options: { schema: string, src: string, wc: string }) => {
 
 // Collect args
 const argv = yargs
-  .usage(`Usage: $0 --schema <schemaPath> --src <srcDir> -f`)
+  .usage(`Usage: $0 --schema <schemaPath> --src <srcDir>`)
   .options({
     schema: {
-      describe: 'Path to schema.graphql or schema.json',
+      describe: `Path to schema.graphql or schema.json. Alternatively, you can also specify the path to 
+      webpack.config.js for your graphql-js file to compile directly from graphql-jq.`,
       demandOption: true,
       type: 'string',
     },
@@ -119,18 +110,7 @@ const argv = yargs
       demandOption: true,
       type: 'string',
     },
-    wc: {
-      describe: 'Custom webpack config if schema is graphql-js',
-      demandOption: false,
-      type: 'string',
-    },
-    force: {
-      describe: 'Recursively delete all *.graphql.js files in src folder before compilation',
-      demandOption: false,
-      type: 'boolean'
-    }
   })
-  .alias('f', 'force')
   .help().argv;
 
 (async () => {

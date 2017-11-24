@@ -13,18 +13,9 @@ const printErrors = (summary, errors) => {
   });
 };
 
-export default async (schemaPath, srcDir, customWebpackConfig) => {
+export default async (schemaPath, srcDir) => {
   console.log('transpiling graphql-js with webpack');
-
-  let webpackConfig;
-  if(customWebpackConfig) {
-    console.log(`Using custom webpack config: ${customWebpackConfig}`);
-    webpackConfig = require(customWebpackConfig);
-  } else {
-    console.log('Using default webpack config');
-    webpackConfig = require('./webpack.config');
-    webpackConfig.entry.push(schemaPath);
-  }
+  const webpackConfig = require(schemaPath);
 
   let rawStats;
   try {

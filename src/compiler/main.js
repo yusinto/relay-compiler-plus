@@ -26,7 +26,7 @@ function persistQuery(operationText: string): Promise<string> {
 * Most of the code in this run method are ripped from:
 * relay-compiler/bin/RelayCompilerBin.js
 */
-const run = async (options: { schema: string, src: string }) => {
+const run = async (options: { schema: string, src: string, wc: string }) => {
   const srcDir = path.resolve(process.cwd(), options.src);
   let schemaPath = path.resolve(process.cwd(), options.schema);
   const force = options.force;
@@ -35,8 +35,12 @@ const run = async (options: { schema: string, src: string }) => {
   console.log(`force: ${force}`);
 
   if (path.extname(schemaPath) === '.js') {
-    schemaPath = await graphqlJSCompiler(schemaPath, srcDir);
-    console.log(`schemaPath: ${schemaPath}`);
+    let customWebpackConfig;
+    if(options.wc) {
+      customWebpackConfig = path.resolve(process.cwd(), options.wc);
+    }
+    schemaPath = await graphqlJSCompiler(schemaPath, srcDir, customWebpackConfig);
+    console.log(`schemaPath: ${schemaPath}, customWebpackConfig: ${customWebpackConfig}`);
   }
 
   if (force) {
@@ -113,6 +117,11 @@ const argv = yargs
     src: {
       describe: 'Root directory of application code',
       demandOption: true,
+      type: 'string',
+    },
+    wc: {
+      describe: 'Custom webpack config if schema is graphql-js',
+      demandOption: false,
       type: 'string',
     },
     force: {

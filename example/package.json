@@ -4,9 +4,9 @@
   "description": "A starter kit to quickly create a relay modern app",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run rcp && node src/server",
+    "dev": "node src/server",
     "rcp": "relay-compiler-plus --schema src/schema.graphql --src src",
-    "rcpJS": "relay-compiler-plus --webpackConfig src/server/webpack.config.js --src src"
+    "rcp-js": "relay-compiler-plus --webpackConfig src/server/webpack.config.js --src src"
   },
   "repository": {
     "type": "git",

@@ -2,7 +2,7 @@ const nodeExternals = require('webpack-node-externals');
 const path = require('path');
 
 module.exports = {
-  entry: [],
+  entry: ['babel-polyfill'],
   externals: [nodeExternals()], // ignore all modules in node_modules folder
   output: {
     path: path.resolve('.'),

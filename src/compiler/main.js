@@ -101,7 +101,7 @@ const argv = yargs
   .options({
     schema: {
       describe: `Path to schema.graphql or schema.json. Alternatively, you can also specify the path to 
-      webpack.config.js for your graphql-js file to compile directly from graphql-jq.`,
+      webpack.config.js for your graphql-js file to compile directly from graphql-js.`,
       demandOption: true,
       type: 'string',
     },

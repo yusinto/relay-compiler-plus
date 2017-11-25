@@ -12,7 +12,6 @@ module.exports = {
   module: {
     rules: [
       {
-        // We must exclude any const of universal/redux/store
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/,

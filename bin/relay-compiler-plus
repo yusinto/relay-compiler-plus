@@ -211,12 +211,20 @@ var run = function () {
             } else {
               schemaPath = _path2.default.resolve(process.cwd(), options.schema);
             }
-            console.log('schemaPath: ' + schemaPath + ',customWebpackConfig: ' + customWebpackConfig);
-            _context.next = 8;
+
+            if (!(_path2.default.extname(schemaPath) === '.js')) {
+              _context.next = 10;
+              break;
+            }
+
+            console.log('schemaPath: ' + schemaPath + ', customWebpackConfig: ' + customWebpackConfig);
+            _context.next = 9;
             return (0, _relayCompilerPlus.graphqlJSCompiler)(schemaPath, srcDir, customWebpackConfig);
 
-          case 8:
+          case 9:
             schemaPath = _context.sent;
+
+          case 10:
 
             console.log('schemaPath: ' + schemaPath);
 
@@ -254,52 +262,52 @@ var run = function () {
               onlyValidate: false
             });
             result = '';
-            _context.prev = 16;
-            _context.next = 19;
+            _context.prev = 17;
+            _context.next = 20;
             return codegenRunner.compileAll();
 
-          case 19:
+          case 20:
             result = _context.sent;
-            _context.next = 26;
+            _context.next = 27;
             break;
 
-          case 22:
-            _context.prev = 22;
-            _context.t0 = _context['catch'](16);
+          case 23:
+            _context.prev = 23;
+            _context.t0 = _context['catch'](17);
 
             console.log('Error codegenRunner.compileAll(): ' + _context.t0);
             throw _context.t0;
 
-          case 26:
+          case 27:
             queryCacheOutputFile = srcDir + '/queryMap.json';
-            _context.prev = 27;
+            _context.prev = 28;
 
             _fs2.default.writeFileSync(queryCacheOutputFile, JSON.stringify(queryCache));
             console.log('Query cache written to: ' + queryCacheOutputFile);
-            _context.next = 36;
+            _context.next = 37;
             break;
 
-          case 32:
-            _context.prev = 32;
-            _context.t1 = _context['catch'](27);
+          case 33:
+            _context.prev = 33;
+            _context.t1 = _context['catch'](28);
 
             if (!_context.t1) {
-              _context.next = 36;
+              _context.next = 37;
               break;
             }
 
             return _context.abrupt('return', console.log(_context.t1));
 
-          case 36:
+          case 37:
 
             console.log('Done! ' + result);
 
-          case 37:
+          case 38:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, undefined, [[16, 22], [27, 32]]);
+    }, _callee, undefined, [[17, 23], [28, 33]]);
   }));
 
   return function run(_x) {

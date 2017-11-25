@@ -60,8 +60,7 @@ yarn upgrade graphql --latest
     
      where 
     * `<WEBPACK_CONFIG_PATH>` is the path to your custom webpack config to transpile your graphql-js
-    schema. In your custom webpack config, you need to set `output.libraryTarget: 'commonjs2'` and use
-    es5. See the [example config](https://github.com/yusinto/relay-compiler-plus/blob/master/example/src/server/webpack.config.js)
+    schema. In your custom webpack config, you need to set `output.libraryTarget: 'commonjs2'`. See the [example config](https://github.com/yusinto/relay-compiler-plus/blob/master/example/src/server/webpack.config.js)
     for a working copy. 
       
 

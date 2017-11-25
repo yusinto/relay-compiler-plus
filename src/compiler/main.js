@@ -31,15 +31,15 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
   console.log(`src: ${srcDir}`);
 
   let schemaPath;
-  let customWebpackConfig = options.webpackConfig;
+  let customWebpackConfig;
 
-  if (customWebpackConfig) {
-    customWebpackConfig = path.resolve(process.cwd(), customWebpackConfig);
+  if (options.webpackConfig) {
+    customWebpackConfig = path.resolve(process.cwd(), options.webpackConfig);
   } else {
     schemaPath = path.resolve(process.cwd(), options.schema);
   }
 
-  if (path.extname(schemaPath) === '.js') {
+  if ((schemaPath && path.extname(schemaPath) === '.js') || customWebpackConfig) {
     console.log(`schemaPath: ${schemaPath}, customWebpackConfig: ${customWebpackConfig}`);
     schemaPath = await graphqlJSCompiler(schemaPath, srcDir, customWebpackConfig);
   }

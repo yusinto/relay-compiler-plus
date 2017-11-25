@@ -203,16 +203,16 @@ var run = function () {
             console.log('src: ' + srcDir);
 
             schemaPath = void 0;
-            customWebpackConfig = options.webpackConfig;
+            customWebpackConfig = void 0;
 
 
-            if (customWebpackConfig) {
-              customWebpackConfig = _path2.default.resolve(process.cwd(), customWebpackConfig);
+            if (options.webpackConfig) {
+              customWebpackConfig = _path2.default.resolve(process.cwd(), options.webpackConfig);
             } else {
               schemaPath = _path2.default.resolve(process.cwd(), options.schema);
             }
 
-            if (!(_path2.default.extname(schemaPath) === '.js')) {
+            if (!(schemaPath && _path2.default.extname(schemaPath) === '.js' || customWebpackConfig)) {
               _context.next = 10;
               break;
             }

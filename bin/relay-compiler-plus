@@ -193,7 +193,7 @@ function persistQuery(operationText) {
 */
 var run = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(options) {
-    var srcDir, schemaPath, reporter, parserConfigs, writerConfigs, codegenRunner, result, queryCacheOutputFile;
+    var srcDir, schemaPath, customWebpackConfig, reporter, parserConfigs, writerConfigs, codegenRunner, result, queryCacheOutputFile;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -205,19 +205,26 @@ var run = function () {
             console.log('src: ' + srcDir);
 
             if (!(_path2.default.extname(schemaPath) === '.js')) {
-              _context.next = 9;
+              _context.next = 11;
               break;
             }
 
-            _context.next = 7;
-            return (0, _relayCompilerPlus.graphqlJSCompiler)(schemaPath, srcDir);
+            customWebpackConfig = options.webpackConfig;
 
-          case 7:
-            schemaPath = _context.sent;
+            if (customWebpackConfig) {
+              customWebpackConfig = _path2.default.resolve(process.cwd(), customWebpackConfig);
+              console.log('customWebpackConfig: ' + customWebpackConfig);
+            }
 
-            console.log('schemaPath: ' + schemaPath + ', srcDir: ' + srcDir);
+            _context.next = 9;
+            return (0, _relayCompilerPlus.graphqlJSCompiler)(schemaPath, srcDir, customWebpackConfig);
 
           case 9:
+            schemaPath = _context.sent;
+
+            console.log('schemaPath: ' + schemaPath);
+
+          case 11:
 
             (0, _utils.clean)(srcDir);
 
@@ -253,52 +260,52 @@ var run = function () {
               onlyValidate: false
             });
             result = '';
-            _context.prev = 15;
-            _context.next = 18;
+            _context.prev = 17;
+            _context.next = 20;
             return codegenRunner.compileAll();
 
-          case 18:
+          case 20:
             result = _context.sent;
-            _context.next = 25;
+            _context.next = 27;
             break;
 
-          case 21:
-            _context.prev = 21;
-            _context.t0 = _context['catch'](15);
+          case 23:
+            _context.prev = 23;
+            _context.t0 = _context['catch'](17);
 
             console.log('Error codegenRunner.compileAll(): ' + _context.t0);
             throw _context.t0;
 
-          case 25:
+          case 27:
             queryCacheOutputFile = srcDir + '/queryMap.json';
-            _context.prev = 26;
+            _context.prev = 28;
 
             _fs2.default.writeFileSync(queryCacheOutputFile, JSON.stringify(queryCache));
             console.log('Query cache written to: ' + queryCacheOutputFile);
-            _context.next = 35;
+            _context.next = 37;
             break;
 
-          case 31:
-            _context.prev = 31;
-            _context.t1 = _context['catch'](26);
+          case 33:
+            _context.prev = 33;
+            _context.t1 = _context['catch'](28);
 
             if (!_context.t1) {
-              _context.next = 35;
+              _context.next = 37;
               break;
             }
 
             return _context.abrupt('return', console.log(_context.t1));
 
-          case 35:
+          case 37:
 
             console.log('Done! ' + result);
 
-          case 36:
+          case 38:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, undefined, [[15, 21], [26, 31]]);
+    }, _callee, undefined, [[17, 23], [28, 33]]);
   }));
 
   return function run(_x) {
@@ -309,13 +316,18 @@ var run = function () {
 // Collect args
 var argv = _yargs2.default.usage('Usage: $0 --schema <schemaPath> --src <srcDir>').options({
   schema: {
-    describe: 'Path to schema.graphql or schema.json. Alternatively, you can also specify the path to \n      webpack.config.js for your graphql-js file to compile directly from graphql-jq.',
-    demandOption: true,
+    describe: 'Path to schema.js or schema.graphql or schema.json',
+    demandOption: false,
     type: 'string'
   },
   src: {
     describe: 'Root directory of application code',
     demandOption: true,
+    type: 'string'
+  },
+  webpackConfig: {
+    describe: 'Custom webpack config to use to compile graphql-js',
+    demandOption: false,
     type: 'string'
   }
 }).help().argv;

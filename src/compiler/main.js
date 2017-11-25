@@ -26,15 +26,21 @@ function persistQuery(operationText: string): Promise<string> {
 * Most of the code in this run method are ripped from:
 * relay-compiler/bin/RelayCompilerBin.js
 */
-const run = async (options: { schema: string, src: string }) => {
+const run = async (options: { schema: string, src: string, webpackConfig: string }) => {
   const srcDir = path.resolve(process.cwd(), options.src);
   let schemaPath = path.resolve(process.cwd(), options.schema);
   console.log(`schema: ${schemaPath}`);
   console.log(`src: ${srcDir}`);
 
   if (path.extname(schemaPath) === '.js') {
-    schemaPath = await graphqlJSCompiler(schemaPath, srcDir);
-    console.log(`schemaPath: ${schemaPath}, srcDir: ${srcDir}`);
+    let customWebpackConfig = options.webpackConfig;
+    if(customWebpackConfig) {
+      customWebpackConfig = path.resolve(process.cwd(), customWebpackConfig);
+      console.log(`customWebpackConfig: ${customWebpackConfig}`);
+    }
+
+    schemaPath = await graphqlJSCompiler(schemaPath, srcDir, customWebpackConfig);
+    console.log(`schemaPath: ${schemaPath}`);
   }
 
   clean(srcDir);
@@ -100,14 +106,18 @@ const argv = yargs
   .usage(`Usage: $0 --schema <schemaPath> --src <srcDir>`)
   .options({
     schema: {
-      describe: `Path to schema.graphql or schema.json. Alternatively, you can also specify the path to 
-      webpack.config.js for your graphql-js file to compile directly from graphql-js.`,
-      demandOption: true,
+      describe: `Path to schema.js or schema.graphql or schema.json`,
+      demandOption: false,
       type: 'string',
     },
     src: {
       describe: 'Root directory of application code',
       demandOption: true,
+      type: 'string',
+    },
+    webpackConfig: {
+      describe: 'Custom webpack config to use to compile graphql-js',
+      demandOption: false,
       type: 'string',
     },
   })

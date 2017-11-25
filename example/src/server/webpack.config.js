@@ -3,11 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: ['babel-polyfill', './src/server/schema.js'],
-  target: 'node',
-  node: {
-    __dirname: false,
-  },
+  entry: ['./src/server/schema.js'],
   externals: [nodeExternals()], // ignore all modules in node_modules folder
   output: {
     path: path.resolve('./'),
@@ -29,11 +25,4 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-      },
-    }),
-  ],
 };

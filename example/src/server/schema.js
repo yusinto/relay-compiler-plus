@@ -1,4 +1,7 @@
 import {GraphQLObjectType, GraphQLSchema, GraphQLString} from 'graphql';
+import Logger from '../universal/log';
+
+const log = new Logger('schema');
 
 const query = new GraphQLObjectType({
   name: 'Query',
@@ -9,11 +12,17 @@ const query = new GraphQLObjectType({
         fields: {
           animal: {
             type: GraphQLString,
-            resolve: () => 'loui',
+            resolve: () => {
+              log.info('Invoking animal');
+              return 'loui';
+            }
           },
           human: {
             type: GraphQLString,
-            resolve: () => 'wendy',
+            resolve: () => {
+              log.info('Invoking human');
+              return 'wendy';
+            }
           },
         }
       }),

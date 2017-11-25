@@ -9,7 +9,10 @@ yarn
 # to compile from schema.js
 npm run rcp-js
 
-# to compile from schema.graphql
+# to compile from schema.js using a custom webpack config
+npm run rcp-js-custom
+
+# to compile from schema.graphql or schema.json
 npm run rcp
 
 npm run dev

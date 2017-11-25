@@ -167,7 +167,7 @@ var _ripped = __webpack_require__(/*! ./ripped */ 8);
 
 var _utils = __webpack_require__(/*! ./utils */ 11);
 
-var _relayCompilerPlus = __webpack_require__(/*! relay-compiler-plus */ 13);
+var _graphqlJSCompiler = __webpack_require__(/*! relay-compiler-plus/graphqlJSCompiler */ 13);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -219,7 +219,7 @@ var run = function () {
 
             console.log('schemaPath: ' + schemaPath + ', customWebpackConfig: ' + customWebpackConfig);
             _context.next = 9;
-            return (0, _relayCompilerPlus.graphqlJSCompiler)(schemaPath, srcDir, customWebpackConfig);
+            return (0, _graphqlJSCompiler.graphqlJSCompiler)(schemaPath, srcDir, customWebpackConfig);
 
           case 9:
             schemaPath = _context.sent;
@@ -623,14 +623,14 @@ module.exports = require("crypto");
 
 /***/ }),
 /* 13 */
-/*!**************************************!*\
-  !*** external "relay-compiler-plus" ***!
-  \**************************************/
+/*!********************************************************!*\
+  !*** external "relay-compiler-plus/graphqlJSCompiler" ***!
+  \********************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports) {
 
-module.exports = require("relay-compiler-plus");
+module.exports = require("relay-compiler-plus/graphqlJSCompiler");
 
 /***/ })
 /******/ ]);

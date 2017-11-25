@@ -5,7 +5,7 @@ import fs from 'fs';
 import RelayCompiler from 'relay-compiler';
 import {getFilepathsFromGlob, getRelayFileWriter, getSchema} from './ripped';
 import {md5, clean} from './utils';
-import {graphqlJSCompiler} from 'relay-compiler-plus';
+import {graphqlJSCompiler} from 'relay-compiler-plus/graphqlJSCompiler';
 
 const {
   ConsoleReporter,

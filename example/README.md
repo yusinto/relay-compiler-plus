@@ -6,6 +6,12 @@ Example project using relay-compiler-plus to generate relay persisted queries.
 ```
 yarn
 
+# to compile from schema.js
+npm run rcp-js
+
+# to compile from schema.graphql
+npm run rcp
+
 npm run dev
 ```
 

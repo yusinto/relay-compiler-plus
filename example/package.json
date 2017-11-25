@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "npm run rcp && node src/server",
-    "rcp": "relay-compiler-plus --schema src/server/schema.js --src src"
+    "rcp": "relay-compiler-plus --webpackConfig src/server/webpack.config.js --src src"
   },
   "repository": {
     "type": "git",

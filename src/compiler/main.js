@@ -27,15 +27,18 @@ function persistQuery(operationText: string): Promise<string> {
 * relay-compiler/bin/RelayCompilerBin.js
 */
 const run = async (options: { schema: string, src: string, webpackConfig: string }) => {
-  let schemaPath = path.resolve(process.cwd(), options.schema);
   const srcDir = path.resolve(process.cwd(), options.src);
-  console.log(`schema: ${schemaPath}, src: ${srcDir}, webpackConfig: ${options.webpackConfig}`);
+  console.log(`src: ${srcDir}`);
 
+  let schemaPath;
   let customWebpackConfig = options.webpackConfig;
+
   if (customWebpackConfig) {
     customWebpackConfig = path.resolve(process.cwd(), customWebpackConfig);
-    console.log(`customWebpackConfig: ${customWebpackConfig}`);
+  } else {
+    schemaPath = path.resolve(process.cwd(), options.schema);
   }
+  console.log(`schemaPath: ${schemaPath},customWebpackConfig: ${customWebpackConfig}`);
   schemaPath = await graphqlJSCompiler(schemaPath, srcDir, customWebpackConfig);
   console.log(`schemaPath: ${schemaPath}`);
 

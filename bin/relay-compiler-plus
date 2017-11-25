@@ -193,26 +193,29 @@ function persistQuery(operationText) {
 */
 var run = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(options) {
-    var schemaPath, srcDir, customWebpackConfig, reporter, parserConfigs, writerConfigs, codegenRunner, result, queryCacheOutputFile;
+    var srcDir, schemaPath, customWebpackConfig, reporter, parserConfigs, writerConfigs, codegenRunner, result, queryCacheOutputFile;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            schemaPath = _path2.default.resolve(process.cwd(), options.schema);
             srcDir = _path2.default.resolve(process.cwd(), options.src);
 
-            console.log('schema: ' + schemaPath + ', src: ' + srcDir + ', webpackConfig: ' + options.webpackConfig);
+            console.log('src: ' + srcDir);
 
+            schemaPath = void 0;
             customWebpackConfig = options.webpackConfig;
+
 
             if (customWebpackConfig) {
               customWebpackConfig = _path2.default.resolve(process.cwd(), customWebpackConfig);
-              console.log('customWebpackConfig: ' + customWebpackConfig);
+            } else {
+              schemaPath = _path2.default.resolve(process.cwd(), options.schema);
             }
-            _context.next = 7;
+            console.log('schemaPath: ' + schemaPath + ',customWebpackConfig: ' + customWebpackConfig);
+            _context.next = 8;
             return (0, _relayCompilerPlus.graphqlJSCompiler)(schemaPath, srcDir, customWebpackConfig);
 
-          case 7:
+          case 8:
             schemaPath = _context.sent;
 
             console.log('schemaPath: ' + schemaPath);
@@ -251,52 +254,52 @@ var run = function () {
               onlyValidate: false
             });
             result = '';
-            _context.prev = 15;
-            _context.next = 18;
+            _context.prev = 16;
+            _context.next = 19;
             return codegenRunner.compileAll();
 
-          case 18:
+          case 19:
             result = _context.sent;
-            _context.next = 25;
+            _context.next = 26;
             break;
 
-          case 21:
-            _context.prev = 21;
-            _context.t0 = _context['catch'](15);
+          case 22:
+            _context.prev = 22;
+            _context.t0 = _context['catch'](16);
 
             console.log('Error codegenRunner.compileAll(): ' + _context.t0);
             throw _context.t0;
 
-          case 25:
+          case 26:
             queryCacheOutputFile = srcDir + '/queryMap.json';
-            _context.prev = 26;
+            _context.prev = 27;
 
             _fs2.default.writeFileSync(queryCacheOutputFile, JSON.stringify(queryCache));
             console.log('Query cache written to: ' + queryCacheOutputFile);
-            _context.next = 35;
+            _context.next = 36;
             break;
 
-          case 31:
-            _context.prev = 31;
-            _context.t1 = _context['catch'](26);
+          case 32:
+            _context.prev = 32;
+            _context.t1 = _context['catch'](27);
 
             if (!_context.t1) {
-              _context.next = 35;
+              _context.next = 36;
               break;
             }
 
             return _context.abrupt('return', console.log(_context.t1));
 
-          case 35:
+          case 36:
 
             console.log('Done! ' + result);
 
-          case 36:
+          case 37:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, undefined, [[15, 21], [26, 31]]);
+    }, _callee, undefined, [[16, 22], [27, 32]]);
   }));
 
   return function run(_x) {

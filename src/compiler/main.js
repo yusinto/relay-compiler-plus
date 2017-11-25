@@ -27,21 +27,17 @@ function persistQuery(operationText: string): Promise<string> {
 * relay-compiler/bin/RelayCompilerBin.js
 */
 const run = async (options: { schema: string, src: string, webpackConfig: string }) => {
-  const srcDir = path.resolve(process.cwd(), options.src);
   let schemaPath = path.resolve(process.cwd(), options.schema);
-  console.log(`schema: ${schemaPath}`);
-  console.log(`src: ${srcDir}`);
+  const srcDir = path.resolve(process.cwd(), options.src);
+  console.log(`schema: ${schemaPath}, src: ${srcDir}, webpackConfig: ${options.webpackConfig}`);
 
-  if (path.extname(schemaPath) === '.js') {
-    let customWebpackConfig = options.webpackConfig;
-    if(customWebpackConfig) {
-      customWebpackConfig = path.resolve(process.cwd(), customWebpackConfig);
-      console.log(`customWebpackConfig: ${customWebpackConfig}`);
-    }
-
-    schemaPath = await graphqlJSCompiler(schemaPath, srcDir, customWebpackConfig);
-    console.log(`schemaPath: ${schemaPath}`);
+  let customWebpackConfig = options.webpackConfig;
+  if (customWebpackConfig) {
+    customWebpackConfig = path.resolve(process.cwd(), customWebpackConfig);
+    console.log(`customWebpackConfig: ${customWebpackConfig}`);
   }
+  schemaPath = await graphqlJSCompiler(schemaPath, srcDir, customWebpackConfig);
+  console.log(`schemaPath: ${schemaPath}`);
 
   clean(srcDir);
 
@@ -116,7 +112,7 @@ const argv = yargs
       type: 'string',
     },
     webpackConfig: {
-      describe: 'Custom webpack config to use to compile graphql-js',
+      describe: 'Custom webpack config to compile graphql-js',
       demandOption: false,
       type: 'string',
     },

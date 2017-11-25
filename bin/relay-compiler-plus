@@ -193,21 +193,15 @@ function persistQuery(operationText) {
 */
 var run = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(options) {
-    var srcDir, schemaPath, customWebpackConfig, reporter, parserConfigs, writerConfigs, codegenRunner, result, queryCacheOutputFile;
+    var schemaPath, srcDir, customWebpackConfig, reporter, parserConfigs, writerConfigs, codegenRunner, result, queryCacheOutputFile;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            srcDir = _path2.default.resolve(process.cwd(), options.src);
             schemaPath = _path2.default.resolve(process.cwd(), options.schema);
+            srcDir = _path2.default.resolve(process.cwd(), options.src);
 
-            console.log('schema: ' + schemaPath);
-            console.log('src: ' + srcDir);
-
-            if (!(_path2.default.extname(schemaPath) === '.js')) {
-              _context.next = 11;
-              break;
-            }
+            console.log('schema: ' + schemaPath + ', src: ' + srcDir + ', webpackConfig: ' + options.webpackConfig);
 
             customWebpackConfig = options.webpackConfig;
 
@@ -215,16 +209,13 @@ var run = function () {
               customWebpackConfig = _path2.default.resolve(process.cwd(), customWebpackConfig);
               console.log('customWebpackConfig: ' + customWebpackConfig);
             }
-
-            _context.next = 9;
+            _context.next = 7;
             return (0, _relayCompilerPlus.graphqlJSCompiler)(schemaPath, srcDir, customWebpackConfig);
 
-          case 9:
+          case 7:
             schemaPath = _context.sent;
 
             console.log('schemaPath: ' + schemaPath);
-
-          case 11:
 
             (0, _utils.clean)(srcDir);
 
@@ -260,52 +251,52 @@ var run = function () {
               onlyValidate: false
             });
             result = '';
-            _context.prev = 17;
-            _context.next = 20;
+            _context.prev = 15;
+            _context.next = 18;
             return codegenRunner.compileAll();
 
-          case 20:
+          case 18:
             result = _context.sent;
-            _context.next = 27;
+            _context.next = 25;
             break;
 
-          case 23:
-            _context.prev = 23;
-            _context.t0 = _context['catch'](17);
+          case 21:
+            _context.prev = 21;
+            _context.t0 = _context['catch'](15);
 
             console.log('Error codegenRunner.compileAll(): ' + _context.t0);
             throw _context.t0;
 
-          case 27:
+          case 25:
             queryCacheOutputFile = srcDir + '/queryMap.json';
-            _context.prev = 28;
+            _context.prev = 26;
 
             _fs2.default.writeFileSync(queryCacheOutputFile, JSON.stringify(queryCache));
             console.log('Query cache written to: ' + queryCacheOutputFile);
-            _context.next = 37;
+            _context.next = 35;
             break;
 
-          case 33:
-            _context.prev = 33;
-            _context.t1 = _context['catch'](28);
+          case 31:
+            _context.prev = 31;
+            _context.t1 = _context['catch'](26);
 
             if (!_context.t1) {
-              _context.next = 37;
+              _context.next = 35;
               break;
             }
 
             return _context.abrupt('return', console.log(_context.t1));
 
-          case 37:
+          case 35:
 
             console.log('Done! ' + result);
 
-          case 38:
+          case 36:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, undefined, [[17, 23], [28, 33]]);
+    }, _callee, undefined, [[15, 21], [26, 31]]);
   }));
 
   return function run(_x) {
@@ -326,7 +317,7 @@ var argv = _yargs2.default.usage('Usage: $0 --schema <schemaPath> --src <srcDir>
     type: 'string'
   },
   webpackConfig: {
-    describe: 'Custom webpack config to use to compile graphql-js',
+    describe: 'Custom webpack config to compile graphql-js',
     demandOption: false,
     type: 'string'
   }

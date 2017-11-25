@@ -38,7 +38,7 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
   } else {
     schemaPath = path.resolve(process.cwd(), options.schema);
   }
-  console.log(`schemaPath: ${schemaPath},customWebpackConfig: ${customWebpackConfig}`);
+  console.log(`schemaPath: ${schemaPath}, customWebpackConfig: ${customWebpackConfig}`);
   schemaPath = await graphqlJSCompiler(schemaPath, srcDir, customWebpackConfig);
   console.log(`schemaPath: ${schemaPath}`);
 

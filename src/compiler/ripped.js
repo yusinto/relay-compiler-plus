@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * The code in this file are ripped from:
  * relay-compiler/bin/RelayCompilerBin.js

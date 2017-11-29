@@ -4,23 +4,15 @@ import path from 'path';
 import fs from 'fs';
 import RelayCompiler from 'relay-compiler';
 import {getFilepathsFromGlob, getRelayFileWriter, getSchema} from './ripped';
-import {md5, clean} from './utils';
-import {graphqlJSCompiler} from 'relay-compiler-plus/graphqlJSCompiler';
+import {clean} from './utils';
+import {graphqlJSCompiler} from 'relay-compiler-plus/graphqlJSCompiler'; //eslint-disable-line
+import {queryMap, persistQuery} from './persistQuery';
 
 const {
   ConsoleReporter,
   Runner: CodegenRunner,
   FileIRParser: RelayJSModuleParser,
 } = RelayCompiler;
-const queryCache = [];
-
-function persistQuery(operationText: string): Promise<string> {
-  return new Promise((resolve) => {
-    const queryId = md5(operationText);
-    queryCache.push({id: queryId, text: operationText});
-    resolve(queryId);
-  });
-}
 
 /*
 * Most of the code in this run method are ripped from:
@@ -63,7 +55,7 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
           '**/__mocks__/**',
           '**/__tests__/**',
           '**/__generated__/**',
-        ]
+        ],
       }),
     },
   };
@@ -91,10 +83,10 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
     throw err;
   }
 
-  const queryCacheOutputFile = `${srcDir}/queryMap.json`;
+  const queryMapOutputFile = `${srcDir}/queryMap.json`;
   try {
-    fs.writeFileSync(queryCacheOutputFile, JSON.stringify(queryCache));
-    console.log(`Query cache written to: ${queryCacheOutputFile}`);
+    fs.writeFileSync(queryMapOutputFile, JSON.stringify(queryMap));
+    console.log(`Query map written to: ${queryMapOutputFile}`);
   } catch (err) {
     if (err) {
       return console.log(err);
@@ -105,11 +97,11 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
 };
 
 // Collect args
-const argv = yargs
-  .usage(`Usage: $0 --schema <schemaPath> --src <srcDir>`)
+const argv = yargs // eslint-disable-line prefer-destructuring
+  .usage('Usage: $0 --schema <schemaPath> --src <srcDir>')
   .options({
     schema: {
-      describe: `Path to schema.js or schema.graphql or schema.json`,
+      describe: 'Path to schema.js or schema.graphql or schema.json',
       demandOption: false,
       type: 'string',
     },
@@ -127,7 +119,7 @@ const argv = yargs
   .help().argv;
 
 (async () => {
-  console.log(`Welcome to relay-compiler-plus. Compiling now with these parameters:`);
+  console.log('Welcome to relay-compiler-plus. Compiling now with these parameters:');
   try {
     await run(argv);
   } catch (err) {

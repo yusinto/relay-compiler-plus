@@ -25,7 +25,5 @@ export const clean = (src: string) => {
     fs.unlinkSync(filePath);
   });
 
-  console.log(`Finished cleaning`);
+  console.log('Finished cleaning');
 };
-
-

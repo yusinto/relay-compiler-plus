@@ -8,6 +8,8 @@
   },
   "scripts": {
     "flow": "flow",
+    "test": "jest",
+    "lint": "eslint src",
     "build-compiler": "NODE_ENV=production node build && exec 3<> bin/relay-compiler-plus && awk -v TEXT='#!/usr/bin/env node' 'BEGIN {print TEXT}{print}' bin/relay-compiler-plus >&3",
     "build-exports": "babel src/exports -d lib",
     "build-graphql-js-compiler": "babel src/graphqlJSCompiler -d graphqlJSCompiler",
@@ -52,9 +54,19 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.2",
     "babel-register": "^6.26.0",
+    "eslint": "^4.12.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-flowtype": "^2.39.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.5.1",
     "flow-bin": "^0.59.0",
     "flow-copy-source": "^1.2.1",
-    "rimraf": "^2.6.2"
+    "jest": "^21.2.1",
+    "rimraf": "^2.6.2",
+    "testdouble": "^3.2.6"
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * Changes have been made to this file.
  *
@@ -14,8 +15,6 @@
  * @providesModule formatGeneratedModule
  * @format
  */
-
-'use strict';
 
 export type FormatModule = ({|
   moduleName: string,
@@ -45,8 +44,6 @@ const formatGeneratedModule: FormatModule = ({
   return `/**
  * ${'@'}flow${hashText}
  */
-
-/* eslint-disable */
 
 'use strict';
 

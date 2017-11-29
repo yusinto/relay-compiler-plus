@@ -17,12 +17,12 @@ export default async (schemaPath, srcDir, customWebpackConfig) => {
   console.log('transpiling graphql-js with webpack');
 
   let webpackConfig;
-  if(customWebpackConfig) {
+  if (customWebpackConfig) {
     console.log(`Using custom webpack config: ${customWebpackConfig}`);
-    webpackConfig = require(customWebpackConfig);
+    webpackConfig = require(customWebpackConfig); //eslint-disable-line import/no-dynamic-require
   } else {
     console.log('Using default webpack config');
-    webpackConfig = require('./webpack.config');
+    webpackConfig = require('./webpack.config'); //eslint-disable-line import/no-dynamic-require
     webpackConfig.entry.push(schemaPath);
   }
 
@@ -39,7 +39,7 @@ export default async (schemaPath, srcDir, customWebpackConfig) => {
   }
 
   const transpiled = path.resolve(webpackConfig.output.path, webpackConfig.output.filename);
-  const schema = require(transpiled).default;
+  const schema = require(transpiled).default; //eslint-disable-line import/no-dynamic-require
   const outputDest = path.resolve(srcDir, './schema.graphql');
 
   fs.writeFileSync(outputDest, printSchema(schema));

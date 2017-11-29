@@ -62,7 +62,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -122,6 +122,63 @@ module.exports = require("fast-glob");
 
 /***/ }),
 /* 5 */
+/*!*******************************!*\
+  !*** ./src/compiler/utils.js ***!
+  \*******************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.clean = exports.md5 = undefined;
+
+var _crypto = __webpack_require__(/*! crypto */ 12);
+
+var _crypto2 = _interopRequireDefault(_crypto);
+
+var _fastGlob = __webpack_require__(/*! fast-glob */ 4);
+
+var _fastGlob2 = _interopRequireDefault(_fastGlob);
+
+var _fs = __webpack_require__(/*! fs */ 1);
+
+var _fs2 = _interopRequireDefault(_fs);
+
+var _path = __webpack_require__(/*! path */ 0);
+
+var _path2 = _interopRequireDefault(_path);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Ripped from relay-compiler/RelayFileWriter.js
+var md5 = exports.md5 = function md5(x) {
+  return _crypto2.default.createHash('md5').update(x, 'utf8').digest('hex');
+};
+
+var clean = exports.clean = function clean(src) {
+  console.log('Start clean...');
+  var filesToClean = _fastGlob2.default.sync('**/__generated__/**/*.graphql.js', {
+    cwd: src,
+    bashNative: [],
+    onlyFiles: true
+  });
+
+  filesToClean.forEach(function (f) {
+    var filePath = _path2.default.resolve(src, f);
+    console.log('deleting ' + filePath);
+    _fs2.default.unlinkSync(filePath);
+  });
+
+  console.log('Finished cleaning');
+};
+
+/***/ }),
+/* 6 */
 /*!***************************************************!*\
   !*** multi babel-polyfill ./src/compiler/main.js ***!
   \***************************************************/
@@ -130,11 +187,11 @@ module.exports = require("fast-glob");
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! babel-polyfill */2);
-module.exports = __webpack_require__(/*! ./src/compiler/main.js */6);
+module.exports = __webpack_require__(/*! ./src/compiler/main.js */7);
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /*!******************************!*\
   !*** ./src/compiler/main.js ***!
   \******************************/
@@ -145,7 +202,7 @@ module.exports = __webpack_require__(/*! ./src/compiler/main.js */6);
 "use strict";
 
 
-var _yargs = __webpack_require__(/*! yargs */ 7);
+var _yargs = __webpack_require__(/*! yargs */ 8);
 
 var _yargs2 = _interopRequireDefault(_yargs);
 
@@ -163,37 +220,31 @@ var _relayCompiler = __webpack_require__(/*! relay-compiler */ 3);
 
 var _relayCompiler2 = _interopRequireDefault(_relayCompiler);
 
-var _ripped = __webpack_require__(/*! ./ripped */ 8);
+var _ripped = __webpack_require__(/*! ./ripped */ 9);
 
-var _utils = __webpack_require__(/*! ./utils */ 11);
+var _utils = __webpack_require__(/*! ./utils */ 5);
 
 var _graphqlJSCompiler = __webpack_require__(/*! relay-compiler-plus/graphqlJSCompiler */ 13);
 
+var _persistQuery = __webpack_require__(/*! ./persistQuery */ 14);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; } //eslint-disable-line
+
 
 var ConsoleReporter = _relayCompiler2.default.ConsoleReporter,
     CodegenRunner = _relayCompiler2.default.Runner,
     RelayJSModuleParser = _relayCompiler2.default.FileIRParser;
 
-var queryCache = [];
-
-function persistQuery(operationText) {
-  return new Promise(function (resolve) {
-    var queryId = (0, _utils.md5)(operationText);
-    queryCache.push({ id: queryId, text: operationText });
-    resolve(queryId);
-  });
-}
-
 /*
 * Most of the code in this run method are ripped from:
 * relay-compiler/bin/RelayCompilerBin.js
 */
+
 var run = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(options) {
-    var srcDir, schemaPath, customWebpackConfig, reporter, parserConfigs, writerConfigs, codegenRunner, result, queryCacheOutputFile;
+    var srcDir, schemaPath, customWebpackConfig, reporter, parserConfigs, writerConfigs, codegenRunner, result, queryMapOutputFile;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -248,7 +299,7 @@ var run = function () {
             };
             writerConfigs = {
               default: {
-                getWriter: (0, _ripped.getRelayFileWriter)(srcDir, persistQuery),
+                getWriter: (0, _ripped.getRelayFileWriter)(srcDir, _persistQuery.persistQuery),
                 isGeneratedFile: function isGeneratedFile(filePath) {
                   return filePath.endsWith('.js') && filePath.includes('__generated__');
                 },
@@ -279,11 +330,11 @@ var run = function () {
             throw _context.t0;
 
           case 27:
-            queryCacheOutputFile = srcDir + '/queryMap.json';
+            queryMapOutputFile = srcDir + '/queryMap.json';
             _context.prev = 28;
 
-            _fs2.default.writeFileSync(queryCacheOutputFile, JSON.stringify(queryCache));
-            console.log('Query cache written to: ' + queryCacheOutputFile);
+            _fs2.default.writeFileSync(queryMapOutputFile, JSON.stringify(_persistQuery.queryMap));
+            console.log('Query map written to: ' + queryMapOutputFile);
             _context.next = 37;
             break;
 
@@ -316,7 +367,8 @@ var run = function () {
 }();
 
 // Collect args
-var argv = _yargs2.default.usage('Usage: $0 --schema <schemaPath> --src <srcDir>').options({
+var argv = _yargs2.default // eslint-disable-line prefer-destructuring
+.usage('Usage: $0 --schema <schemaPath> --src <srcDir>').options({
   schema: {
     describe: 'Path to schema.js or schema.graphql or schema.json',
     demandOption: false,
@@ -364,7 +416,7 @@ _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
 }))();
 
 /***/ }),
-/* 7 */
+/* 8 */
 /*!************************!*\
   !*** external "yargs" ***!
   \************************/
@@ -375,7 +427,7 @@ _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
 module.exports = require("yargs");
 
 /***/ }),
-/* 8 */
+/* 9 */
 /*!********************************!*\
   !*** ./src/compiler/ripped.js ***!
   \********************************/
@@ -401,33 +453,34 @@ var _path = __webpack_require__(/*! path */ 0);
 
 var _path2 = _interopRequireDefault(_path);
 
-var _graphql = __webpack_require__(/*! graphql */ 9);
+var _graphql = __webpack_require__(/*! graphql */ 10);
 
 var _relayCompiler = __webpack_require__(/*! relay-compiler */ 3);
 
 var _relayCompiler2 = _interopRequireDefault(_relayCompiler);
 
-var _formatGeneratedModule = __webpack_require__(/*! ./formatGeneratedModule */ 10);
+var _formatGeneratedModule = __webpack_require__(/*! ./formatGeneratedModule */ 11);
 
 var _formatGeneratedModule2 = _interopRequireDefault(_formatGeneratedModule);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var RelayFileWriter = _relayCompiler2.default.FileWriter,
-    RelayIRTransforms = _relayCompiler2.default.IRTransforms; /**
-                                                               * The code in this file are ripped from:
-                                                               * relay-compiler/bin/RelayCompilerBin.js
-                                                               *
-                                                               * Copyright (c) 2013-present, Facebook, Inc.
-                                                               * All rights reserved.
-                                                               *
-                                                               * This source code is licensed under the BSD-style license found in the
-                                                               * LICENSE file in the root directory of this source tree. An additional grant
-                                                               * of patent rights can be found in the PATENTS file in the same directory.
-                                                               *
-                                                               * @providesModule RelayCompilerBin
-                                                               * @format
-                                                               */
+    RelayIRTransforms = _relayCompiler2.default.IRTransforms; /* eslint-disable */
+/**
+ * The code in this file are ripped from:
+ * relay-compiler/bin/RelayCompilerBin.js
+ *
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule RelayCompilerBin
+ * @format
+ */
 
 var codegenTransforms = RelayIRTransforms.codegenTransforms,
     fragmentTransforms = RelayIRTransforms.fragmentTransforms,
@@ -495,7 +548,7 @@ function getSchema(schemaPath) {
 }
 
 /***/ }),
-/* 9 */
+/* 10 */
 /*!**************************!*\
   !*** external "graphql" ***!
   \**************************/
@@ -506,7 +559,7 @@ function getSchema(schemaPath) {
 module.exports = require("graphql");
 
 /***/ }),
-/* 10 */
+/* 11 */
 /*!***********************************************!*\
   !*** ./src/compiler/formatGeneratedModule.js ***!
   \***********************************************/
@@ -515,6 +568,24 @@ module.exports = require("graphql");
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+var formatGeneratedModule = function formatGeneratedModule(_ref) {
+  var moduleName = _ref.moduleName,
+      documentType = _ref.documentType,
+      docText = _ref.docText,
+      concreteText = _ref.concreteText,
+      flowText = _ref.flowText,
+      hash = _ref.hash,
+      devTextGenerator = _ref.devTextGenerator,
+      relayRuntimeModule = _ref.relayRuntimeModule;
+
+  var objectName = documentType === 'ConcreteBatch' ? 'batch' : 'fragment';
+  var docTextComment = docText ? '\n/*\n' + docText.trim() + '\n*/\n' : '';
+  var hashText = hash ? '\n * ' + hash : '';
+  // const devOnlyText = devTextGenerator ? devTextGenerator(objectName) : '';
+  return '/**\n * ' + '@' + 'flow' + hashText + '\n */\n\n\'use strict\';\n\n/*::\nimport type {' + documentType + '} from \'' + relayRuntimeModule + '\';\n' + (flowText || '') + '\n*/\n\n' + docTextComment + '\nconst ' + objectName + ' /*: ' + documentType + '*/ = ' + concreteText + ';\n\nmodule.exports = ' + objectName + ';\n';
+}; /* eslint-disable */
 /**
  * Changes have been made to this file.
  *
@@ -532,83 +603,7 @@ module.exports = require("graphql");
  * @format
  */
 
-
-
-var formatGeneratedModule = function formatGeneratedModule(_ref) {
-  var moduleName = _ref.moduleName,
-      documentType = _ref.documentType,
-      docText = _ref.docText,
-      concreteText = _ref.concreteText,
-      flowText = _ref.flowText,
-      hash = _ref.hash,
-      devTextGenerator = _ref.devTextGenerator,
-      relayRuntimeModule = _ref.relayRuntimeModule;
-
-  var objectName = documentType === 'ConcreteBatch' ? 'batch' : 'fragment';
-  var docTextComment = docText ? '\n/*\n' + docText.trim() + '\n*/\n' : '';
-  var hashText = hash ? '\n * ' + hash : '';
-  // const devOnlyText = devTextGenerator ? devTextGenerator(objectName) : '';
-  return '/**\n * ' + '@' + 'flow' + hashText + '\n */\n\n/* eslint-disable */\n\n\'use strict\';\n\n/*::\nimport type {' + documentType + '} from \'' + relayRuntimeModule + '\';\n' + (flowText || '') + '\n*/\n\n' + docTextComment + '\nconst ' + objectName + ' /*: ' + documentType + '*/ = ' + concreteText + ';\n\nmodule.exports = ' + objectName + ';\n';
-};
-
 module.exports = formatGeneratedModule;
-
-/***/ }),
-/* 11 */
-/*!*******************************!*\
-  !*** ./src/compiler/utils.js ***!
-  \*******************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.clean = exports.md5 = undefined;
-
-var _crypto = __webpack_require__(/*! crypto */ 12);
-
-var _crypto2 = _interopRequireDefault(_crypto);
-
-var _fastGlob = __webpack_require__(/*! fast-glob */ 4);
-
-var _fastGlob2 = _interopRequireDefault(_fastGlob);
-
-var _fs = __webpack_require__(/*! fs */ 1);
-
-var _fs2 = _interopRequireDefault(_fs);
-
-var _path = __webpack_require__(/*! path */ 0);
-
-var _path2 = _interopRequireDefault(_path);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// Ripped from relay-compiler/RelayFileWriter.js
-var md5 = exports.md5 = function md5(x) {
-  return _crypto2.default.createHash('md5').update(x, 'utf8').digest('hex');
-};
-
-var clean = exports.clean = function clean(src) {
-  console.log('Start clean...');
-  var filesToClean = _fastGlob2.default.sync('**/__generated__/**/*.graphql.js', {
-    cwd: src,
-    bashNative: [],
-    onlyFiles: true
-  });
-
-  filesToClean.forEach(function (f) {
-    var filePath = _path2.default.resolve(src, f);
-    console.log('deleting ' + filePath);
-    _fs2.default.unlinkSync(filePath);
-  });
-
-  console.log('Finished cleaning');
-};
 
 /***/ }),
 /* 12 */
@@ -631,6 +626,35 @@ module.exports = require("crypto");
 /***/ (function(module, exports) {
 
 module.exports = require("relay-compiler-plus/graphqlJSCompiler");
+
+/***/ }),
+/* 14 */
+/*!**************************************!*\
+  !*** ./src/compiler/persistQuery.js ***!
+  \**************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.persistQuery = exports.queryMap = undefined;
+
+var _utils = __webpack_require__(/*! ./utils */ 5);
+
+var queryMap = exports.queryMap = {};
+
+var persistQuery = exports.persistQuery = function persistQuery(operationText) {
+  return new Promise(function (resolve) {
+    var queryId = (0, _utils.md5)(operationText);
+    queryMap[queryId] = operationText;
+    resolve(queryId);
+  });
+};
 
 /***/ })
 /******/ ]);

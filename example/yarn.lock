@@ -2693,8 +2693,8 @@ nan@^2.3.0:
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.7.0.tgz#d95bf721ec877e08db276ed3fc6eb78f9083ad46"
 
 nanomatch@^1.2.5:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/nanomatch/-/nanomatch-1.2.5.tgz#5c9ab02475c76676275731b0bf0a7395c624a9c4"
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/nanomatch/-/nanomatch-1.2.6.tgz#f27233e97c34a8706b7e781a4bc611c957a81625"
   dependencies:
     arr-diff "^4.0.0"
     array-unique "^0.3.2"
@@ -3273,8 +3273,8 @@ regjsparser@^0.1.4:
     jsesc "~0.5.0"
 
 relay-compiler-plus@^1.4.0:
-  version "1.4.13"
-  resolved "https://registry.yarnpkg.com/relay-compiler-plus/-/relay-compiler-plus-1.4.13.tgz#a9a998f2de484678e1f2ede41c8d3eb20f921852"
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/relay-compiler-plus/-/relay-compiler-plus-1.6.0.tgz#38588f9df83d41952cc971a5bfb9912a1e92056a"
   dependencies:
     babel-loader "^7.1.2"
     babel-plugin-transform-async-to-generator "^6.24.1"

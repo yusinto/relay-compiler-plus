@@ -45,6 +45,8 @@ const formatGeneratedModule: FormatModule = ({
  * ${'@'}flow${hashText}
  */
 
+/* eslint-disable */
+
 'use strict';
 
 /*::

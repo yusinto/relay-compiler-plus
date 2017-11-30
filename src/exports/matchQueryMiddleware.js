@@ -17,7 +17,7 @@ export default function matchQueryMiddleware(queryMapJson, debug = false) {
           log(`Yayy! Found persisted query ${queryId}`, debug);
           req.body.query = query;
         } else {
-          throw new Error(`matchQueryMiddlware: can't find queryId: ${queryId}`);
+          throw new Error(`matchQueryMiddleware: can't find queryId: ${queryId}`);
         }
       }
       next();

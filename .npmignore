@@ -7,3 +7,4 @@ src
 .gitignore
 .npmignore
 yarn.lock
+**/*.test.js

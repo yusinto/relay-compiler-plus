@@ -278,7 +278,6 @@ var run = function () {
           case 10:
 
             console.log('schemaPath: ' + schemaPath);
-
             (0, _utils.clean)(srcDir);
 
             reporter = new ConsoleReporter({ verbose: true });
@@ -291,7 +290,7 @@ var run = function () {
                   return (0, _ripped.getSchema)(schemaPath);
                 },
                 filepaths: (0, _ripped.getFilepathsFromGlob)(srcDir, {
-                  extensions: ['js'],
+                  extensions: options.extensions,
                   include: ['**'],
                   exclude: ['**/node_modules/**', '**/__mocks__/**', '**/__tests__/**', '**/__generated__/**']
                 })
@@ -382,6 +381,12 @@ var argv = _yargs2.default // eslint-disable-line prefer-destructuring
   webpackConfig: {
     describe: 'Custom webpack config to compile graphql-js',
     demandOption: false,
+    type: 'string'
+  },
+  extensions: {
+    array: true,
+    default: ['js', 'jsx'],
+    describe: 'File extensions to compile (--extensions js jsx)',
     type: 'string'
   }
 }).help().argv;

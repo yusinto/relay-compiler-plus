@@ -18,7 +18,7 @@ const {
 * Most of the code in this run method are ripped from:
 * relay-compiler/bin/RelayCompilerBin.js
 */
-const run = async (options: { schema: string, src: string, webpackConfig: string }) => {
+const run = async (options: { schema: string, src: string, webpackConfig: string, extensions:  Array<string>}) => {
   const srcDir = path.resolve(process.cwd(), options.src);
   console.log(`src: ${srcDir}`);
 
@@ -37,7 +37,6 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
   }
 
   console.log(`schemaPath: ${schemaPath}`);
-
   clean(srcDir);
 
   const reporter = new ConsoleReporter({verbose: true});
@@ -48,7 +47,7 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
       getParser: RelayJSModuleParser.getParser,
       getSchema: () => getSchema(schemaPath),
       filepaths: getFilepathsFromGlob(srcDir, {
-        extensions: ['js'],
+        extensions: options.extensions,
         include: ['**'],
         exclude: [
           '**/node_modules/**',
@@ -113,6 +112,12 @@ const argv = yargs // eslint-disable-line prefer-destructuring
     webpackConfig: {
       describe: 'Custom webpack config to compile graphql-js',
       demandOption: false,
+      type: 'string',
+    },
+    extensions: {
+      array: true,
+      default: ['js', 'jsx'],
+      describe: 'File extensions to compile (--extensions js jsx)',
       type: 'string',
     },
   })

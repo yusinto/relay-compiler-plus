@@ -13,7 +13,7 @@ export default {
   },
   externals: [nodeExternals(), 'relay-compiler-plus/graphqlJSCompiler'], // ignore all modules in node_modules folder
   output: {
-    path: path.resolve('./bin'),
+    path: path.resolve('./dist/bin'),
     filename: 'relay-compiler-plus',
     pathinfo: true,
     library: 'RelayCompilerPlus',

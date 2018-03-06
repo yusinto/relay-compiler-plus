@@ -7,7 +7,8 @@
     "dev": "node src/server",
     "rcp": "relay-compiler-plus --schema src/schema.graphql --src src",
     "rcp-js": "relay-compiler-plus --schema src/server/schema.js --src src",
-    "rcp-js-custom": "relay-compiler-plus --webpackConfig src/server/webpack.config.js --src src"
+    "rcp-js-custom": "relay-compiler-plus --webpackConfig src/server/webpack.config.js --src src",
+    "clean-relay": "find . \\( -name \"*.graphql.js\" -o -name \"*.graphql.json\" \\) -type f -delete && rm -rf ./src/queryMap.json"
   },
   "repository": {
     "type": "git",
@@ -46,7 +47,7 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-relay": "^1.5.0",
-    "relay-compiler-plus": "file:..",
+    "relay-compiler-plus": "file:../dist",
     "relay-runtime": "^1.5.0"
   },
   "devDependencies": {

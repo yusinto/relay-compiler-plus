@@ -4,6 +4,7 @@ var path = require('path');
 const sourceFolder = path.resolve(__dirname, 'src');
 
 module.exports = {
+  mode: 'development',
   devtool: 'source-map',
   // Add webpack-hot-middleware/client to our bundle so our universal subscribes to update notifications from the server
   entry: ['webpack-hot-middleware/client', path.join(__dirname, 'src/client/index')],

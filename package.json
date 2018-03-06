@@ -46,11 +46,12 @@
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
     "body-parser": "^1.18.2",
-    "graphql": "^0.11.7",
-    "relay-compiler": "^1.4.1",
-    "webpack": "^3.8.1",
+    "graphql": "^0.13.1",
+    "relay-compiler": "^1.5.0",
+    "uglifyjs-webpack-plugin": "^1.2.2",
+    "webpack": "^4.1.0",
     "webpack-node-externals": "^1.6.0",
-    "yargs": "^10.0.3"
+    "yargs": "^11.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -63,9 +64,9 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.5.1",
-    "flow-bin": "^0.59.0",
+    "flow-bin": "^0.66.0",
     "flow-copy-source": "^1.2.1",
-    "jest": "^21.2.1",
+    "jest": "^22.4.2",
     "rimraf": "^2.6.2",
     "testdouble": "^3.2.6"
   }

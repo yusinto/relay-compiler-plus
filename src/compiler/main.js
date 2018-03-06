@@ -18,7 +18,7 @@ const {
 * Most of the code in this run method are ripped from:
 * relay-compiler/bin/RelayCompilerBin.js
 */
-const run = async (options: { schema: string, src: string, webpackConfig: string, extensions:  Array<string>}) => {
+const run = async (options: { schema: string, src: string, webpackConfig: string, extensions: Array<string>}) => {
   const srcDir = path.resolve(process.cwd(), options.src);
   console.log(`src: ${srcDir}`);
 
@@ -84,7 +84,7 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
 
   const queryMapOutputFile = `${srcDir}/queryMap.json`;
   try {
-    fs.writeFileSync(queryMapOutputFile, JSON.stringify(queryMap));
+    fs.writeFileSync(queryMapOutputFile, JSON.stringify(queryMap, null, 2));
     console.log(`Query map written to: ${queryMapOutputFile}`);
   } catch (err) {
     if (err) {

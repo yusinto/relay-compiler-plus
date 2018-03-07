@@ -74,7 +74,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 13);
+/******/ 	return __webpack_require__(__webpack_require__.s = 14);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -392,6 +392,18 @@ function getSchema(schemaPath) {
 
 /***/ }),
 /* 11 */
+/*!******************************************************!*\
+  !*** external "relay-compiler/lib/DotGraphQLParser" ***!
+  \******************************************************/
+/*! no static exports found */
+/*! all exports used */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("relay-compiler/lib/DotGraphQLParser");
+
+/***/ }),
+/* 12 */
 /*!************************!*\
   !*** external "yargs" ***!
   \************************/
@@ -403,7 +415,7 @@ function getSchema(schemaPath) {
 module.exports = require("yargs");
 
 /***/ }),
-/* 12 */
+/* 13 */
 /*!******************************!*\
   !*** ./src/compiler/main.js ***!
   \******************************/
@@ -415,7 +427,7 @@ module.exports = require("yargs");
 "use strict";
 
 
-var _yargs = __webpack_require__(/*! yargs */ 11);
+var _yargs = __webpack_require__(/*! yargs */ 12);
 
 var _yargs2 = _interopRequireDefault(_yargs);
 
@@ -431,6 +443,10 @@ var _fs2 = _interopRequireDefault(_fs);
 
 var _relayCompiler = __webpack_require__(/*! relay-compiler */ 4);
 
+var _DotGraphQLParser = __webpack_require__(/*! relay-compiler/lib/DotGraphQLParser */ 11);
+
+var _DotGraphQLParser2 = _interopRequireDefault(_DotGraphQLParser);
+
 var _ripped = __webpack_require__(/*! ./ripped */ 10);
 
 var _utils = __webpack_require__(/*! ./utils */ 2);
@@ -441,14 +457,8 @@ var _persistQuery = __webpack_require__(/*! ./persistQuery */ 6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-// import GraphqlCompiler from 'graphql-compiler';
-//eslint-disable-line
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; } //eslint-disable-line
 
-
-// const {
-//   DotGraphQLParser,
-// } = GraphqlCompiler;
 
 /*
 * Most of the code in this run method are ripped from:
@@ -510,22 +520,19 @@ var run = function () {
                   include: ['**'],
                   exclude: ['**/node_modules/**', '**/__mocks__/**', '**/__tests__/**', '**/__generated__/**']
                 })
+              },
+              graphql: {
+                baseDir: srcDir,
+                getParser: _DotGraphQLParser2.default.getParser,
+                getSchema: function getSchema() {
+                  return schema;
+                },
+                filepaths: (0, _ripped.getFilepathsFromGlob)(srcDir, {
+                  extensions: ['graphql'],
+                  include: ['**'],
+                  exclude: ['**/node_modules/**', '**/__mocks__/**', '**/__tests__/**', '**/__generated__/**']
+                })
               }
-              // graphql: {
-              //   baseDir: srcDir,
-              //   getParser: DotGraphQLParser.getParser,
-              //   getSchema: () => schema,
-              //   filepaths: getFilepathsFromGlob(srcDir, {
-              //     extensions: ['graphql'],
-              //     include: ['**'],
-              //     exclude: [
-              //       '**/node_modules/**',
-              //       '**/__mocks__/**',
-              //       '**/__tests__/**',
-              //       '**/__generated__/**',
-              //     ],
-              //   }),
-              // },
             };
             writerConfigs = {
               js: {
@@ -533,8 +540,8 @@ var run = function () {
                 isGeneratedFile: function isGeneratedFile(filePath) {
                   return filePath.endsWith('.js') && filePath.includes('__generated__');
                 },
-                parser: 'js'
-                // baseParsers: ['graphql'],
+                parser: 'js',
+                baseParsers: ['graphql']
               }
             };
             codegenRunner = new _relayCompiler.Runner({
@@ -544,40 +551,6 @@ var run = function () {
               onlyValidate: false,
               sourceControl: null
             });
-
-            // const parserConfigs = {
-            //   default: {
-            //     baseDir: srcDir,
-            //     getFileFilter: JSModuleParser.getFileFilter,
-            //     getParser: JSModuleParser.getParser,
-            //     getSchema: () => getSchema(schemaPath),
-            //     filepaths: getFilepathsFromGlob(srcDir, {
-            //       extensions: options.extensions,
-            //       include: ['**'],
-            //       exclude: [
-            //         '**/node_modules/**',
-            //         '**/__mocks__/**',
-            //         '**/__tests__/**',
-            //         '**/__generated__/**',
-            //       ],
-            //     }),
-            //   },
-            // };
-            // const writerConfigs = {
-            //   default: {
-            //     getWriter: getRelayFileWriter(srcDir, persistQuery),
-            //     isGeneratedFile: (filePath) =>
-            //       filePath.endsWith('.js') && filePath.includes('__generated__'),
-            //     parser: 'default',
-            //   },
-            // };
-            // const codegenRunner = new CodegenRunner({
-            //   reporter,
-            //   parserConfigs,
-            //   writerConfigs,
-            //   onlyValidate: false,
-            // });
-
             result = '';
             _context.prev = 18;
             _context.next = 21;
@@ -688,7 +661,7 @@ _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
 }))();
 
 /***/ }),
-/* 13 */
+/* 14 */
 /*!***************************************************!*\
   !*** multi babel-polyfill ./src/compiler/main.js ***!
   \***************************************************/
@@ -698,7 +671,7 @@ _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! babel-polyfill */5);
-module.exports = __webpack_require__(/*! ./src/compiler/main.js */12);
+module.exports = __webpack_require__(/*! ./src/compiler/main.js */13);
 
 
 /***/ })

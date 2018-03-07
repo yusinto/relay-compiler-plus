@@ -50,7 +50,6 @@
     "babel-preset-stage-0": "^6.24.1",
     "body-parser": "^1.18.2",
     "graphql": "^0.13.1",
-    "graphql-compiler": "^0.0.2",
     "relay-compiler": "^1.5.0",
     "uglifyjs-webpack-plugin": "^1.2.2",
     "webpack": "^4.1.0",

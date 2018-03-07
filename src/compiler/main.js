@@ -3,15 +3,11 @@ import 'babel-polyfill';
 import path from 'path';
 import fs from 'fs';
 import {JSModuleParser, ConsoleReporter, Runner as CodegenRunner} from 'relay-compiler';
-// import GraphqlCompiler from 'graphql-compiler';
+import DotGraphQLParser from 'relay-compiler/lib/DotGraphQLParser';
 import {getFilepathsFromGlob, getRelayFileWriter, getSchema} from './ripped';
 import {clean} from './utils';
 import {graphqlJSCompiler} from 'relay-compiler-plus/graphqlJSCompiler'; //eslint-disable-line
 import {queryMap, persistQuery} from './persistQuery';
-
-// const {
-//   DotGraphQLParser,
-// } = GraphqlCompiler;
 
 /*
 * Most of the code in this run method are ripped from:
@@ -62,21 +58,21 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
         ],
       }),
     },
-    // graphql: {
-    //   baseDir: srcDir,
-    //   getParser: DotGraphQLParser.getParser,
-    //   getSchema: () => schema,
-    //   filepaths: getFilepathsFromGlob(srcDir, {
-    //     extensions: ['graphql'],
-    //     include: ['**'],
-    //     exclude: [
-    //       '**/node_modules/**',
-    //       '**/__mocks__/**',
-    //       '**/__tests__/**',
-    //       '**/__generated__/**',
-    //     ],
-    //   }),
-    // },
+    graphql: {
+      baseDir: srcDir,
+      getParser: DotGraphQLParser.getParser,
+      getSchema: () => schema,
+      filepaths: getFilepathsFromGlob(srcDir, {
+        extensions: ['graphql'],
+        include: ['**'],
+        exclude: [
+          '**/node_modules/**',
+          '**/__mocks__/**',
+          '**/__tests__/**',
+          '**/__generated__/**',
+        ],
+      }),
+    },
   };
   const writerConfigs = {
     js: {
@@ -84,7 +80,7 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
       isGeneratedFile: (filePath: string) =>
         filePath.endsWith('.js') && filePath.includes('__generated__'),
       parser: 'js',
-      // baseParsers: ['graphql'],
+      baseParsers: ['graphql'],
     },
   };
   const codegenRunner = new CodegenRunner({
@@ -94,39 +90,6 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
     onlyValidate: false,
     sourceControl: null,
   });
-
-  // const parserConfigs = {
-  //   default: {
-  //     baseDir: srcDir,
-  //     getFileFilter: JSModuleParser.getFileFilter,
-  //     getParser: JSModuleParser.getParser,
-  //     getSchema: () => getSchema(schemaPath),
-  //     filepaths: getFilepathsFromGlob(srcDir, {
-  //       extensions: options.extensions,
-  //       include: ['**'],
-  //       exclude: [
-  //         '**/node_modules/**',
-  //         '**/__mocks__/**',
-  //         '**/__tests__/**',
-  //         '**/__generated__/**',
-  //       ],
-  //     }),
-  //   },
-  // };
-  // const writerConfigs = {
-  //   default: {
-  //     getWriter: getRelayFileWriter(srcDir, persistQuery),
-  //     isGeneratedFile: (filePath) =>
-  //       filePath.endsWith('.js') && filePath.includes('__generated__'),
-  //     parser: 'default',
-  //   },
-  // };
-  // const codegenRunner = new CodegenRunner({
-  //   reporter,
-  //   parserConfigs,
-  //   writerConfigs,
-  //   onlyValidate: false,
-  // });
 
   let result = '';
   try {

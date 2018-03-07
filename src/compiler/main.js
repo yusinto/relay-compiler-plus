@@ -2,23 +2,18 @@ import yargs from 'yargs';
 import 'babel-polyfill';
 import path from 'path';
 import fs from 'fs';
-import RelayCompiler from 'relay-compiler';
+import {JSModuleParser, ConsoleReporter, Runner as CodegenRunner} from 'relay-compiler';
+import DotGraphQLParser from 'relay-compiler/lib/DotGraphQLParser';
 import {getFilepathsFromGlob, getRelayFileWriter, getSchema} from './ripped';
 import {clean} from './utils';
 import {graphqlJSCompiler} from 'relay-compiler-plus/graphqlJSCompiler'; //eslint-disable-line
 import {queryMap, persistQuery} from './persistQuery';
 
-const {
-  ConsoleReporter,
-  Runner: CodegenRunner,
-  FileIRParser: RelayJSModuleParser,
-} = RelayCompiler;
-
 /*
 * Most of the code in this run method are ripped from:
 * relay-compiler/bin/RelayCompilerBin.js
 */
-const run = async (options: { schema: string, src: string, webpackConfig: string, extensions:  Array<string>}) => {
+const run = async (options: { schema: string, src: string, webpackConfig: string, extensions: Array<string> }) => {
   const srcDir = path.resolve(process.cwd(), options.src);
   console.log(`src: ${srcDir}`);
 
@@ -39,13 +34,19 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
   console.log(`schemaPath: ${schemaPath}`);
   clean(srcDir);
 
-  const reporter = new ConsoleReporter({verbose: true});
+  const reporter = new ConsoleReporter({
+    verbose: options.verbose,
+    quiet: options.quiet,
+  });
+
+
+  const schema = getSchema(schemaPath);
   const parserConfigs = {
-    default: {
+    js: {
       baseDir: srcDir,
-      getFileFilter: RelayJSModuleParser.getFileFilter,
-      getParser: RelayJSModuleParser.getParser,
-      getSchema: () => getSchema(schemaPath),
+      getFileFilter: JSModuleParser.getFileFilter,
+      getParser: JSModuleParser.getParser,
+      getSchema: () => schema,
       filepaths: getFilepathsFromGlob(srcDir, {
         extensions: options.extensions,
         include: ['**'],
@@ -57,13 +58,29 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
         ],
       }),
     },
+    graphql: {
+      baseDir: srcDir,
+      getParser: DotGraphQLParser.getParser,
+      getSchema: () => schema,
+      filepaths: getFilepathsFromGlob(srcDir, {
+        extensions: ['graphql'],
+        include: ['**'],
+        exclude: [
+          '**/node_modules/**',
+          '**/__mocks__/**',
+          '**/__tests__/**',
+          '**/__generated__/**',
+        ],
+      }),
+    },
   };
   const writerConfigs = {
-    default: {
+    js: {
       getWriter: getRelayFileWriter(srcDir, persistQuery),
-      isGeneratedFile: (filePath) =>
+      isGeneratedFile: (filePath: string) =>
         filePath.endsWith('.js') && filePath.includes('__generated__'),
-      parser: 'default',
+      parser: 'js',
+      baseParsers: ['graphql'],
     },
   };
   const codegenRunner = new CodegenRunner({
@@ -71,6 +88,7 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
     parserConfigs,
     writerConfigs,
     onlyValidate: false,
+    sourceControl: null,
   });
 
   let result = '';
@@ -84,7 +102,7 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
 
   const queryMapOutputFile = `${srcDir}/queryMap.json`;
   try {
-    fs.writeFileSync(queryMapOutputFile, JSON.stringify(queryMap));
+    fs.writeFileSync(queryMapOutputFile, JSON.stringify(queryMap, null, 2));
     console.log(`Query map written to: ${queryMapOutputFile}`);
   } catch (err) {
     if (err) {

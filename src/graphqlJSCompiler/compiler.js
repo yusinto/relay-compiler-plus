@@ -40,7 +40,7 @@ export default async (schemaPath, srcDir, customWebpackConfig) => {
 
   const transpiled = path.resolve(webpackConfig.output.path, webpackConfig.output.filename);
   const schema = require(transpiled).default; //eslint-disable-line import/no-dynamic-require
-  const outputDest = path.resolve(srcDir, './schema.graphql');
+  const outputDest = path.resolve(srcDir, '../schema.graphql');
 
   fs.writeFileSync(outputDest, printSchema(schema));
   fs.unlinkSync(transpiled);

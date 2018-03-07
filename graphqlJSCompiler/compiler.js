@@ -82,7 +82,7 @@ exports.default = function () {
             transpiled = _path2.default.resolve(webpackConfig.output.path, webpackConfig.output.filename);
             schema = require(transpiled).default; //eslint-disable-line import/no-dynamic-require
 
-            outputDest = _path2.default.resolve(srcDir, './schema.graphql');
+            outputDest = _path2.default.resolve(srcDir, '../schema.graphql');
 
 
             _fs2.default.writeFileSync(outputDest, (0, _utilities.printSchema)(schema));

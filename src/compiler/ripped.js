@@ -24,14 +24,15 @@ import {
 } from 'graphql';
 import type {GraphQLSchema} from 'graphql';
 import RelayCompiler from 'relay-compiler';
-import formatGeneratedModule from './formatGeneratedModule';
 
 const {
   FileWriter: RelayFileWriter,
   IRTransforms: RelayIRTransforms,
+  formatGeneratedModule,
 } = RelayCompiler;
 
 const {
+  commonTransforms,
   codegenTransforms,
   fragmentTransforms,
   printTransforms,
@@ -60,11 +61,19 @@ export function getFilepathsFromGlob(baseDir: string,
 // Note: this function has been modified from its original form.
 // persistQuery param is added
 export function getRelayFileWriter(baseDir: string, persistQuery: (operationText: string) => Promise<string>) {
-  return (onlyValidate: boolean, schema: GraphQLSchema, documents: any, baseDocuments: any) =>
+  return ({
+            onlyValidate,
+            schema,
+            documents,
+            baseDocuments,
+            sourceControl,
+            reporter,
+          }) =>
     new RelayFileWriter({
       config: {
         baseDir,
         compilerTransforms: {
+          commonTransforms,
           codegenTransforms,
           fragmentTransforms,
           printTransforms,
@@ -81,6 +90,8 @@ export function getRelayFileWriter(baseDir: string, persistQuery: (operationText
       schema,
       baseDocuments,
       documents,
+      reporter,
+      sourceControl,
     });
 }
 
@@ -91,13 +102,12 @@ export function getSchema(schemaPath: string): GraphQLSchema {
       source = printSchema(buildClientSchema(JSON.parse(source).data));
     }
     source = `
-  directive @include(if: Boolean) on FRAGMENT | FIELD
-  directive @skip(if: Boolean) on FRAGMENT | FIELD
+  directive @include(if: Boolean) on FRAGMENT_SPREAD | FIELD
+  directive @skip(if: Boolean) on FRAGMENT_SPREAD | FIELD
 
   ${source}
   `;
-    const output = buildASTSchema(parse(source));
-    return output;
+    return buildASTSchema(parse(source), {assumeValid: true});
   } catch (error) {
     throw new Error(
       `

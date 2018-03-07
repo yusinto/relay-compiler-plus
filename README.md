@@ -47,7 +47,8 @@ yarn upgrade graphql --latest
     * A `queryMap.json` file under `<SRC_DIR_PATH>/queryMap.json`.
     This file can be consumed by the server to map the query ids to actual queries.
     * If you specified a schema.js file, this will also generate a `schema.graphql` 
-    file under `<SRC_DIR_PATH>/schema.graphql`.
+    file under `../<SRC_DIR_PATH>/schema.graphql`. The `schema.graphql` has to sit
+    outside the src folder otherwise relay-compiler will complain.
     
     If your graphql-js file is complex and you need to override the default webpack config
     you can do so like this:

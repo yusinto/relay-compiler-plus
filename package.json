@@ -16,7 +16,7 @@
     "build-flow": "flow-copy-source -v src dist/lib",
     "clean": "rimraf dist/*",
     "build": "npm run clean && npm run build-compiler && npm run build-exports && npm run build-graphql-js-compiler && cp LICENSE package.json dist",
-    "prep-publish": "cd dist && npm version patch -m 'Upgrade to %s' && npm publish && git push"
+    "prep-publish": "npm version patch -m 'Upgrade to %s' && npm publish && git push"
   },
   "repository": {
     "type": "git",

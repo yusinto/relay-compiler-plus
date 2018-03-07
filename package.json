@@ -3,9 +3,6 @@
   "version": "1.7.1",
   "description": "A custom relay modern compiler that supports persisted queries",
   "main": "lib/index.js",
-  "files": [
-    "dist/**/*"
-  ],
   "bin": {
     "relay-compiler-plus": "bin/relay-compiler-plus"
   },
@@ -19,7 +16,7 @@
     "build-flow": "flow-copy-source -v src dist/lib",
     "clean": "rimraf dist/*",
     "build": "npm run clean && npm run build-compiler && npm run build-exports && npm run build-graphql-js-compiler && cp LICENSE package.json dist",
-    "prep-publish": "npm version patch -m 'Upgrade to %s' && npm publish && git push"
+    "prep-publish": "cd dist && npm version patch -m 'Upgrade to %s' && npm publish && git push"
   },
   "repository": {
     "type": "git",

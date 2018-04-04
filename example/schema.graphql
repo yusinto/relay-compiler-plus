@@ -1,0 +1,9 @@
+type Query {
+  root: Root
+}
+
+type Root {
+  id: ID
+  animal: String
+  human: String
+}

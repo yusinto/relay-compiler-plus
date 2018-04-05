@@ -22,6 +22,7 @@ const formatGeneratedModule = ({
 }) => {
   const docTextComment = docText ? '\n/*\n' + docText.trim() + '\n*/\n' : '';
   const hashText = hash ? `\n * ${hash}` : '';
+  const operationText = process.env.NODE_ENV !== 'production' ? devOnlyAssignments : '';
   return `/**
  * ${'@'}flow${hashText}
  */
@@ -37,7 +38,7 @@ ${flowText || ''}
 
 ${docTextComment}
 const node/*: ${documentType}*/ = ${concreteText};
-const node2 = ${devOnlyAssignments};
+${operationText}
 (node/*: any*/).hash = '${sourceHash}';
 module.exports = node;
 `;

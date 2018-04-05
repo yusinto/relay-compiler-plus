@@ -44,7 +44,8 @@
     "node": true
   },
   "globals": {
-    "jest",
-    "td"
+    "jest": true,
+    "td": true,
+    "__DEV__": true
   }
 }

@@ -273,8 +273,7 @@ module.exports = require("crypto");
 
 
 var formatGeneratedModule = function formatGeneratedModule(_ref) {
-  var moduleName = _ref.moduleName,
-      documentType = _ref.documentType,
+  var documentType = _ref.documentType,
       docText = _ref.docText,
       concreteText = _ref.concreteText,
       flowText = _ref.flowText,
@@ -285,7 +284,8 @@ var formatGeneratedModule = function formatGeneratedModule(_ref) {
 
   var docTextComment = docText ? '\n/*\n' + docText.trim() + '\n*/\n' : '';
   var hashText = hash ? '\n * ' + hash : '';
-  return '/**\n * ' + '@' + 'flow' + hashText + '\n */\n\n/* eslint-disable */\n\n\'use strict\';\n\n/*::\nimport type { ' + documentType + ' } from \'' + relayRuntimeModule + '\';\n' + (flowText || '') + '\n*/\n\n' + docTextComment + '\nconst node/*: ' + documentType + '*/ = ' + concreteText + ';\nconst node2 = ' + devOnlyAssignments + ';\n(node/*: any*/).hash = \'' + sourceHash + '\';\nmodule.exports = node;\n';
+  var operationText =  false ? undefined : '';
+  return '/**\n * ' + '@' + 'flow' + hashText + '\n */\n\n/* eslint-disable */\n\n\'use strict\';\n\n/*::\nimport type { ' + documentType + ' } from \'' + relayRuntimeModule + '\';\n' + (flowText || '') + '\n*/\n\n' + docTextComment + '\nconst node/*: ' + documentType + '*/ = ' + concreteText + ';\n' + operationText + '\n(node/*: any*/).hash = \'' + sourceHash + '\';\nmodule.exports = node;\n';
 };
 
 module.exports = formatGeneratedModule;

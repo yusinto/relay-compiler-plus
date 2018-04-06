@@ -260,6 +260,8 @@ module.exports = require("crypto");
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -269,8 +271,6 @@ module.exports = require("crypto");
  * @providesModule formatGeneratedModule
  * @format
  */
-
-
 
 var formatGeneratedModule = function formatGeneratedModule(_ref) {
   var documentType = _ref.documentType,

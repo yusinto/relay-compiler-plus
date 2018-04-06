@@ -74,7 +74,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -251,6 +251,50 @@ module.exports = require("crypto");
 
 /***/ }),
 /* 9 */
+/*!***********************************************!*\
+  !*** ./src/compiler/formatGeneratedModule.js ***!
+  \***********************************************/
+/*! no static exports found */
+/*! all exports used */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule formatGeneratedModule
+ * @format
+ */
+
+var formatGeneratedModule = function formatGeneratedModule(_ref) {
+  var documentType = _ref.documentType,
+      docText = _ref.docText,
+      concreteText = _ref.concreteText,
+      flowText = _ref.flowText,
+      hash = _ref.hash,
+      relayRuntimeModule = _ref.relayRuntimeModule,
+      sourceHash = _ref.sourceHash,
+      devOnlyAssignments = _ref.devOnlyAssignments;
+
+  var docTextComment = docText ? '\n/*\n' + docText.trim() + '\n*/\n' : '';
+  var hashText = hash ? '\n * ' + hash : '';
+
+  // HACK: process.env.NODE_ENV !== 'production' gets replaced by sed with process.env.NODE_ENV !== 'production' at
+  // the npm run build-compiler step. This prevents webpack and babel from transforming the code
+  var operationText = process.env.NODE_ENV !== 'production' ? devOnlyAssignments : '';
+  return '/**\n * ' + '@' + 'flow' + hashText + '\n */\n\n/* eslint-disable */\n\n\'use strict\';\n\n/*::\nimport type { ' + documentType + ' } from \'' + relayRuntimeModule + '\';\n' + (flowText || '') + '\n*/\n\n' + docTextComment + '\nconst node/*: ' + documentType + '*/ = ' + concreteText + ';\n' + operationText + '\n(node/*: any*/).hash = \'' + sourceHash + '\';\nmodule.exports = node;\n';
+};
+
+module.exports = formatGeneratedModule;
+
+/***/ }),
+/* 10 */
 /*!**************************!*\
   !*** external "graphql" ***!
   \**************************/
@@ -262,7 +306,7 @@ module.exports = require("crypto");
 module.exports = require("graphql");
 
 /***/ }),
-/* 10 */
+/* 11 */
 /*!********************************!*\
   !*** ./src/compiler/ripped.js ***!
   \********************************/
@@ -289,15 +333,20 @@ var _path = __webpack_require__(/*! path */ 1);
 
 var _path2 = _interopRequireDefault(_path);
 
-var _graphql = __webpack_require__(/*! graphql */ 9);
+var _graphql = __webpack_require__(/*! graphql */ 10);
 
 var _relayCompiler = __webpack_require__(/*! relay-compiler */ 4);
 
 var _relayCompiler2 = _interopRequireDefault(_relayCompiler);
 
+var _formatGeneratedModule = __webpack_require__(/*! ./formatGeneratedModule */ 9);
+
+var _formatGeneratedModule2 = _interopRequireDefault(_formatGeneratedModule);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* eslint-disable */
+var RelayFileWriter = _relayCompiler2.default.FileWriter,
+    RelayIRTransforms = _relayCompiler2.default.IRTransforms; /* eslint-disable */
 /**
  * The code in this file are ripped from:
  * relay-compiler/bin/RelayCompilerBin.js
@@ -313,9 +362,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @format
  */
 
-var RelayFileWriter = _relayCompiler2.default.FileWriter,
-    RelayIRTransforms = _relayCompiler2.default.IRTransforms,
-    formatGeneratedModule = _relayCompiler2.default.formatGeneratedModule;
 var commonTransforms = RelayIRTransforms.commonTransforms,
     codegenTransforms = RelayIRTransforms.codegenTransforms,
     fragmentTransforms = RelayIRTransforms.fragmentTransforms,
@@ -361,7 +407,7 @@ function getRelayFileWriter(baseDir, persistQuery) {
           queryTransforms: queryTransforms
         },
         customScalars: {},
-        formatModule: formatGeneratedModule,
+        formatModule: _formatGeneratedModule2.default,
         inputFieldWhiteListForFlow: [],
         schemaExtensions: schemaExtensions,
         useHaste: false,
@@ -391,7 +437,7 @@ function getSchema(schemaPath) {
 }
 
 /***/ }),
-/* 11 */
+/* 12 */
 /*!******************************************************!*\
   !*** external "relay-compiler/lib/DotGraphQLParser" ***!
   \******************************************************/
@@ -403,7 +449,7 @@ function getSchema(schemaPath) {
 module.exports = require("relay-compiler/lib/DotGraphQLParser");
 
 /***/ }),
-/* 12 */
+/* 13 */
 /*!************************!*\
   !*** external "yargs" ***!
   \************************/
@@ -415,7 +461,7 @@ module.exports = require("relay-compiler/lib/DotGraphQLParser");
 module.exports = require("yargs");
 
 /***/ }),
-/* 13 */
+/* 14 */
 /*!******************************!*\
   !*** ./src/compiler/main.js ***!
   \******************************/
@@ -427,7 +473,7 @@ module.exports = require("yargs");
 "use strict";
 
 
-var _yargs = __webpack_require__(/*! yargs */ 12);
+var _yargs = __webpack_require__(/*! yargs */ 13);
 
 var _yargs2 = _interopRequireDefault(_yargs);
 
@@ -443,11 +489,11 @@ var _fs2 = _interopRequireDefault(_fs);
 
 var _relayCompiler = __webpack_require__(/*! relay-compiler */ 4);
 
-var _DotGraphQLParser = __webpack_require__(/*! relay-compiler/lib/DotGraphQLParser */ 11);
+var _DotGraphQLParser = __webpack_require__(/*! relay-compiler/lib/DotGraphQLParser */ 12);
 
 var _DotGraphQLParser2 = _interopRequireDefault(_DotGraphQLParser);
 
-var _ripped = __webpack_require__(/*! ./ripped */ 10);
+var _ripped = __webpack_require__(/*! ./ripped */ 11);
 
 var _utils = __webpack_require__(/*! ./utils */ 2);
 
@@ -661,7 +707,7 @@ _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
 }))();
 
 /***/ }),
-/* 14 */
+/* 15 */
 /*!***************************************************!*\
   !*** multi babel-polyfill ./src/compiler/main.js ***!
   \***************************************************/
@@ -671,7 +717,7 @@ _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! babel-polyfill */5);
-module.exports = __webpack_require__(/*! ./src/compiler/main.js */13);
+module.exports = __webpack_require__(/*! ./src/compiler/main.js */14);
 
 
 /***/ })

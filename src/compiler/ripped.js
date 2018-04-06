@@ -24,11 +24,11 @@ import {
 } from 'graphql';
 import type {GraphQLSchema} from 'graphql';
 import RelayCompiler from 'relay-compiler';
+import formatGeneratedModule from './formatGeneratedModule';
 
 const {
   FileWriter: RelayFileWriter,
   IRTransforms: RelayIRTransforms,
-  formatGeneratedModule,
 } = RelayCompiler;
 
 const {

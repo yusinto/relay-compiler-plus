@@ -8,8 +8,6 @@
  * @format
  */
 
-'use strict';
-
 const formatGeneratedModule = ({
   documentType,
   docText,
@@ -20,7 +18,7 @@ const formatGeneratedModule = ({
   sourceHash,
   devOnlyAssignments,
 }) => {
-  const docTextComment = docText ? '\n/*\n' + docText.trim() + '\n*/\n' : '';
+  const docTextComment = docText ? `\n/*\n${docText.trim()}\n*/\n` : '';
   const hashText = hash ? `\n * ${hash}` : '';
 
   // HACK: __DEV__ gets replaced by sed with process.env.NODE_ENV !== 'production' at

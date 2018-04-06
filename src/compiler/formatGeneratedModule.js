@@ -22,7 +22,10 @@ const formatGeneratedModule = ({
 }) => {
   const docTextComment = docText ? '\n/*\n' + docText.trim() + '\n*/\n' : '';
   const hashText = hash ? `\n * ${hash}` : '';
-  const operationText = process.env.NODE_ENV !== 'production' ? devOnlyAssignments : '';
+
+  // HACK: __DEV__ gets replaced by sed with process.env.NODE_ENV !== 'production' at
+  // the npm run build-compiler step. This prevents webpack and babel from transforming the code
+  const operationText = __DEV__ ? devOnlyAssignments : '';
   return `/**
  * ${'@'}flow${hashText}
  */

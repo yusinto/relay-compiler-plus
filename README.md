@@ -28,7 +28,7 @@ yarn upgrade graphql --latest
 
     ```
     "scripts": {
-        "rcp": "relay-compiler-plus --schema <SCHEMA_FILE_PATH> --src <SRC_DIR_PATH>"
+        "rcp": "NODE_ENV=production relay-compiler-plus --schema <SCHEMA_FILE_PATH> --src <SRC_DIR_PATH>"
     },
     ```
 
@@ -43,19 +43,21 @@ yarn upgrade graphql --latest
     ``` 
     
     this should generate:
-    * query files (*.graphql.js) containing query ids and null query text.
+    * query files (*.graphql.js) containing query ids and null query text. Note that if you omit NODE_ENV=production,
+    rcp will include both the query id and the query text in your query files. This can be useful for debugging in 
+    development.
     * A `queryMap.json` file under `<SRC_DIR_PATH>/queryMap.json`.
     This file can be consumed by the server to map the query ids to actual queries.
     * If you specified a schema.js file, this will also generate a `schema.graphql` 
     file under `../<SRC_DIR_PATH>/schema.graphql`. The `schema.graphql` has to sit
-    outside the src folder otherwise relay-compiler will complain.
+    outside the src folder otherwise the relay-compiler will complain.
     
     If your graphql-js file is complex and you need to override the default webpack config
     you can do so like this:
     
     ```
     "scripts": {
-        "rcp": "relay-compiler-plus --webpackConfig <WEBPACK_CONFIG_PATH> --src <SRC_DIR_PATH>"
+        "rcp": "NODE_ENV=production relay-compiler-plus --webpackConfig <WEBPACK_CONFIG_PATH> --src <SRC_DIR_PATH>"
     },
     ```
     

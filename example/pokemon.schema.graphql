@@ -1,5 +1,5 @@
-# source: http://localhost:3000/graphql
-# timestamp: Tue Apr 17 2018 22:32:05 GMT+1000 (AEST)
+# source: https://api.graph.cool/simple/v1/Peerex
+# timestamp: Tue Apr 17 2018 22:31:35 GMT+1000 (AEST)
 
 enum _ModelMutationType {
   CREATED
@@ -1168,7 +1168,6 @@ interface Node {
 }
 
 type Query {
-  root: Root
   allCustomers(filter: CustomerFilter, orderBy: CustomerOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): [Customer!]!
   allFiles(filter: FileFilter, orderBy: FileOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): [File!]!
   allStripeSources(filter: StripeSourceFilter, orderBy: StripeSourceOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): [StripeSource!]!
@@ -1196,12 +1195,6 @@ type Query {
 type RemoveFromStripeSourcesPayload {
   customerCustomer: Customer
   stripeSourcesStripeSource: StripeSource
-}
-
-type Root {
-  id: ID
-  animal: String
-  human: String
 }
 
 type StripeSource implements Node {

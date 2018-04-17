@@ -1,0 +1,272 @@
+{
+  "query": {
+    "kind": "Document",
+    "definitions": [
+      {
+        "kind": "OperationDefinition",
+        "operation": "query",
+        "variableDefinitions": [
+          {
+            "kind": "VariableDefinition",
+            "variable": {
+              "kind": "Variable",
+              "name": {
+                "kind": "Name",
+                "value": "_filter"
+              }
+            },
+            "type": {
+              "kind": "NamedType",
+              "name": {
+                "kind": "Name",
+                "value": "CustomerFilter"
+              }
+            }
+          },
+          {
+            "kind": "VariableDefinition",
+            "variable": {
+              "kind": "Variable",
+              "name": {
+                "kind": "Name",
+                "value": "_orderBy"
+              }
+            },
+            "type": {
+              "kind": "NamedType",
+              "name": {
+                "kind": "Name",
+                "value": "CustomerOrderBy"
+              }
+            }
+          },
+          {
+            "kind": "VariableDefinition",
+            "variable": {
+              "kind": "Variable",
+              "name": {
+                "kind": "Name",
+                "value": "_skip"
+              }
+            },
+            "type": {
+              "kind": "NamedType",
+              "name": {
+                "kind": "Name",
+                "value": "Int"
+              }
+            }
+          },
+          {
+            "kind": "VariableDefinition",
+            "variable": {
+              "kind": "Variable",
+              "name": {
+                "kind": "Name",
+                "value": "_after"
+              }
+            },
+            "type": {
+              "kind": "NamedType",
+              "name": {
+                "kind": "Name",
+                "value": "String"
+              }
+            }
+          },
+          {
+            "kind": "VariableDefinition",
+            "variable": {
+              "kind": "Variable",
+              "name": {
+                "kind": "Name",
+                "value": "_before"
+              }
+            },
+            "type": {
+              "kind": "NamedType",
+              "name": {
+                "kind": "Name",
+                "value": "String"
+              }
+            }
+          },
+          {
+            "kind": "VariableDefinition",
+            "variable": {
+              "kind": "Variable",
+              "name": {
+                "kind": "Name",
+                "value": "_first"
+              }
+            },
+            "type": {
+              "kind": "NamedType",
+              "name": {
+                "kind": "Name",
+                "value": "Int"
+              }
+            }
+          },
+          {
+            "kind": "VariableDefinition",
+            "variable": {
+              "kind": "Variable",
+              "name": {
+                "kind": "Name",
+                "value": "_last"
+              }
+            },
+            "type": {
+              "kind": "NamedType",
+              "name": {
+                "kind": "Name",
+                "value": "Int"
+              }
+            }
+          }
+        ],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [
+            {
+              "kind": "Field",
+              "alias": null,
+              "arguments": [
+                {
+                  "kind": "Argument",
+                  "name": {
+                    "kind": "Name",
+                    "value": "filter"
+                  },
+                  "value": {
+                    "kind": "Variable",
+                    "name": {
+                      "kind": "Name",
+                      "value": "_filter"
+                    }
+                  }
+                },
+                {
+                  "kind": "Argument",
+                  "name": {
+                    "kind": "Name",
+                    "value": "orderBy"
+                  },
+                  "value": {
+                    "kind": "Variable",
+                    "name": {
+                      "kind": "Name",
+                      "value": "_orderBy"
+                    }
+                  }
+                },
+                {
+                  "kind": "Argument",
+                  "name": {
+                    "kind": "Name",
+                    "value": "skip"
+                  },
+                  "value": {
+                    "kind": "Variable",
+                    "name": {
+                      "kind": "Name",
+                      "value": "_skip"
+                    }
+                  }
+                },
+                {
+                  "kind": "Argument",
+                  "name": {
+                    "kind": "Name",
+                    "value": "after"
+                  },
+                  "value": {
+                    "kind": "Variable",
+                    "name": {
+                      "kind": "Name",
+                      "value": "_after"
+                    }
+                  }
+                },
+                {
+                  "kind": "Argument",
+                  "name": {
+                    "kind": "Name",
+                    "value": "before"
+                  },
+                  "value": {
+                    "kind": "Variable",
+                    "name": {
+                      "kind": "Name",
+                      "value": "_before"
+                    }
+                  }
+                },
+                {
+                  "kind": "Argument",
+                  "name": {
+                    "kind": "Name",
+                    "value": "first"
+                  },
+                  "value": {
+                    "kind": "Variable",
+                    "name": {
+                      "kind": "Name",
+                      "value": "_first"
+                    }
+                  }
+                },
+                {
+                  "kind": "Argument",
+                  "name": {
+                    "kind": "Name",
+                    "value": "last"
+                  },
+                  "value": {
+                    "kind": "Variable",
+                    "name": {
+                      "kind": "Name",
+                      "value": "_last"
+                    }
+                  }
+                }
+              ],
+              "selectionSet": {
+                "kind": "SelectionSet",
+                "selections": [
+                  {
+                    "kind": "Field",
+                    "name": {
+                      "kind": "Name",
+                      "value": "email",
+                      "loc": {
+                        "start": 22,
+                        "end": 27
+                      }
+                    },
+                    "arguments": [],
+                    "directives": [],
+                    "loc": {
+                      "start": 22,
+                      "end": 27
+                    }
+                  }
+                ],
+                "loc": {
+                  "start": 16,
+                  "end": 31
+                }
+              },
+              "name": {
+                "kind": "Name",
+                "value": "allCustomers"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variables": {}
+}

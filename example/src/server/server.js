@@ -4,7 +4,7 @@ import WebpackConfig from '../../webpack.config.dev';
 import WebpackDevMiddleware from 'webpack-dev-middleware';
 import WebPackHotMiddleware from 'webpack-hot-middleware';
 import expressGraphl from 'express-graphql';
-import graphqlSchema from './schema';
+import graphqlSchema from './createSchema';
 import queryMapJson from '../queryMap.json';
 import {matchQueryMiddleware} from 'relay-compiler-plus';
 
@@ -27,7 +27,7 @@ app.use(WebPackHotMiddleware(webpackCompiler));
 
 // graphql
 app.use('/graphql',
-  matchQueryMiddleware(queryMapJson),
+  // matchQueryMiddleware(queryMapJson),
   expressGraphl({
     schema: graphqlSchema,
     graphiql: true,

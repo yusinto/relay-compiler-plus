@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "node src/server",
+    "peerex": "graphql get-schema -p pokemon",
+    "peerex-rcp": "npm run peerex && npm run rcp-js-custom",
     "rcp": "NODE_ENV=production relay-compiler-plus --schema schema.graphql --src src",
     "rcp-js": "NODE_ENV=production relay-compiler-plus --schema src/server/schema.js --src src",
     "rcp-js-custom": "NODE_ENV=production relay-compiler-plus --webpackConfig src/server/webpack.config.js --src src",

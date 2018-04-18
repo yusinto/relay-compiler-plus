@@ -3,7 +3,7 @@ projects:
     schemaPath: ./pokemon.schema.graphql
     extensions:
       endpoints:
-        default: http://localhost:9000
+        default: https://api.graph.cool/relay/v1/Peerex
   rcp:
     schemaPath: ./schema.graphql
     extensions:

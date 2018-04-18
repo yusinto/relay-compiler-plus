@@ -11,7 +11,10 @@ render(
         query client_index_Query {
           root {
             animal
-            ...app_root
+          }
+
+          viewer {
+            ...app_viewer
           }
         }
     `}

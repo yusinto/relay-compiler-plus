@@ -7,7 +7,7 @@ const pokemonTypeDefs = importSchema('./pokemon.schema.graphql');
 
 const fetcher = async ({query, variables, operationName, context}) => {
   const body = JSON.stringify({query, variables, operationName});
-  const fetchResult = await fetch('http://localhost:9000', {
+  const fetchResult = await fetch('https://api.graph.cool/simple/v1/Peerex/graphql', {
     method: 'POST',
     headers: {
       Accept: 'application/json',

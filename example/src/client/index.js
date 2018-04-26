@@ -12,10 +12,6 @@ render(
           root {
             animal
           }
-
-          viewer {
-            ...app_viewer
-          }
         }
     `}
     render={({error, props}) => {

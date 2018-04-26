@@ -12,14 +12,14 @@
               "kind": "Variable",
               "name": {
                 "kind": "Name",
-                "value": "_filter"
+                "value": "_where"
               }
             },
             "type": {
               "kind": "NamedType",
               "name": {
                 "kind": "Name",
-                "value": "CustomerFilter"
+                "value": "PostWhereInput"
               }
             }
           },
@@ -36,7 +36,7 @@
               "kind": "NamedType",
               "name": {
                 "kind": "Name",
-                "value": "CustomerOrderBy"
+                "value": "PostOrderByInput"
               }
             }
           },
@@ -137,13 +137,13 @@
                   "kind": "Argument",
                   "name": {
                     "kind": "Name",
-                    "value": "filter"
+                    "value": "where"
                   },
                   "value": {
                     "kind": "Variable",
                     "name": {
                       "kind": "Name",
-                      "value": "_filter"
+                      "value": "_where"
                     }
                   }
                 },
@@ -239,28 +239,28 @@
                     "kind": "Field",
                     "name": {
                       "kind": "Name",
-                      "value": "email",
+                      "value": "title",
                       "loc": {
-                        "start": 22,
-                        "end": 27
+                        "start": 16,
+                        "end": 21
                       }
                     },
                     "arguments": [],
                     "directives": [],
                     "loc": {
-                      "start": 22,
-                      "end": 27
+                      "start": 16,
+                      "end": 21
                     }
                   }
                 ],
                 "loc": {
-                  "start": 16,
-                  "end": 31
+                  "start": 10,
+                  "end": 25
                 }
               },
               "name": {
                 "kind": "Name",
-                "value": "allCustomers"
+                "value": "posts"
               }
             }
           ]

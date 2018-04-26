@@ -4,9 +4,10 @@
   "description": "A starter kit to quickly create a relay modern app",
   "main": "index.js",
   "scripts": {
+    "brs": "babel-node buildRemoteSchema.js",
     "dev": "node src/server",
-    "peerex": "graphql get-schema -p pokemon",
-    "peerex-rcp": "npm run peerex && npm run rcp-js-custom",
+    "remote": "graphql get-schema -p remote",
+    "remote-rcp": "npm run remote && npm run rcp-js-custom",
     "rcp": "NODE_ENV=production relay-compiler-plus --schema schema.graphql --src src",
     "rcp-js": "NODE_ENV=production relay-compiler-plus --schema src/server/schema.js --src src",
     "rcp-js-custom": "NODE_ENV=production relay-compiler-plus --webpackConfig src/server/webpack.config.js --src src",
@@ -60,6 +61,7 @@
     "relay-runtime": "^1.5.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-relay": "^1.5.0",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",

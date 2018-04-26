@@ -1,9 +1,12 @@
 projects:
-  pokemon:
-    schemaPath: ./pokemon.schema.graphql
+  remote:
+    schemaPath: ./remote.schema.graphql
     extensions:
       endpoints:
-        default: https://api.graph.cool/relay/v1/Peerex
+        default:
+          url: https://graphql.myshopify.com/api/graphql
+          headers:
+            x-shopify-storefront-access-token: 078bc5caa0ddebfa89cccb4a1baa1f5c
   rcp:
     schemaPath: ./schema.graphql
     extensions:

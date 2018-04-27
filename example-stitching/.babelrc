@@ -1,0 +1,18 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "modules": "commonjs"
+      }
+    ],
+    "react",
+    "stage-0"
+  ],
+  "plugins": [
+    "relay",
+    "transform-decorators-legacy",
+    "array-includes",
+    "transform-async-to-generator"
+  ]
+}

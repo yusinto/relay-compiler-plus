@@ -1,0 +1,9 @@
+schemaPath: ./remote.schema.graphql
+extensions:
+  endpoints:
+    default:
+      url: https://api.yelp.com/v3/graphql
+      headers:
+#            Authorization: Bearer 36B1F298562590D5C829B584FE0B162F5B86C3C2840E7F032D56570EB4031972
+#            X-Shopify-Storefront-Access-Token: 078bc5caa0ddebfa89cccb4a1baa1f5c
+        Authorization: Bearer ivBFA35PyGDQS0Drwb3R6h-7zwbtuykyqplRxtgzfeYGqvxu3rzeRDOcmp-YKgQXmom8bphj0iNJwgdhTFOsNI4GeUbtOnOxs-OB1gOebY7bHujJlN0KRwsjE53iWnYx

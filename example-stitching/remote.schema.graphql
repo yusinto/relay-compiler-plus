@@ -1,0 +1,626 @@
+# source: https://api.yelp.com/v3/graphql
+# timestamp: Fri Apr 27 2018 18:47:43 GMT+1000 (AEST)
+
+type Business {
+  """Name of this business."""
+  name: String
+
+  """Yelp ID of this business."""
+  id: String
+
+  """Yelp alias of this business."""
+  alias: String
+
+  """Whether business has been claimed by a business owner."""
+  is_claimed: Boolean
+
+  """Whether business has been (permanently) closed."""
+  is_closed: Boolean
+
+  """URL for business page on Yelp."""
+  url: String
+
+  """Phone number of the business."""
+  phone: String
+
+  """
+  Phone number of the business formatted nicely to be displayed to users. The
+  format is the standard phone number format for the business's country.
+  """
+  display_phone: String
+
+  """Number of reviews for this business."""
+  review_count: Int
+
+  """
+  A list of category title and alias pairs associated with this business.
+  """
+  categories: [Category]
+
+  """Rating for this business (value ranges from 1, 1.5, ... 4.5, 5)."""
+  rating: Float
+
+  """
+  Price level of the business. Value is one of $, $$, $$$ and $$$$ or null if we
+  don't have price available for the business.
+  """
+  price: String
+
+  """
+  The location of this business, including address, city, state, zip code and country.
+  """
+  location: Location
+
+  """The coordinates of this business."""
+  coordinates: Coordinates
+
+  """URLs of up to three photos of the business."""
+  photos: [String]
+
+  """Opening hours of the business."""
+  hours: [Hours]
+
+  """Review snippets from the business."""
+  reviews(limit: Int, offset: Int): [Review]
+
+  """
+  When searching, this provides the distance of the business from the search location in meters
+  """
+  distance: Float
+
+  """Business attributes, if available."""
+  attributes: GenericScalar
+}
+
+type Businesses {
+  """A list of business Yelp finds based on the search criteria."""
+  business: [Business]
+
+  """Total number of businesses found."""
+  total: Int
+}
+
+type Category {
+  """Title of a category for display purpose."""
+  title: String
+
+  """
+  Alias of a category, when searching for business in certain categories, use alias rather than the title.
+  """
+  alias: String
+}
+
+type Coordinates {
+  """The latitude of this business."""
+  latitude: Float
+
+  """The longitude of this business."""
+  longitude: Float
+}
+
+type Event {
+  """Name of this event."""
+  name: String
+
+  """Event id."""
+  id: String
+
+  """The business tied to this event."""
+  business: Business
+
+  """The ID of the related business."""
+  business_id: String
+
+  """Number of Yelp users attending this event."""
+  attending_count: String
+
+  """The category of this event."""
+  category: String
+
+  """Cost of attending this event."""
+  cost: Int
+
+  """Maximum cost of this event."""
+  cost_max: Int
+  country: String
+
+  """Description excerpt of this event."""
+  description: String
+
+  """Yelp page of this event."""
+  event_site_url: String
+
+  """Yelp image url of this event."""
+  image_url: String
+
+  """Number of Yelp users interested in attending this event."""
+  interested_count: String
+
+  """Whether this event is canceled."""
+  is_canceled: Boolean
+
+  """Whether this event is free."""
+  is_free: Boolean
+
+  """Whether this event is created by a Yelp community manager."""
+  is_official: Boolean
+
+  """Latitude of this event."""
+  latitude: Float
+
+  """Longitude of this event."""
+  longitude: Float
+
+  """
+  The location of this business, including address, city, state, zip code and country.
+  """
+  location: Location
+
+  """URL to buy tickets for this event."""
+  tickets_url: String
+
+  """
+  Time this event ends. Returns time and date in the following format - "YYYY-MM-DD HH-mm".
+  """
+  time_end: String
+
+  """
+  Time the event starts. Returns time and date in the following format - "YYYY-MM-DD HH-mm".
+  """
+  time_start: String
+  zip_code: String
+}
+
+type Events {
+  """List of events found matching search criteria."""
+  events: [Event]
+
+  """Total number of events found."""
+  total: Int
+}
+
+"""
+The `GenericScalar` scalar type represents a generic
+GraphQL scalar value that could be:
+String, Boolean, Int, Float, List or Object.
+"""
+scalar GenericScalar
+
+type Hours {
+  """
+  The type of the opening hours information. Right now, this is always REGULAR.
+  """
+  hours_type: String
+
+  """The specific open hours and days for a business."""
+  open: [OpenHours]
+
+  """Describes if the business is open now."""
+  is_open_now: Boolean
+}
+
+type Language {
+  """
+  The ISO 639-1 alpha-2 code for this language. When such a code is unavailable
+  for a language, it will be a ISO 639-2 alpha-3 code instead.
+  """
+  code: String
+}
+
+type Location {
+  """Street address of this business."""
+  address1: String
+
+  """Street address of this business, continued."""
+  address2: String
+
+  """Street address of this business, continued."""
+  address3: String
+
+  """City of this business."""
+  city: String
+
+  """ISO 3166-2 (with a few exceptions) state code of this business."""
+  state: String
+
+  """Zip code of this business."""
+  zip_code: String
+
+  """ISO 3166-1 alpha-2 country code of this business."""
+  country: String
+
+  """
+  Array of strings that if organized vertically give an address that is in the
+  standard address format for the business's country.
+  """
+  formatted_address: String
+}
+
+type OpenHours {
+  """
+  Whether the business opens overnight or not. When this is true, the end time will be lower than the start time.
+  """
+  is_overnight: Boolean
+
+  """
+  End of the opening hours in a day, in 24-hour clock notation, like 2130 means 9:30 PM.
+  """
+  end: String
+
+  """
+  Start of the opening hours in a day, in 24-hour clock notation, like 1000 means 10 AM.
+  """
+  start: String
+
+  """
+  From 0 to 6, representing day of the week from Monday to Sunday. Notice that
+  you may get the same day of the week more than once if the business has more
+  than one opening time slots.
+  """
+  day: Int
+}
+
+type Query {
+  """Load information about a specific business."""
+  business(
+    """The Yelp ID for the business you want to load."""
+    id: String
+  ): Business
+
+  """
+  Match business data from sources to businesses on Yelp. This returns the single best match we can find.
+  """
+  business_match_best(
+    """
+    Required. The name of the business. Maximum length is 64; only digits, letters, spaces, and !#$%&+,­./:?@'are allowed.
+    """
+    name: String!
+
+    """
+    Optional. The first line of the business’s address. Maximum length is 64;
+    only digits, letters, spaces, and ­’/#&,.: are allowed.
+    """
+    address1: String
+
+    """
+    Optional. The second line of the business’s address. Maximum length is 64;
+    only digits, letters, spaces, and ­’/#&,.: are allowed.
+    """
+    address2: String
+
+    """
+    Optional. The third line of the business’s address. Maximum length is 64;
+    only digits, letters, spaces, and ­’/#&,.: are allowed.
+    """
+    address3: String
+
+    """
+    Required. The city of the business. Maximum length is 64; only digits, letters, spaces, and ­’.() are allowed.
+    """
+    city: String!
+
+    """
+    Required. The ISO 3166­-2 code for the region/province of the business. Maximum length is 3.
+    """
+    state: String!
+
+    """
+    Required. The ISO 3166­-1 alpha­2 country code of the business. Maximum length is 2.
+    """
+    country: String!
+
+    """
+    Optional. The WGS84 latitude of the business in decimal degrees. Must be between ­-90 and +90.
+    """
+    latitude: Float
+
+    """
+    Optional. The WGS84 longitude of the business in decimal degrees. Must be between ­-180 and +180.
+    """
+    longitude: Float
+
+    """
+    Optional. The phone number of the business which can be submitted as (a)
+    locally ­formatted with digits only (e.g., 016703080) or (b)
+    internationally­ formatted with a leading + sign and digits only after
+    (+35316703080). Maximum length is 32.
+    """
+    phone: String
+
+    """Optional. The postal code of the business. Maximum length is 12."""
+    postal_code: String
+  ): Business
+
+  """
+  Match business data from sources to businesses on Yelp. This will return up to
+  10 businesses that is the best match based on the information provided.
+  """
+  business_match_lookup(
+    """
+    Required. The name of the business. Maximum length is 64; only digits, letters, spaces, and !#$%&+,­./:?@'are allowed.
+    """
+    name: String!
+
+    """
+    Optional. The first line of the business’s address. Maximum length is 64;
+    only digits, letters, spaces, and ­’/#&,.: are allowed.
+    """
+    address1: String
+
+    """
+    Optional. The second line of the business’s address. Maximum length is 64;
+    only digits, letters, spaces, and ­’/#&,.: are allowed.
+    """
+    address2: String
+
+    """
+    Optional. The third line of the business’s address. Maximum length is 64;
+    only digits, letters, spaces, and ­’/#&,.: are allowed.
+    """
+    address3: String
+
+    """
+    Required. The city of the business. Maximum length is 64; only digits, letters, spaces, and ­’.() are allowed.
+    """
+    city: String!
+
+    """
+    Required. The ISO 3166­-2 code for the region/province of the business. Maximum length is 3.
+    """
+    state: String!
+
+    """
+    Required. The ISO 3166­-1 alpha­2 country code of the business. Maximum length is 2.
+    """
+    country: String!
+
+    """
+    Optional. The WGS84 latitude of the business in decimal degrees. Must be between ­-90 and +90.
+    """
+    latitude: Float
+
+    """
+    Optional. The WGS84 longitude of the business in decimal degrees. Must be between ­-180 and +180.
+    """
+    longitude: Float
+
+    """
+    Optional. The phone number of the business which can be submitted as (a)
+    locally ­formatted with digits only (e.g., 016703080) or (b)
+    internationally­ formatted with a leading + sign and digits only after
+    (+35316703080). Maximum length is 32.
+    """
+    phone: String
+
+    """Optional. The postal code of the business. Maximum length is 12."""
+    postal_code: String
+  ): Businesses
+
+  """Load reviews for a specific business."""
+  reviews(
+    """The Yelp ID for the business you want to load."""
+    business: String
+
+    """
+    Output locale.  Show reviews in the same language. See the list of supported locales.
+    """
+    locale: String
+    limit: Int
+    offset: Int
+  ): Reviews
+
+  """Search for businesses on Yelp by their phone number."""
+  phone_search(
+    """
+    Required. Phone number of the business you want to search for. It must start
+    with + and include the country code, like +14159083801.
+    """
+    phone: String
+  ): Businesses
+
+  """Search for businesses on Yelp."""
+  search(
+    """
+    Optional. Search term (e.g. "food", "restaurants"). If term isn't included
+    we search everything. The term keyword also accepts business names such as "Starbucks".
+    """
+    term: String
+
+    """
+    Required. Specifies the combination of "address, neighborhood, city, state
+    or zip, optional country" to be used when searching for businesses.
+    """
+    location: String
+    country: String
+
+    """
+    Optional. Offset the list of returned business results by this amount.
+    """
+    offset: Int
+
+    """
+    Optional. Number of business results to return. By default, it will return 20. Maximum is 50.
+    """
+    limit: Int
+
+    """
+    Sort the results by one of the these modes: best_match, rating, review_count
+    or distance. By default it's best_match. The rating sort is not strictly
+    sorted by the rating value, but by an adjusted rating value that takes into
+    account the number of ratings, similar to a Bayesian average. This is so a
+    business with 1 rating of 5 stars doesn't immediately jump to the top.
+    """
+    sort_by: String
+
+    """
+    Optional. Specify the locale to return the event information in. See the list of supported locales.
+    """
+    locale: String
+
+    """
+    Required if location is not provided. Longitude of the location you want to search nearby.
+    """
+    longitude: Float
+
+    """
+    Required if location is not provided. Latitude of the location you want to search nearby.
+    """
+    latitude: Float
+
+    """
+    Optional. Categories to filter the search results with. See the list of
+    supported categories. The category filter can be a list of comma delimited
+    categories. For example, "bars,french" will filter by Bars OR French. The
+    category identifier should be used (for example "discgolf", not "Disc Golf").
+    """
+    categories: String
+
+    """
+    Optional. Default to false. When set to true, only return the businesses
+    open now. Notice that open_at and open_now cannot be used together.
+    """
+    open_now: Boolean
+
+    """
+    Optional. An integer representing the Unix time in the same timezone of the
+    search location. If specified, it will return business open at the given
+    time. Notice that open_at and open_now cannot be used together.
+    """
+    open_at: Int
+
+    """
+    Optional. Pricing levels to filter the search result with: 1 = $, 2 = $$, 3
+    = $$$, 4 = $$$$. The price filter can be a list of comma delimited pricing
+    levels. For example, "1, 2, 3" will filter the results to show the ones that
+    are $, $$, or $$$.
+    """
+    price: String
+
+    """Additional filters to restrict search results."""
+    attributes: [String]
+
+    """
+    Optional. Search radius in meters. If the value is too large, a
+    AREA_TOO_LARGE error may be returned. The max value is 40000 meters (25 miles).
+    """
+    radius: Float
+  ): Businesses
+
+  """Load information about a specific event."""
+  event(
+    """The Yelp ID for the event you want to load."""
+    id: String
+  ): Event
+
+  """Search for events based on search parameters."""
+  event_search(
+    """
+    Optional. Specify the locale to return the event information in. See the list of supported locales.
+    """
+    locale: String
+
+    """Optional. Offset the list of returned events results by this amount."""
+    offset: Int
+
+    """
+    Optional. Number of events results to return. By default, it will return 3. Maximum is 50.
+    """
+    limit: Int
+
+    """
+    Optional. Sort by either descending or ascending order. By default, it returns results in descending order.
+    """
+    sort_by: String
+
+    """
+    Optional. Sort on popularity or time start. By default, sorts on popularity.
+    """
+    sort_on: String
+
+    """
+    Optional. Unix timestamp of the event start time. Will return events that only begin at or after the specified time.
+    """
+    start_date: Int
+
+    """
+    Optional. Unix timestamp of the event end time. Will return events that only end at or before the specified time.
+    """
+    end_date: Int
+
+    """
+    Optional. The category filter can be a list of comma delimited categories to
+    get OR'd results that include the categories provided. See the list of categories.
+    """
+    categories: [String]
+
+    """
+    Optional. Filter whether the events are free to attend. By default no filter
+    is applied so both free and paid events will be returned.
+    """
+    is_free: Boolean
+
+    """
+    Optional. Specifies the combination of "address, neighborhood, city, state
+    or zip, optional country" to be used when searching for events.
+    """
+    location: String
+
+    """
+    Optional. Latitude of the location you want to search nearby. If latitude is provided, longitude is required too.
+    """
+    latitude: Float
+
+    """
+    Optional. Longitude of the location you want to search nearby. If longitude is provided, latitude is required too.
+    """
+    longitude: Float
+
+    """
+    Optional. Search radius in meters. If the value is too large, a
+    AREA_TOO_LARGE error may be returned. The max value is 40000 meters (25 miles).
+    """
+    radius: Float
+  ): Events
+}
+
+type Review {
+  """Yelp ID of this review."""
+  id: String
+
+  """Rating of this review."""
+  rating: Int
+
+  """The user who wrote the review."""
+  user: User
+
+  """Text excerpt of this review."""
+  text: String
+
+  """The time that the review was created in PST."""
+  time_created: String
+
+  """URL of this review."""
+  url: String
+}
+
+type Reviews {
+  """The reviews objects."""
+  review: [Review]
+
+  """Total number of reviews."""
+  total: Int
+
+  """A list of languages for which the business has at least one review."""
+  possible_languages: [Language]
+
+  """The business associated with the reviews"""
+  business: Business
+}
+
+type User {
+  """URL of the user's profile photo."""
+  image_url: String
+
+  """Name of the user."""
+  name: String
+}

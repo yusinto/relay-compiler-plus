@@ -1,20 +1,31 @@
-import {GraphQLServer} from 'graphql-yoga'
-import schema from './mergedSchema';
+import Express from 'express';
 import Webpack from 'webpack';
 import WebpackConfig from '../../webpack.config.dev';
 import WebpackDevMiddleware from 'webpack-dev-middleware';
 import WebPackHotMiddleware from 'webpack-hot-middleware';
+import expressGraphl from 'express-graphql';
+import mergedSchema from './mergedSchema';
 import queryMapJson from '../queryMap.json';
 import {matchQueryMiddleware} from 'relay-compiler-plus';
 
+const PORT = 3000;
+const app = Express();
+
 const webpackCompiler = Webpack(WebpackConfig);
-const server = new GraphQLServer({schema});
-server.express.use(WebpackDevMiddleware(webpackCompiler, {
+app.use(WebpackDevMiddleware(webpackCompiler, {
   publicPath: WebpackConfig.output.publicPath,
   noInfo: true
 }));
-server.express.use(WebPackHotMiddleware(webpackCompiler));
-server.express.get('/', (req, res) => {
+app.use(WebPackHotMiddleware(webpackCompiler));
+
+app.use('/graphql',
+  matchQueryMiddleware(queryMapJson),
+  expressGraphl({
+    schema: mergedSchema,
+    graphiql: true,
+  }));
+
+app.use((req, res) => {
   const html = `<!DOCTYPE html>
                     <html>
                       <head>
@@ -30,11 +41,6 @@ server.express.get('/', (req, res) => {
 
   res.end(html);
 });
-server.express.post(server.options.endpoint, matchQueryMiddleware(queryMapJson));
-const options = {
-  port: 8000,
-  endpoint: '/graphql',
-  subscriptions: '/subscriptions',
-  playground: '/playground',
-}
-server.start(options, ({port}) => console.log(`Yoga is running on localhost:${port}`));
+app.listen(PORT, () => {
+  console.log(`Server started at ${PORT}`);
+});

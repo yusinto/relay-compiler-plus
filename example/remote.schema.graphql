@@ -1,3 +1,6 @@
+# source: https://api.yelp.com/v3/graphql
+# timestamp: Fri Apr 27 2018 13:49:56 GMT+1000 (AEST)
+
 type Business {
   """Name of this business."""
   name: String
@@ -258,8 +261,6 @@ type OpenHours {
 }
 
 type Query {
-  root: Root
-
   """Load information about a specific business."""
   business(
     """The Yelp ID for the business you want to load."""
@@ -614,12 +615,6 @@ type Reviews {
 
   """The business associated with the reviews"""
   business: Business
-}
-
-type Root {
-  id: ID
-  animal: String
-  human: String
 }
 
 type User {

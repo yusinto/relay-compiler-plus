@@ -4,11 +4,12 @@ import WebpackConfig from '../../webpack.config.dev';
 import WebpackDevMiddleware from 'webpack-dev-middleware';
 import WebPackHotMiddleware from 'webpack-hot-middleware';
 import expressGraphl from 'express-graphql';
-import graphqlSchema from './createSchema';
+import graphqlSchema from './schema';
 import queryMapJson from '../queryMap.json';
 import {matchQueryMiddleware} from 'relay-compiler-plus';
+import bodyParser from 'body-parser';
 
-const PORT = 3000;
+const PORT = 3333;
 const app = Express();
 
 // create a webpack instance from our dev config
@@ -28,6 +29,11 @@ app.use(WebPackHotMiddleware(webpackCompiler));
 // graphql
 app.use('/graphql',
   // matchQueryMiddleware(queryMapJson),
+  bodyParser.json(),
+  (req, res, next) => {
+    console.log(`in rcp.server, body looks like ${req.body.query}`);
+    next();
+  },
   expressGraphl({
     schema: graphqlSchema,
     graphiql: true,

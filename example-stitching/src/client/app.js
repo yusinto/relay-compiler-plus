@@ -3,7 +3,6 @@ import {createFragmentContainer, graphql} from 'react-relay';
 
 const App = (props) => {
   const {animal, human} = props.root;
-  const {name, url, rating} = props.business;
 
   return (
     <div>
@@ -13,24 +12,29 @@ const App = (props) => {
       <div>
         App got human = {props.root.human}
       </div>
-      <div>
-        {name} click <a href={url} target="_blank">here</a> has rating {rating}
-      </div>
+      {
+        props.posts.map(({title, text}, index) =>
+          <div key={index}>
+            {title}
+            <br/>
+            {text}
+          </div>
+        )
+      }
     </div>);
 };
 
 // export default app;
 export default createFragmentContainer(App,
   graphql`
-    fragment app_root on Root {
-        animal
-        human
-    }
-    
-    fragment app_business on Business {
-        name
-        url
-        rating
-    }
+      fragment app_root on Root {
+          animal
+          human
+      }
+
+      fragment app_posts on Post @relay(plural: true) {
+          title
+          text
+      }
   `
 );

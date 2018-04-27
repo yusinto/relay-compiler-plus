@@ -14,10 +14,9 @@ render(
             ...app_root
           }
 
-          business(id: "yelp-san-francisco") {
-            name
-            phone
-            ...app_business
+          posts {
+            title
+            ...app_posts
           }
         }
     `}
@@ -25,10 +24,10 @@ render(
       if (error) {
         return <div>{error.message}</div>;
       } else if (props) {
-        const {name, phone} = props.business;
+        const {title, text} = props.posts[0];
         return (
           <div>
-            {props.root.animal} is at {name} with phone: {phone}
+            {props.root.animal} first post is: {title}
             <div>
               <App {...props} />
             </div>

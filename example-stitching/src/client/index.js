@@ -7,16 +7,12 @@ import App from './app';
 render(
   <QueryRenderer
     environment={relayEnvironment}
-    query={ graphql`
+    query={graphql`
         query client_index_Query {
-          root {
-            animal
-            ...app_root
-          }
-
-          posts {
-            title
-            ...app_posts
+          user {
+            email
+            name
+            ...app_user
           }
         }
     `}
@@ -24,17 +20,14 @@ render(
       if (error) {
         return <div>{error.message}</div>;
       } else if (props) {
-        const {title, text} = props.posts[0];
         return (
           <div>
-            {props.root.animal} first post is: {title}
-            <div>
-              <App {...props} />
-            </div>
+            Welcome to {props.user.name}!
+            <App {...props} />
           </div>
         );
       }
 
-      return <div>Loading</div>;
+      return <div>Loading...</div>;
     }}
   />, document.getElementById('reactDiv'));

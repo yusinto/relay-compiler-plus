@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "get-remote-schema": "graphql get-schema",
-    "rcp": "npm run get-remote-schema && NODE_ENV=production relay-compiler-plus --webpackConfig src/server/webpack.config.js --src src",
-    "start": "npm run rcp && nodemon --ext js,json,graphql --exec babel-node src/server",
+    "rcp": "NODE_ENV=production relay-compiler-plus --webpackConfig src/server/webpack.config.js --src src",
+    "remote-rcp": "npm run get-remote-schema && npm run rcp",
+    "start": "npm run remote-rcp && nodemon --ext js,json,graphql --exec babel-node src/server",
     "clean-relay": "find . \\( -name \"*.graphql.js\" -o -name \"*.queryMap.json\" \\) -type f -delete && rm -rf ./src/queryMap.json"
   },
   "repository": {

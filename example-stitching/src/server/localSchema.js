@@ -1,33 +1,43 @@
-import {GraphQLObjectType, GraphQLSchema, GraphQLString, GraphQLID} from 'graphql';
+import {GraphQLObjectType, GraphQLSchema, GraphQLString, GraphQLID, GraphQLList} from 'graphql';
 
+const Place = new GraphQLObjectType({
+  name: 'Place',
+  fields: {
+    id: {type: GraphQLString},
+    name: {type: GraphQLString},
+  }
+});
+
+const wendyPlaces = [
+  {id: 'sugar-factory', name: 'Sugar Factory'},
+  {id: 'nutdo', name: 'Nutdo'},
+  {id: 'goodbye-carbs', name: 'Goodbye Carbs'},
+];
 const query = new GraphQLObjectType({
   name: 'Query',
   fields: {
-    root: {
+    user: {
       type: new GraphQLObjectType({
-        name: 'Root',
+        name: 'User',
         fields: {
-          id: {
-            type: GraphQLID,
-            resolve: () => true,
-          },
-          animal: {
+          email: {
             type: GraphQLString,
-            resolve: () => {
-              console.log('Invoking animal');
-              return 'loui';
-            }
+            resolve: () => 'wendy@gmail.com',
           },
-          human: {
+          name: {
             type: GraphQLString,
-            resolve: () => {
-              console.log('Invoking human');
-              return 'wendy';
-            }
+            resolve: () => 'Wendy Ang',
           },
+          favouritePlaces: {
+            type: new GraphQLList(Place),
+            resolve: () => wendyPlaces,
+          }
         }
       }),
       resolve: () => true,
+    },
+    place: {
+      type: Place,
     },
   },
 });

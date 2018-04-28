@@ -1,21 +1,12 @@
-# relay-compiler-plus-example
-Example project using relay-compiler-plus to generate relay persisted queries.
+# relay-compiler-plus-stitching-example
+Example project using relay-compiler-plus and schema stitching.
 
 ## Quickstart
 
 ```
 yarn
 
-# to compile from schema.js
-npm run rcp-js
-
-# to compile from schema.js using a custom webpack config
-npm run rcp-js-custom
-
-# to compile from schema.graphql or schema.json
-npm run rcp
-
-npm run dev
+npm start
 ```
 
 Browse to http://localhost:3000, under dev tools network tab you should be able

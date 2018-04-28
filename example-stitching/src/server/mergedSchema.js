@@ -5,11 +5,11 @@ import fetch from 'node-fetch';
 import localSchema from './localSchema';
 
 const uri = 'https://eu1.prisma.sh/public-nickelwarrior-830/wendarie-prisma/dev';
-const httpLink = new HttpLink({uri, fetch});
+const link = new HttpLink({uri, fetch});
 
 const remoteSchema = makeRemoteExecutableSchema({
   schema: makeExecutableSchema({typeDefs: importSchema('./remote.schema.graphql')}),
-  link: httpLink,
+  link,
 });
 
 const linkTypeDefs = `

@@ -26,7 +26,7 @@ const query = new GraphQLObjectType({
           },
           name: {
             type: GraphQLString,
-            resolve: () => 'Wendy Ang',
+            resolve: () => 'Wendy',
           },
           favouritePlaces: {
             type: new GraphQLList(Place),

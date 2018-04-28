@@ -9,11 +9,18 @@ yarn
 npm start
 ```
 
-Browse to http://localhost:3000, under dev tools network tab you should be able
-to see graphql requests sent has a queryId and variables object and nothing
-else.
+Browse to http://localhost:3000 and you should see a list of places with details coming from prisma.
 
-On the server, you should be able to see console output of the server
-mapping the queryId to the actual queries.
+You can even use graphiql to query the remote schema! http://localhost:3000/graphql
 
-Have fun!
+and do this:
+
+```graphql
+{
+    businesses {
+        name
+        email
+    }
+} 
+
+```

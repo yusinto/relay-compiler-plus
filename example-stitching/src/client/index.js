@@ -22,7 +22,7 @@ render(
       } else if (props) {
         return (
           <div>
-            Welcome to {props.user.name}!
+            <h1>Welcome to {props.user.name}'s home!</h1>
             <App {...props} />
           </div>
         );

@@ -13,12 +13,13 @@ import {queryMap, persistQuery} from './persistQuery';
 * Most of the code in this run method are ripped from:
 * relay-compiler/bin/RelayCompilerBin.js
 */
-const run = async (options: { schema: string, src: string, webpackConfig: string, extensions: Array<string> }) => {
+const run = async (options: { schema: string, src: string, webpackConfig: string, extensions: Array<string>, exclude: Array<string> }) => {
   const srcDir = path.resolve(process.cwd(), options.src);
   console.log(`src: ${srcDir}`);
 
   let schemaPath;
   let customWebpackConfig;
+  let excludeGraphql;
 
   if (options.webpackConfig) {
     customWebpackConfig = path.resolve(process.cwd(), options.webpackConfig);
@@ -29,6 +30,16 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
   if ((schemaPath && path.extname(schemaPath) === '.js') || customWebpackConfig) {
     console.log(`schemaPath: ${schemaPath}, customWebpackConfig: ${customWebpackConfig}`);
     schemaPath = await graphqlJSCompiler(schemaPath, srcDir, customWebpackConfig);
+  }
+
+  if(options.exclude) {
+    excludeGraphql = [
+      '**/node_modules/**',
+      '**/__mocks__/**',
+      '**/__tests__/**',
+      '**/__generated__/**',
+      ...options.exclude,
+    ];
   }
 
   console.log(`schemaPath: ${schemaPath}`);
@@ -65,12 +76,7 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
       filepaths: getFilepathsFromGlob(srcDir, {
         extensions: ['graphql'],
         include: ['**'],
-        exclude: [
-          '**/node_modules/**',
-          '**/__mocks__/**',
-          '**/__tests__/**',
-          '**/__generated__/**',
-        ],
+        exclude: excludeGraphql,
       }),
     },
   };
@@ -136,6 +142,11 @@ const argv = yargs // eslint-disable-line prefer-destructuring
       array: true,
       default: ['js', 'jsx'],
       describe: 'File extensions to compile (--extensions js jsx)',
+      type: 'string',
+    },
+    exclude: {
+      array: true,
+      describe: 'Directories to ignore under src',
       type: 'string',
     },
   })

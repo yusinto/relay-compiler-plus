@@ -39,7 +39,7 @@ app.use((req, res) => {
                       <head>
                         <meta charset="utf-8">
                         <meta name="viewport" content="width=device-width, initial-scale=1">
-                        <title>Create relay modern app</title>
+                        <title>Relay compiler plus example</title>
                       </head>
                       <body>
                         <div id="reactDiv" />

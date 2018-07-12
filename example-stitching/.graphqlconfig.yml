@@ -1,5 +1,7 @@
-schemaPath: ./remote.schema.graphql
-extensions:
-  endpoints:
-    default:
-      url: https://eu1.prisma.sh/public-nickelwarrior-830/wendarie-prisma/dev
+projects:
+  wendarie:
+    schemaPath: ./remote.schema.graphql
+    extensions:
+      endpoints:
+        default:
+          url: https://eu1.prisma.sh/public-nickelwarrior-830/wendarie-prisma/dev

@@ -49,13 +49,8 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
       getSchema: () => schema,
       filepaths: getFilepathsFromGlob(srcDir, {
         extensions: options.extensions,
-        include: ['**'],
-        exclude: [
-          '**/node_modules/**',
-          '**/__mocks__/**',
-          '**/__tests__/**',
-          '**/__generated__/**',
-        ],
+        include: options.include,
+        exclude: options.exclude,
       }),
     },
     graphql: {
@@ -64,13 +59,8 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
       getSchema: () => schema,
       filepaths: getFilepathsFromGlob(srcDir, {
         extensions: ['graphql'],
-        include: ['**'],
-        exclude: [
-          '**/node_modules/**',
-          '**/__mocks__/**',
-          '**/__tests__/**',
-          '**/__generated__/**',
-        ],
+        include: options.include,
+        exclude: options.exclude,
       }),
     },
   };
@@ -136,6 +126,23 @@ const argv = yargs // eslint-disable-line prefer-destructuring
       array: true,
       default: ['js', 'jsx'],
       describe: 'File extensions to compile (--extensions js jsx)',
+      type: 'string',
+    },
+    include: {
+      array: true,
+      default: ['**'],
+      describe: 'Directories to include under src',
+      type: 'string',
+    },
+    exclude: {
+      array: true,
+      default: [
+        '**/node_modules/**',
+        '**/__mocks__/**',
+        '**/__tests__/**',
+        '**/__generated__/**',
+      ],
+      describe: 'Directories to ignore under src',
       type: 'string',
     },
   })

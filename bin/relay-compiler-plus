@@ -563,8 +563,8 @@ var run = function () {
                 },
                 filepaths: (0, _ripped.getFilepathsFromGlob)(srcDir, {
                   extensions: options.extensions,
-                  include: ['**'],
-                  exclude: ['**/node_modules/**', '**/__mocks__/**', '**/__tests__/**', '**/__generated__/**']
+                  include: options.include,
+                  exclude: options.exclude
                 })
               },
               graphql: {
@@ -575,8 +575,8 @@ var run = function () {
                 },
                 filepaths: (0, _ripped.getFilepathsFromGlob)(srcDir, {
                   extensions: ['graphql'],
-                  include: ['**'],
-                  exclude: ['**/node_modules/**', '**/__mocks__/**', '**/__tests__/**', '**/__generated__/**']
+                  include: options.include,
+                  exclude: options.exclude
                 })
               }
             };
@@ -673,6 +673,18 @@ var argv = _yargs2.default // eslint-disable-line prefer-destructuring
     array: true,
     default: ['js', 'jsx'],
     describe: 'File extensions to compile (--extensions js jsx)',
+    type: 'string'
+  },
+  include: {
+    array: true,
+    default: ['**'],
+    describe: 'Directories to include under src',
+    type: 'string'
+  },
+  exclude: {
+    array: true,
+    default: ['**/node_modules/**', '**/__mocks__/**', '**/__tests__/**', '**/__generated__/**'],
+    describe: 'Directories to ignore under src',
     type: 'string'
   }
 }).help().argv;

@@ -1,9 +1,9 @@
 import yargs from 'yargs';
-import 'babel-polyfill';
+import '@babel/polyfill';
 import path from 'path';
 import fs from 'fs';
-import {JSModuleParser, ConsoleReporter, Runner as CodegenRunner} from 'relay-compiler';
-import DotGraphQLParser from 'relay-compiler/lib/DotGraphQLParser';
+import {CodegenRunner, ConsoleReporter, DotGraphQLParser} from 'graphql-compiler';
+import RelayJSModuleParser from 'relay-compiler/lib/RelayJSModuleParser';
 import {getFilepathsFromGlob, getRelayFileWriter, getSchema} from './ripped';
 import {clean} from './utils';
 import {graphqlJSCompiler} from 'relay-compiler-plus/graphqlJSCompiler'; //eslint-disable-line
@@ -44,8 +44,8 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
   const parserConfigs = {
     js: {
       baseDir: srcDir,
-      getFileFilter: JSModuleParser.getFileFilter,
-      getParser: JSModuleParser.getParser,
+      getFileFilter: RelayJSModuleParser.getFileFilter,
+      getParser: RelayJSModuleParser.getParser,
       getSchema: () => schema,
       filepaths: getFilepathsFromGlob(srcDir, {
         extensions: options.extensions,
@@ -67,8 +67,7 @@ const run = async (options: { schema: string, src: string, webpackConfig: string
   const writerConfigs = {
     js: {
       getWriter: getRelayFileWriter(srcDir, persistQuery),
-      isGeneratedFile: (filePath: string) =>
-        filePath.endsWith('.js') && filePath.includes('__generated__'),
+      isGeneratedFile: (filePath: string) => filePath.endsWith('.js') && filePath.includes('__generated__'),
       parser: 'js',
       baseParsers: ['graphql'],
     },

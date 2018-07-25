@@ -1,15 +1,14 @@
 {
   "presets": [
     [
-      "env",
+      "@babel/preset-env",
       {
         "modules": "commonjs"
       }
-    ],
-    "stage-0"
+    ]
   ],
   "plugins": [
-    "transform-flow-strip-types",
-    "transform-async-to-generator"
+    "@babel/plugin-transform-async-to-generator",
+    "@babel/plugin-transform-flow-strip-types"
   ]
 }

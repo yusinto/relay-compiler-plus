@@ -4,9 +4,6 @@ module.exports =
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
-/******/ 	// object to store loaded and loading wasm modules
-/******/ 	var installedWasmModules = {};
-/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/
@@ -41,17 +38,32 @@ module.exports =
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
 /******/ 	};
 /******/
 /******/ 	// define __esModule on exports
 /******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
 /******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -69,28 +81,13 @@ module.exports =
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
-/******/ 	// object with all compiled WebAssembly.Modules
-/******/ 	__webpack_require__.w = {};
-/******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/*!*********************!*\
-  !*** external "fs" ***!
-  \*********************/
-/*! no static exports found */
-/*! all exports used */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-module.exports = require("fs");
-
-/***/ }),
-/* 1 */
 /*!***********************!*\
   !*** external "path" ***!
   \***********************/
@@ -102,7 +99,55 @@ module.exports = require("fs");
 module.exports = require("path");
 
 /***/ }),
+/* 1 */
+/*!*********************!*\
+  !*** external "fs" ***!
+  \*********************/
+/*! no static exports found */
+/*! all exports used */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("fs");
+
+/***/ }),
 /* 2 */
+/*!**********************************!*\
+  !*** external "@babel/polyfill" ***!
+  \**********************************/
+/*! no static exports found */
+/*! all exports used */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("@babel/polyfill");
+
+/***/ }),
+/* 3 */
+/*!*********************************!*\
+  !*** external "relay-compiler" ***!
+  \*********************************/
+/*! no static exports found */
+/*! all exports used */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("relay-compiler");
+
+/***/ }),
+/* 4 */
+/*!****************************!*\
+  !*** external "fast-glob" ***!
+  \****************************/
+/*! no static exports found */
+/*! all exports used */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("fast-glob");
+
+/***/ }),
+/* 5 */
 /*!*******************************!*\
   !*** ./src/compiler/utils.js ***!
   \*******************************/
@@ -117,351 +162,62 @@ module.exports = require("path");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.clean = exports.md5 = undefined;
+exports.clean = exports.md5 = void 0;
 
-var _crypto = __webpack_require__(/*! crypto */ 8);
+var _crypto = _interopRequireDefault(__webpack_require__(/*! crypto */ 13));
 
-var _crypto2 = _interopRequireDefault(_crypto);
+var _fastGlob = _interopRequireDefault(__webpack_require__(/*! fast-glob */ 4));
 
-var _fastGlob = __webpack_require__(/*! fast-glob */ 3);
+var _fs = _interopRequireDefault(__webpack_require__(/*! fs */ 1));
 
-var _fastGlob2 = _interopRequireDefault(_fastGlob);
-
-var _fs = __webpack_require__(/*! fs */ 0);
-
-var _fs2 = _interopRequireDefault(_fs);
-
-var _path = __webpack_require__(/*! path */ 1);
-
-var _path2 = _interopRequireDefault(_path);
+var _path = _interopRequireDefault(__webpack_require__(/*! path */ 0));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Ripped from relay-compiler/RelayFileWriter.js
-var md5 = exports.md5 = function md5(x) {
-  return _crypto2.default.createHash('md5').update(x, 'utf8').digest('hex');
+var md5 = function md5(x) {
+  return _crypto.default.createHash('md5').update(x, 'utf8').digest('hex');
 };
 
-var clean = exports.clean = function clean(src) {
+exports.md5 = md5;
+
+var clean = function clean(src) {
   console.log('Start clean...');
-  var filesToClean = _fastGlob2.default.sync('**/__generated__/**/*.graphql.js', {
+
+  var filesToClean = _fastGlob.default.sync('**/__generated__/**/*.graphql.js', {
     cwd: src,
     bashNative: [],
     onlyFiles: true
   });
 
   filesToClean.forEach(function (f) {
-    var filePath = _path2.default.resolve(src, f);
-    console.log('deleting ' + filePath);
-    _fs2.default.unlinkSync(filePath);
-  });
+    var filePath = _path.default.resolve(src, f);
 
+    console.log("deleting ".concat(filePath));
+
+    _fs.default.unlinkSync(filePath);
+  });
   console.log('Finished cleaning');
 };
 
-/***/ }),
-/* 3 */
-/*!****************************!*\
-  !*** external "fast-glob" ***!
-  \****************************/
-/*! no static exports found */
-/*! all exports used */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-module.exports = require("fast-glob");
-
-/***/ }),
-/* 4 */
-/*!*********************************!*\
-  !*** external "relay-compiler" ***!
-  \*********************************/
-/*! no static exports found */
-/*! all exports used */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-module.exports = require("relay-compiler");
-
-/***/ }),
-/* 5 */
-/*!*********************************!*\
-  !*** external "babel-polyfill" ***!
-  \*********************************/
-/*! no static exports found */
-/*! all exports used */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-module.exports = require("babel-polyfill");
+exports.clean = clean;
 
 /***/ }),
 /* 6 */
-/*!**************************************!*\
-  !*** ./src/compiler/persistQuery.js ***!
-  \**************************************/
+/*!****************************************************!*\
+  !*** multi @babel/polyfill ./src/compiler/main.js ***!
+  \****************************************************/
 /*! no static exports found */
 /*! all exports used */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+__webpack_require__(/*! @babel/polyfill */2);
+module.exports = __webpack_require__(/*! ./src/compiler/main.js */7);
 
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.persistQuery = exports.queryMap = undefined;
-
-var _utils = __webpack_require__(/*! ./utils */ 2);
-
-var queryMap = exports.queryMap = {};
-
-var persistQuery = exports.persistQuery = function persistQuery(operationText) {
-  return new Promise(function (resolve) {
-    var queryId = (0, _utils.md5)(operationText);
-    queryMap[queryId] = operationText;
-    resolve(queryId);
-  });
-};
 
 /***/ }),
 /* 7 */
-/*!********************************************************!*\
-  !*** external "relay-compiler-plus/graphqlJSCompiler" ***!
-  \********************************************************/
-/*! no static exports found */
-/*! all exports used */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-module.exports = require("relay-compiler-plus/graphqlJSCompiler");
-
-/***/ }),
-/* 8 */
-/*!*************************!*\
-  !*** external "crypto" ***!
-  \*************************/
-/*! no static exports found */
-/*! all exports used */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-module.exports = require("crypto");
-
-/***/ }),
-/* 9 */
-/*!***********************************************!*\
-  !*** ./src/compiler/formatGeneratedModule.js ***!
-  \***********************************************/
-/*! no static exports found */
-/*! all exports used */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @providesModule formatGeneratedModule
- * @format
- */
-
-var formatGeneratedModule = function formatGeneratedModule(_ref) {
-  var documentType = _ref.documentType,
-      docText = _ref.docText,
-      concreteText = _ref.concreteText,
-      flowText = _ref.flowText,
-      hash = _ref.hash,
-      relayRuntimeModule = _ref.relayRuntimeModule,
-      sourceHash = _ref.sourceHash,
-      devOnlyAssignments = _ref.devOnlyAssignments;
-
-  var docTextComment = docText ? '\n/*\n' + docText.trim() + '\n*/\n' : '';
-  var hashText = hash ? '\n * ' + hash : '';
-
-  // HACK: process.env.NODE_ENV !== 'production' gets replaced by sed with process.env.NODE_ENV !== 'production' at
-  // the npm run build-compiler step. This prevents webpack and babel from transforming the code
-  var operationText = process.env.NODE_ENV !== 'production' ? devOnlyAssignments : '';
-  return '/**\n * ' + '@' + 'flow' + hashText + '\n */\n\n/* eslint-disable */\n\n\'use strict\';\n\n/*::\nimport type { ' + documentType + ' } from \'' + relayRuntimeModule + '\';\n' + (flowText || '') + '\n*/\n\n' + docTextComment + '\nconst node/*: ' + documentType + '*/ = ' + concreteText + ';\n' + operationText + '\n(node/*: any*/).hash = \'' + sourceHash + '\';\nmodule.exports = node;\n';
-};
-
-module.exports = formatGeneratedModule;
-
-/***/ }),
-/* 10 */
-/*!**************************!*\
-  !*** external "graphql" ***!
-  \**************************/
-/*! no static exports found */
-/*! all exports used */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-module.exports = require("graphql");
-
-/***/ }),
-/* 11 */
-/*!********************************!*\
-  !*** ./src/compiler/ripped.js ***!
-  \********************************/
-/*! no static exports found */
-/*! all exports used */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.getFilepathsFromGlob = getFilepathsFromGlob;
-exports.getRelayFileWriter = getRelayFileWriter;
-exports.getSchema = getSchema;
-
-var _fs = __webpack_require__(/*! fs */ 0);
-
-var _fs2 = _interopRequireDefault(_fs);
-
-var _path = __webpack_require__(/*! path */ 1);
-
-var _path2 = _interopRequireDefault(_path);
-
-var _graphql = __webpack_require__(/*! graphql */ 10);
-
-var _relayCompiler = __webpack_require__(/*! relay-compiler */ 4);
-
-var _relayCompiler2 = _interopRequireDefault(_relayCompiler);
-
-var _formatGeneratedModule = __webpack_require__(/*! ./formatGeneratedModule */ 9);
-
-var _formatGeneratedModule2 = _interopRequireDefault(_formatGeneratedModule);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var RelayFileWriter = _relayCompiler2.default.FileWriter,
-    RelayIRTransforms = _relayCompiler2.default.IRTransforms; /* eslint-disable */
-/**
- * The code in this file are ripped from:
- * relay-compiler/bin/RelayCompilerBin.js
- *
- * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule RelayCompilerBin
- * @format
- */
-
-var commonTransforms = RelayIRTransforms.commonTransforms,
-    codegenTransforms = RelayIRTransforms.codegenTransforms,
-    fragmentTransforms = RelayIRTransforms.fragmentTransforms,
-    printTransforms = RelayIRTransforms.printTransforms,
-    queryTransforms = RelayIRTransforms.queryTransforms,
-    schemaExtensions = RelayIRTransforms.schemaExtensions;
-function getFilepathsFromGlob(baseDir, options) {
-  var extensions = options.extensions,
-      include = options.include,
-      exclude = options.exclude;
-
-  var patterns = include.map(function (inc) {
-    return inc + '/*.+(' + extensions.join('|') + ')';
-  });
-
-  var glob = __webpack_require__(/*! fast-glob */ 3);
-  return glob.sync(patterns, {
-    cwd: baseDir,
-    bashNative: [],
-    onlyFiles: true,
-    ignore: exclude
-  });
-}
-
-// Note: this function has been modified from its original form.
-// persistQuery param is added
-function getRelayFileWriter(baseDir, persistQuery) {
-  return function (_ref) {
-    var onlyValidate = _ref.onlyValidate,
-        schema = _ref.schema,
-        documents = _ref.documents,
-        baseDocuments = _ref.baseDocuments,
-        sourceControl = _ref.sourceControl,
-        reporter = _ref.reporter;
-    return new RelayFileWriter({
-      config: {
-        baseDir: baseDir,
-        compilerTransforms: {
-          commonTransforms: commonTransforms,
-          codegenTransforms: codegenTransforms,
-          fragmentTransforms: fragmentTransforms,
-          printTransforms: printTransforms,
-          queryTransforms: queryTransforms
-        },
-        customScalars: {},
-        formatModule: _formatGeneratedModule2.default,
-        inputFieldWhiteListForFlow: [],
-        schemaExtensions: schemaExtensions,
-        useHaste: false,
-        persistQuery: persistQuery
-      },
-      onlyValidate: onlyValidate,
-      schema: schema,
-      baseDocuments: baseDocuments,
-      documents: documents,
-      reporter: reporter,
-      sourceControl: sourceControl
-    });
-  };
-}
-
-function getSchema(schemaPath) {
-  try {
-    var source = _fs2.default.readFileSync(schemaPath, 'utf8');
-    if (_path2.default.extname(schemaPath) === '.json') {
-      source = (0, _graphql.printSchema)((0, _graphql.buildClientSchema)(JSON.parse(source).data));
-    }
-    source = '\n  directive @include(if: Boolean) on FRAGMENT_SPREAD | FIELD\n  directive @skip(if: Boolean) on FRAGMENT_SPREAD | FIELD\n\n  ' + source + '\n  ';
-    return (0, _graphql.buildASTSchema)((0, _graphql.parse)(source), { assumeValid: true });
-  } catch (error) {
-    throw new Error(('\nError loading schema. Expected the schema to be a .graphql or a .json\nfile, describing your GraphQL server\'s API. Error detail:\n\n' + error.stack + '\n    ').trim());
-  }
-}
-
-/***/ }),
-/* 12 */
-/*!******************************************************!*\
-  !*** external "relay-compiler/lib/DotGraphQLParser" ***!
-  \******************************************************/
-/*! no static exports found */
-/*! all exports used */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-module.exports = require("relay-compiler/lib/DotGraphQLParser");
-
-/***/ }),
-/* 13 */
-/*!************************!*\
-  !*** external "yargs" ***!
-  \************************/
-/*! no static exports found */
-/*! all exports used */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-module.exports = require("yargs");
-
-/***/ }),
-/* 14 */
 /*!******************************!*\
   !*** ./src/compiler/main.js ***!
   \******************************/
@@ -473,81 +229,71 @@ module.exports = require("yargs");
 "use strict";
 
 
-var _yargs = __webpack_require__(/*! yargs */ 13);
+var _yargs = _interopRequireDefault(__webpack_require__(/*! yargs */ 8));
 
-var _yargs2 = _interopRequireDefault(_yargs);
+__webpack_require__(/*! @babel/polyfill */ 2);
 
-__webpack_require__(/*! babel-polyfill */ 5);
+var _path = _interopRequireDefault(__webpack_require__(/*! path */ 0));
 
-var _path = __webpack_require__(/*! path */ 1);
+var _fs = _interopRequireDefault(__webpack_require__(/*! fs */ 1));
 
-var _path2 = _interopRequireDefault(_path);
+var _relayCompiler = __webpack_require__(/*! relay-compiler */ 3);
 
-var _fs = __webpack_require__(/*! fs */ 0);
+var _DotGraphQLParser = _interopRequireDefault(__webpack_require__(/*! relay-compiler/lib/DotGraphQLParser */ 9));
 
-var _fs2 = _interopRequireDefault(_fs);
+var _ripped = __webpack_require__(/*! ./ripped */ 10);
 
-var _relayCompiler = __webpack_require__(/*! relay-compiler */ 4);
+var _utils = __webpack_require__(/*! ./utils */ 5);
 
-var _DotGraphQLParser = __webpack_require__(/*! relay-compiler/lib/DotGraphQLParser */ 12);
+var _graphqlJSCompiler = __webpack_require__(/*! relay-compiler-plus/graphqlJSCompiler */ 14);
 
-var _DotGraphQLParser2 = _interopRequireDefault(_DotGraphQLParser);
-
-var _ripped = __webpack_require__(/*! ./ripped */ 11);
-
-var _utils = __webpack_require__(/*! ./utils */ 2);
-
-var _graphqlJSCompiler = __webpack_require__(/*! relay-compiler-plus/graphqlJSCompiler */ 7);
-
-var _persistQuery = __webpack_require__(/*! ./persistQuery */ 6);
+var _persistQuery = __webpack_require__(/*! ./persistQuery */ 15);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; } //eslint-disable-line
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 /*
 * Most of the code in this run method are ripped from:
 * relay-compiler/bin/RelayCompilerBin.js
 */
-var run = function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(options) {
+var run =
+/*#__PURE__*/
+function () {
+  var _ref = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee(options) {
     var srcDir, schemaPath, customWebpackConfig, reporter, schema, parserConfigs, writerConfigs, codegenRunner, result, queryMapOutputFile;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            srcDir = _path2.default.resolve(process.cwd(), options.src);
-
-            console.log('src: ' + srcDir);
-
-            schemaPath = void 0;
-            customWebpackConfig = void 0;
-
+            srcDir = _path.default.resolve(process.cwd(), options.src);
+            console.log("src: ".concat(srcDir));
 
             if (options.webpackConfig) {
-              customWebpackConfig = _path2.default.resolve(process.cwd(), options.webpackConfig);
+              customWebpackConfig = _path.default.resolve(process.cwd(), options.webpackConfig);
             } else {
-              schemaPath = _path2.default.resolve(process.cwd(), options.schema);
+              schemaPath = _path.default.resolve(process.cwd(), options.schema);
             }
 
-            if (!(schemaPath && _path2.default.extname(schemaPath) === '.js' || customWebpackConfig)) {
-              _context.next = 10;
+            if (!(schemaPath && _path.default.extname(schemaPath) === '.js' || customWebpackConfig)) {
+              _context.next = 8;
               break;
             }
 
-            console.log('schemaPath: ' + schemaPath + ', customWebpackConfig: ' + customWebpackConfig);
-            _context.next = 9;
+            console.log("schemaPath: ".concat(schemaPath, ", customWebpackConfig: ").concat(customWebpackConfig));
+            _context.next = 7;
             return (0, _graphqlJSCompiler.graphqlJSCompiler)(schemaPath, srcDir, customWebpackConfig);
 
-          case 9:
+          case 7:
             schemaPath = _context.sent;
 
-          case 10:
-
-            console.log('schemaPath: ' + schemaPath);
+          case 8:
+            console.log("schemaPath: ".concat(schemaPath));
             (0, _utils.clean)(srcDir);
-
             reporter = new _relayCompiler.ConsoleReporter({
               verbose: options.verbose,
               quiet: options.quiet
@@ -569,7 +315,7 @@ var run = function () {
               },
               graphql: {
                 baseDir: srcDir,
-                getParser: _DotGraphQLParser2.default.getParser,
+                getParser: _DotGraphQLParser.default.getParser,
                 getSchema: function getSchema() {
                   return schema;
                 },
@@ -598,61 +344,60 @@ var run = function () {
               sourceControl: null
             });
             result = '';
-            _context.prev = 18;
-            _context.next = 21;
+            _context.prev = 16;
+            _context.next = 19;
             return codegenRunner.compileAll();
 
-          case 21:
+          case 19:
             result = _context.sent;
-            _context.next = 28;
+            _context.next = 26;
             break;
 
-          case 24:
-            _context.prev = 24;
-            _context.t0 = _context['catch'](18);
-
-            console.log('Error codegenRunner.compileAll(): ' + _context.t0);
+          case 22:
+            _context.prev = 22;
+            _context.t0 = _context["catch"](16);
+            console.log("Error codegenRunner.compileAll(): ".concat(_context.t0));
             throw _context.t0;
 
-          case 28:
-            queryMapOutputFile = srcDir + '/queryMap.json';
-            _context.prev = 29;
+          case 26:
+            queryMapOutputFile = "".concat(srcDir, "/queryMap.json");
+            _context.prev = 27;
 
-            _fs2.default.writeFileSync(queryMapOutputFile, JSON.stringify(_persistQuery.queryMap, null, 2));
-            console.log('Query map written to: ' + queryMapOutputFile);
-            _context.next = 38;
+            _fs.default.writeFileSync(queryMapOutputFile, JSON.stringify(_persistQuery.queryMap, null, 2));
+
+            console.log("Query map written to: ".concat(queryMapOutputFile));
+            _context.next = 36;
             break;
 
-          case 34:
-            _context.prev = 34;
-            _context.t1 = _context['catch'](29);
+          case 32:
+            _context.prev = 32;
+            _context.t1 = _context["catch"](27);
 
             if (!_context.t1) {
-              _context.next = 38;
+              _context.next = 36;
               break;
             }
 
-            return _context.abrupt('return', console.log(_context.t1));
+            return _context.abrupt("return", console.log(_context.t1));
 
-          case 38:
+          case 36:
+            console.log("Done! ".concat(result));
 
-            console.log('Done! ' + result);
-
-          case 39:
-          case 'end':
+          case 37:
+          case "end":
             return _context.stop();
         }
       }
-    }, _callee, undefined, [[18, 24], [29, 34]]);
+    }, _callee, this, [[16, 22], [27, 32]]);
   }));
 
   return function run(_x) {
     return _ref.apply(this, arguments);
   };
-}();
+}(); // Collect args
 
-// Collect args
-var argv = _yargs2.default // eslint-disable-line prefer-destructuring
+
+var argv = _yargs.default // eslint-disable-line prefer-destructuring
 .usage('Usage: $0 --schema <schemaPath> --src <srcDir>').options({
   schema: {
     describe: 'Path to schema.js or schema.graphql or schema.json',
@@ -689,7 +434,9 @@ var argv = _yargs2.default // eslint-disable-line prefer-destructuring
   }
 }).help().argv;
 
-_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+_asyncToGenerator(
+/*#__PURE__*/
+regeneratorRuntime.mark(function _callee2() {
   return regeneratorRuntime.wrap(function _callee2$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
@@ -705,32 +452,280 @@ _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
 
         case 6:
           _context2.prev = 6;
-          _context2.t0 = _context2['catch'](1);
-
-          console.log('error: ' + _context2.t0);
+          _context2.t0 = _context2["catch"](1);
+          console.log("error: ".concat(_context2.t0));
           process.exit(1);
 
         case 10:
-        case 'end':
+        case "end":
           return _context2.stop();
       }
     }
-  }, _callee2, undefined, [[1, 6]]);
+  }, _callee2, this, [[1, 6]]);
 }))();
 
 /***/ }),
-/* 15 */
-/*!***************************************************!*\
-  !*** multi babel-polyfill ./src/compiler/main.js ***!
-  \***************************************************/
+/* 8 */
+/*!************************!*\
+  !*** external "yargs" ***!
+  \************************/
+/*! no static exports found */
+/*! all exports used */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("yargs");
+
+/***/ }),
+/* 9 */
+/*!******************************************************!*\
+  !*** external "relay-compiler/lib/DotGraphQLParser" ***!
+  \******************************************************/
+/*! no static exports found */
+/*! all exports used */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("relay-compiler/lib/DotGraphQLParser");
+
+/***/ }),
+/* 10 */
+/*!********************************!*\
+  !*** ./src/compiler/ripped.js ***!
+  \********************************/
 /*! no static exports found */
 /*! all exports used */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! babel-polyfill */5);
-module.exports = __webpack_require__(/*! ./src/compiler/main.js */14);
+"use strict";
 
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getFilepathsFromGlob = getFilepathsFromGlob;
+exports.getRelayFileWriter = getRelayFileWriter;
+exports.getSchema = getSchema;
+
+var _fs = _interopRequireDefault(__webpack_require__(/*! fs */ 1));
+
+var _path = _interopRequireDefault(__webpack_require__(/*! path */ 0));
+
+var _graphql = __webpack_require__(/*! graphql */ 11);
+
+var _relayCompiler = _interopRequireDefault(__webpack_require__(/*! relay-compiler */ 3));
+
+var _formatGeneratedModule = _interopRequireDefault(__webpack_require__(/*! ./formatGeneratedModule */ 12));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* eslint-disable */
+
+/**
+ * The code in this file are ripped from:
+ * relay-compiler/bin/RelayCompilerBin.js
+ *
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule RelayCompilerBin
+ * @format
+ */
+var RelayFileWriter = _relayCompiler.default.FileWriter,
+    RelayIRTransforms = _relayCompiler.default.IRTransforms;
+var commonTransforms = RelayIRTransforms.commonTransforms,
+    codegenTransforms = RelayIRTransforms.codegenTransforms,
+    fragmentTransforms = RelayIRTransforms.fragmentTransforms,
+    printTransforms = RelayIRTransforms.printTransforms,
+    queryTransforms = RelayIRTransforms.queryTransforms,
+    schemaExtensions = RelayIRTransforms.schemaExtensions;
+
+function getFilepathsFromGlob(baseDir, options) {
+  var extensions = options.extensions,
+      include = options.include,
+      exclude = options.exclude;
+  var patterns = include.map(function (inc) {
+    return "".concat(inc, "/*.+(").concat(extensions.join('|'), ")");
+  });
+
+  var glob = __webpack_require__(/*! fast-glob */ 4);
+
+  return glob.sync(patterns, {
+    cwd: baseDir,
+    bashNative: [],
+    onlyFiles: true,
+    ignore: exclude
+  });
+} // Note: this function has been modified from its original form.
+// persistQuery param is added
+
+
+function getRelayFileWriter(baseDir, persistQuery) {
+  return function (_ref) {
+    var onlyValidate = _ref.onlyValidate,
+        schema = _ref.schema,
+        documents = _ref.documents,
+        baseDocuments = _ref.baseDocuments,
+        sourceControl = _ref.sourceControl,
+        reporter = _ref.reporter;
+    return new RelayFileWriter({
+      config: {
+        baseDir: baseDir,
+        compilerTransforms: {
+          commonTransforms: commonTransforms,
+          codegenTransforms: codegenTransforms,
+          fragmentTransforms: fragmentTransforms,
+          printTransforms: printTransforms,
+          queryTransforms: queryTransforms
+        },
+        customScalars: {},
+        formatModule: _formatGeneratedModule.default,
+        inputFieldWhiteListForFlow: [],
+        schemaExtensions: schemaExtensions,
+        useHaste: false,
+        persistQuery: persistQuery
+      },
+      onlyValidate: onlyValidate,
+      schema: schema,
+      baseDocuments: baseDocuments,
+      documents: documents,
+      reporter: reporter,
+      sourceControl: sourceControl
+    });
+  };
+}
+
+function getSchema(schemaPath) {
+  try {
+    var source = _fs.default.readFileSync(schemaPath, 'utf8');
+
+    if (_path.default.extname(schemaPath) === '.json') {
+      source = (0, _graphql.printSchema)((0, _graphql.buildClientSchema)(JSON.parse(source).data));
+    }
+
+    source = "\n  directive @include(if: Boolean) on FRAGMENT_SPREAD | FIELD\n  directive @skip(if: Boolean) on FRAGMENT_SPREAD | FIELD\n\n  ".concat(source, "\n  ");
+    return (0, _graphql.buildASTSchema)((0, _graphql.parse)(source), {
+      assumeValid: true
+    });
+  } catch (error) {
+    throw new Error("\nError loading schema. Expected the schema to be a .graphql or a .json\nfile, describing your GraphQL server's API. Error detail:\n\n".concat(error.stack, "\n    ").trim());
+  }
+}
+
+/***/ }),
+/* 11 */
+/*!**************************!*\
+  !*** external "graphql" ***!
+  \**************************/
+/*! no static exports found */
+/*! all exports used */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("graphql");
+
+/***/ }),
+/* 12 */
+/*!***********************************************!*\
+  !*** ./src/compiler/formatGeneratedModule.js ***!
+  \***********************************************/
+/*! no static exports found */
+/*! all exports used */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule formatGeneratedModule
+ * @format
+ */
+var formatGeneratedModule = function formatGeneratedModule(_ref) {
+  var documentType = _ref.documentType,
+      docText = _ref.docText,
+      concreteText = _ref.concreteText,
+      flowText = _ref.flowText,
+      hash = _ref.hash,
+      relayRuntimeModule = _ref.relayRuntimeModule,
+      sourceHash = _ref.sourceHash,
+      devOnlyAssignments = _ref.devOnlyAssignments;
+  var docTextComment = docText ? "\n/*\n".concat(docText.trim(), "\n*/\n") : '';
+  var hashText = hash ? "\n * ".concat(hash) : ''; // HACK: process.env.NODE_ENV !== 'production' gets replaced by sed with process.env.NODE_ENV !== 'production' at
+  // the npm run build-compiler step. This prevents webpack and babel from transforming the code
+
+  var operationText = process.env.NODE_ENV !== 'production' ? devOnlyAssignments : '';
+  return "/**\n * ".concat('@', "flow", hashText, "\n */\n\n/* eslint-disable */\n\n'use strict';\n\n/*::\nimport type { ").concat(documentType, " } from '").concat(relayRuntimeModule, "';\n").concat(flowText || '', "\n*/\n\n").concat(docTextComment, "\nconst node/*: ").concat(documentType, "*/ = ").concat(concreteText, ";\n").concat(operationText, "\n(node/*: any*/).hash = '").concat(sourceHash, "';\nmodule.exports = node;\n");
+};
+
+module.exports = formatGeneratedModule;
+
+/***/ }),
+/* 13 */
+/*!*************************!*\
+  !*** external "crypto" ***!
+  \*************************/
+/*! no static exports found */
+/*! all exports used */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("crypto");
+
+/***/ }),
+/* 14 */
+/*!********************************************************!*\
+  !*** external "relay-compiler-plus/graphqlJSCompiler" ***!
+  \********************************************************/
+/*! no static exports found */
+/*! all exports used */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("relay-compiler-plus/graphqlJSCompiler");
+
+/***/ }),
+/* 15 */
+/*!**************************************!*\
+  !*** ./src/compiler/persistQuery.js ***!
+  \**************************************/
+/*! no static exports found */
+/*! all exports used */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.persistQuery = exports.queryMap = void 0;
+
+var _utils = __webpack_require__(/*! ./utils */ 5);
+
+var queryMap = {};
+exports.queryMap = queryMap;
+
+var persistQuery = function persistQuery(operationText) {
+  return new Promise(function (resolve) {
+    var queryId = (0, _utils.md5)(operationText);
+    queryMap[queryId] = operationText;
+    resolve(queryId);
+  });
+};
+
+exports.persistQuery = persistQuery;
 
 /***/ })
 /******/ ]);

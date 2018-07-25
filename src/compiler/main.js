@@ -1,5 +1,5 @@
 import yargs from 'yargs';
-import 'babel-polyfill';
+import '@babel/polyfill';
 import path from 'path';
 import fs from 'fs';
 import {JSModuleParser, ConsoleReporter, Runner as CodegenRunner} from 'relay-compiler';

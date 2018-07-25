@@ -6,7 +6,7 @@ import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 const compiler = 'main.js';
 
 export default {
-  entry: ['babel-polyfill', `./src/compiler/${compiler}`],
+  entry: ['@babel/polyfill', `./src/compiler/${compiler}`],
   target: 'node',
   node: {
     __dirname: false,
@@ -27,8 +27,8 @@ export default {
         exclude: /node_modules/,
         options: {
           babelrc: false,
-          presets: ['flow', ['env', {modules: 'commonjs'}], 'stage-0'],
-          plugins: ['transform-flow-strip-types', 'transform-async-to-generator'],
+          presets: ['@babel/preset-flow', ['@babel/preset-env', {modules: 'commonjs'}]],
+          plugins: ['@babel/plugin-transform-flow-strip-types', '@babel/plugin-transform-async-to-generator'],
         },
       },
     ],

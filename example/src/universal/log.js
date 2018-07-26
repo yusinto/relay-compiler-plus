@@ -1,8 +1,6 @@
 import moment from 'moment';
 
 module.exports = class Logger {
-  static LOG_LEVELS = {error: 10, warn: 20, info: 30, log: 40};
-
   constructor(moduleName) {
     this.moduleName = moduleName;
   }

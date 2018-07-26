@@ -3671,9 +3671,9 @@ regjsparser@^0.3.0:
   dependencies:
     jsesc "~0.5.0"
 
-relay-compiler-plus@^1.8.1:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/relay-compiler-plus/-/relay-compiler-plus-1.8.1.tgz#e277bbf68e98c5d5eaad6bab17bb585716495b9d"
+relay-compiler-plus@^1.8.2:
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/relay-compiler-plus/-/relay-compiler-plus-1.8.2.tgz#daac326405ca449cb15789e5d92cdfc44743482b"
   dependencies:
     "@babel/plugin-transform-async-to-generator" "^7.0.0-beta.54"
     "@babel/plugin-transform-flow-strip-types" "^7.0.0-beta.54"

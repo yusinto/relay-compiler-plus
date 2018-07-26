@@ -18,7 +18,11 @@ module.exports = {
         options: {
           babelrc: false,
           presets: ['@babel/preset-flow', ['@babel/preset-env', {modules: 'commonjs'}]],
-          plugins: ['@babel/plugin-transform-flow-strip-types', '@babel/plugin-transform-async-to-generator'],
+          plugins: [
+            '@babel/plugin-transform-flow-strip-types',
+            '@babel/plugin-transform-async-to-generator',
+            '@babel/plugin-proposal-class-properties'
+          ],
         },
       },
     ],

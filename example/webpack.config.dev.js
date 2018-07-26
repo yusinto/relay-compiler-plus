@@ -17,7 +17,6 @@ module.exports = {
     publicPath: '/dist/'
   },
   module: {
-    // run eslint before compiling
     rules: [
       {
         test: /\.js$/,
@@ -25,7 +24,6 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
-          presets: 'react-hmre',
           cacheDirectory: true,
         },
       },

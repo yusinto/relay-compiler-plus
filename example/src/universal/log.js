@@ -5,31 +5,26 @@ module.exports = class Logger {
 
   constructor(moduleName) {
     this.moduleName = moduleName;
-    this.consoleWriter = ::this.consoleWriter;
-    this.log = ::this.log;
-    this.info = ::this.info;
-    this.warn = ::this.warn;
-    this.error = ::this.error;
   }
 
-  consoleWriter(level, ...args) {
+  consoleWriter = (level, ...args) => {
     const sanitisedModuleName = this.moduleName ? `[${this.moduleName}]` : '';
     console[level](`${moment().format()} ${level.toUpperCase()} ${sanitisedModuleName}`, ...args);
-  }
+  };
 
-  log(...args) {
+  log = (...args) => {
     this.consoleWriter('log', ...args);
-  }
+  };
 
-  info(...args) {
+  info = (...args) => {
     this.consoleWriter('info', ...args);
-  }
+  };
 
-  warn(...args) {
+  warn = (...args) => {
     this.consoleWriter('warn', ...args);
-  }
+  };
 
-  error(...args) {
+  error = (...args) => {
     this.consoleWriter('error', ...args);
   }
 };

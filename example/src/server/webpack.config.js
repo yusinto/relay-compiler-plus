@@ -17,7 +17,7 @@ module.exports = {
         exclude: /node_modules/,
         options: {
           babelrc: false,
-          presets: ['flow', ['env', {modules: 'commonjs'}], 'stage-0'],
+          presets: ['flow', ['env', {modules: 'commonjs'}]],
           plugins: ['transform-flow-strip-types', 'transform-async-to-generator'],
         },
       },

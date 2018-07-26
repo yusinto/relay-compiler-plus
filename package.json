@@ -1,6 +1,6 @@
 {
   "name": "relay-compiler-plus",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "description": "A custom relay modern compiler that supports persisted queries",
   "main": "lib/index.js",
   "bin": {
@@ -47,7 +47,7 @@
   "dependencies": {
     "@babel/plugin-transform-async-to-generator": "^7.0.0-beta.54",
     "@babel/plugin-transform-flow-strip-types": "^7.0.0-beta.54",
-    "@babel/plugin-proposal-class-properties":"^7.0.0-beta.54",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.54",
     "@babel/polyfill": "^7.0.0-beta.54",
     "@babel/preset-env": "^7.0.0-beta.54",
     "@babel/preset-react": "^7.0.0-beta.54",

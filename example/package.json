@@ -4,7 +4,7 @@
   "description": "A starter kit to quickly create a relay modern app",
   "main": "index.js",
   "scripts": {
-    "dev": "node src/server",
+    "start": "node src/server",
     "rcp": "NODE_ENV=production relay-compiler-plus --schema schema.graphql --src src",
     "rcp-js": "NODE_ENV=production relay-compiler-plus --schema src/server/schema.js --src src",
     "rcp-js-custom": "NODE_ENV=production relay-compiler-plus --webpackConfig src/server/webpack.config.js --src src",
@@ -39,7 +39,7 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-relay": "^1.6.0",
-    "relay-compiler-plus": "^1.8.2",
+    "relay-compiler-plus": "^1.8.3",
     "relay-runtime": "^1.6.0"
   },
   "devDependencies": {

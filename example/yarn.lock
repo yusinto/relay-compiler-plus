@@ -3671,10 +3671,11 @@ regjsparser@^0.3.0:
   dependencies:
     jsesc "~0.5.0"
 
-relay-compiler-plus@^1.8.2:
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/relay-compiler-plus/-/relay-compiler-plus-1.8.2.tgz#daac326405ca449cb15789e5d92cdfc44743482b"
+relay-compiler-plus@^1.8.3:
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/relay-compiler-plus/-/relay-compiler-plus-1.8.3.tgz#5c949a149eaf075d8ed06de609b5537f7efc0607"
   dependencies:
+    "@babel/plugin-proposal-class-properties" "^7.0.0-beta.54"
     "@babel/plugin-transform-async-to-generator" "^7.0.0-beta.54"
     "@babel/plugin-transform-flow-strip-types" "^7.0.0-beta.54"
     "@babel/polyfill" "^7.0.0-beta.54"

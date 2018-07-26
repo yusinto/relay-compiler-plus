@@ -7,15 +7,15 @@ Example project using relay-compiler-plus to generate relay persisted queries.
 yarn
 
 # to compile from schema.js
-npm run rcp-js
+yarn rcp-js
 
 # to compile from schema.js using a custom webpack config
-npm run rcp-js-custom
+yarn rcp-js-custom
 
 # to compile from schema.graphql or schema.json
-npm run rcp
+yarn rcp
 
-npm run dev
+yarn start
 ```
 
 Browse to http://localhost:3000, under dev tools network tab you should be able

@@ -1,18 +1,16 @@
 {
   "presets": [
-    [
-      "env",
-      {
-        "modules": "commonjs"
-      }
-    ],
-    "react",
-    "stage-0"
+  [
+    "@babel/preset-env",
+    {
+      "modules": "commonjs"
+    }
+  ],
+    "@babel/preset-react"
   ],
   "plugins": [
     "relay",
-    "transform-decorators-legacy",
-    "array-includes",
-    "transform-async-to-generator"
+    "@babel/transform-async-to-generator",
+    "@babel/plugin-proposal-class-properties"
   ]
 }

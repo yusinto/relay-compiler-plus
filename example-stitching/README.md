@@ -6,7 +6,7 @@ Example project using relay-compiler-plus and schema stitching.
 ```
 yarn
 
-npm start
+yarn start
 ```
 
 Browse to http://localhost:3000 and you should see a list of places with details coming from prisma.
